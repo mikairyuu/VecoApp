@@ -30,7 +30,7 @@ jobs:
     - name: Run Detekt
       continue-on-error: false
       run: |
-        java -jar ${{ steps.setup_detekt.outputs.detekt_file }} --input ${{ github.workspace }} --report sarif:${{ github.workspace }}/detekt.sarif.json
+        java -jar ${{ steps.setup_detekt.outputs.detekt_file }} -c ${{ github.workspace }}/detekt_config.yml --build-upon-default-config  --input ${{ github.workspace }} --report sarif:${{ github.workspace }}/detekt.sarif.json
 
     - uses: github/codeql-action/upload-sarif@v2
       with:

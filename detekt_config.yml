@@ -1,0 +1,7 @@
+naming:
+  MatchingDeclarationName:
+    active: false
+  MemberNameEqualsClassName:
+    active: false
+style:
+    excludes: ['**/*.kts']
