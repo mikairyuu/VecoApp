@@ -3,6 +3,8 @@ plugins {
     kotlin("android")
 }
 
+val composeVersion = "1.2.0"
+
 android {
     compileSdk = 32
     defaultConfig {
@@ -14,6 +16,9 @@ android {
     }
     buildFeatures {
         compose = true
+    }
+    composeOptions {
+        kotlinCompilerExtensionVersion = composeVersion
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
@@ -36,11 +41,13 @@ dependencies {
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     // Compose
-    implementation("androidx.compose.ui:ui:1.2.0")
-    implementation("androidx.compose.ui:ui-tooling:1.2.0")
-    implementation("androidx.compose.foundation:foundation:1.2.0")
-    implementation("androidx.compose.material:material-icons-core:1.2.0")
-    implementation("androidx.compose.material:material-icons-extended:1.2.0")
-    implementation("androidx.compose.runtime:runtime-livedata:1.2.0")
-    implementation("androidx.compose.runtime:runtime-rxjava2:1.2.0")
+    implementation("androidx.compose.ui:ui:$composeVersion")
+    implementation("androidx.compose.ui:ui-tooling:$composeVersion")
+    implementation("androidx.compose.foundation:foundation:$composeVersion")
+    implementation("androidx.compose.material:material-icons-core:$composeVersion")
+    implementation("androidx.compose.material:material-icons-extended:$composeVersion")
+    implementation("androidx.compose.runtime:runtime-livedata:$composeVersion")
+    implementation("androidx.compose.runtime:runtime-rxjava2:$composeVersion")
+    implementation("androidx.navigation:navigation-compose:2.5.1")
+    implementation("androidx.compose.material:material:$composeVersion")
 }
