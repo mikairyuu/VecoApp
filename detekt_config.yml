@@ -3,7 +3,17 @@ naming:
         active: false
     MemberNameEqualsClassName:
         active: false
+    FunctionNaming:
+        ignoreAnnotated: ['Composable']
+    TopLevelPropertyNaming:
+        constantPattern: '[A-Z][A-Za-z0-9]*'
+complexity:
+    LongParameterList:
+        ignoreDefaultParameters: true
+        functionThreshold: 10
 style:
     excludes: ['**/*.kts']
     NewLineAtEndOfFile:
         active: false
+    UnusedPrivateMember:
+        ignoreAnnotated: ['Preview']
