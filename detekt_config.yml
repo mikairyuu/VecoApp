@@ -1,7 +1,9 @@
 naming:
-  MatchingDeclarationName:
-    active: false
-  MemberNameEqualsClassName:
-    active: false
+    MatchingDeclarationName:
+        active: false
+    MemberNameEqualsClassName:
+        active: false
 style:
     excludes: ['**/*.kts']
+    NewLineAtEndOfFile:
+        active: false
