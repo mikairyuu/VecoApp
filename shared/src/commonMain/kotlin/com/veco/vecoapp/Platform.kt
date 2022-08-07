@@ -1,6 +1,6 @@
 package com.veco.vecoapp
 
-expect class Platform() {
+expect object Platform {
     val osName: PlatformType
     val osVersion: String
     val deviceModel: String
