@@ -1,31 +1,31 @@
 package com.veco.vecoapp.android.ui
 
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.WindowInsets
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.navigationBars
-import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.windowInsetsPadding
-import androidx.compose.material.MaterialTheme
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.compose.rememberNavController
+import com.veco.vecoapp.android.ui.navigation.VecoBottomNavigation
+import com.veco.vecoapp.android.ui.navigation.VecoNavGraph
+import com.veco.vecoapp.android.ui.theme.VecoAppTheme
 
 @Composable
 fun VecoApp() {
-    MaterialTheme {
-        Row(
-            Modifier
-                .fillMaxSize()
-                .statusBarsPadding()
-                .windowInsetsPadding(
-                    WindowInsets.navigationBars
+    VecoAppTheme {
+        val navController = rememberNavController()
+        Scaffold(
+            topBar = {
+                VecoTopAppBar()
+            },
+            bottomBar = {
+                VecoBottomNavigation()
+            },
+            content = {
+                VecoNavGraph(
+                    modifier = Modifier.padding(it),
+                    navController = navController,
                 )
-        ) {
-            val navController = rememberNavController()
-            VecoNavGraph(
-                navController = navController,
-            )
-        }
+            }
+        )
     }
 }
