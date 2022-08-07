@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="brand_default">#40A427</color>
+    <color name="light_grey">#BCBFC5</color>
+    <color name="gradient_primary_3">#7CDE2F</color>
+    <color name="gradient_primary_2">#47CD32</color>
+    <color name="gradient_primary_1">#40A427</color>
+</resources>
