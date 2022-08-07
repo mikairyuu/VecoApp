@@ -2,6 +2,7 @@ plugins {
     kotlin("multiplatform")
     kotlin("native.cocoapods")
     id("com.android.library")
+    id("dev.icerock.mobile.multiplatform-resources")
 }
 
 version = "1.0"
@@ -27,9 +28,14 @@ kotlin {
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
+                implementation("dev.icerock.moko:resources-test:0.20.1")
             }
         }
-        val androidMain by getting
+        val androidMain by getting {
+            dependencies {
+                api("dev.icerock.moko:resources-compose:0.20.1")
+            }
+        }
         val androidTest by getting
         val iosX64Main by getting
         val iosArm64Main by getting
@@ -50,6 +56,15 @@ kotlin {
             iosSimulatorArm64Test.dependsOn(this)
         }
     }
+}
+
+dependencies {
+    commonMainApi("dev.icerock.moko:resources:0.20.1")
+}
+
+multiplatformResources {
+    multiplatformResourcesPackage = "com.veco.vecoapp"
+    iosBaseLocalizationRegion = "ru"
 }
 
 android {
