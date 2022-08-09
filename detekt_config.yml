@@ -13,6 +13,8 @@ complexity:
         functionThreshold: 10
 style:
     excludes: ['**/*.kts']
+    MagicNumber:
+        active: false
     NewLineAtEndOfFile:
         active: false
     UnusedPrivateMember:
