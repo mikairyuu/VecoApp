@@ -1,6 +1,7 @@
 plugins {
     id("com.android.application")
     kotlin("android")
+    id("kotlin-parcelize")
 }
 
 val composeVersion = "1.2.0"
@@ -50,4 +51,6 @@ dependencies {
     implementation("androidx.compose.runtime:runtime-rxjava2:$composeVersion")
     implementation("androidx.navigation:navigation-compose:2.5.1")
     implementation("androidx.compose.material:material:$composeVersion")
+
+    implementation("me.onebone:toolbar-compose:2.3.4")
 }
