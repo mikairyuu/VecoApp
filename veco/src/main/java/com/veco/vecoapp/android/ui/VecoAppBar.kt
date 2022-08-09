@@ -46,7 +46,7 @@ fun VecoTopAppBar(
     toolbarScope.apply {
         Box(
             modifier = Modifier
-                .height(150.dp)
+                .height(100.dp)
                 .pin()
                 .background(color = Color.White)
                 .fillMaxWidth()
@@ -63,6 +63,21 @@ fun VecoTopAppBar(
                     MaterialTheme.typography.h1,
                     animRem.value
                 )
+                val topPadding = androidx.compose.ui.unit.lerp(
+                    14.dp,
+                    4.dp,
+                    animRem.value
+                )
+                val bottomPadding = androidx.compose.ui.unit.lerp(
+                    14.dp,
+                    MaterialTheme.spacing.small,
+                    animRem.value
+                )
+                val horizontalPadding = androidx.compose.ui.unit.lerp(
+                    12.dp,
+                    MaterialTheme.spacing.medium,
+                    animRem.value
+                )
                 Decoration2(
                     contentColor = MaterialTheme.colors.onBackground,
                     typography = labelAnimatedStyle,
@@ -70,10 +85,15 @@ fun VecoTopAppBar(
                         Text(
                             modifier = Modifier
                                 .road(
-                                    whenCollapsed = Alignment.TopStart,
+                                    whenCollapsed = Alignment.BottomStart,
                                     whenExpanded = Alignment.BottomStart
                                 )
-                                .padding(MaterialTheme.spacing.medium),
+                                .padding(
+                                    horizontalPadding,
+                                    topPadding,
+                                    horizontalPadding,
+                                    bottomPadding
+                                ),
                             text = mainTitle
                         )
                     }
