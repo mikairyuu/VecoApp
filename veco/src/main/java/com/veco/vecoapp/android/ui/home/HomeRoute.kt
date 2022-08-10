@@ -93,6 +93,7 @@ fun TaskCard() {
             .fillMaxWidth()
             .padding(MaterialTheme.spacing.medium, 0.dp, MaterialTheme.spacing.medium, 12.dp),
         shape = RoundedCornerShape(8.dp),
+        elevation = 8.dp
     ) {
         Box(modifier = Modifier.padding(12.dp)) {
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {

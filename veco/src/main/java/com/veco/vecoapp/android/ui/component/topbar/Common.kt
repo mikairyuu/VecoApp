@@ -30,14 +30,15 @@ fun VecoPoints(boxScope: BoxScope) {
         ) {
             Box(
                 modifier = Modifier
-                    .size(67.dp, 32.dp)
                     .clip(RoundedCornerShape(16.dp))
                     .defaultGradient()
-                    .padding(6.dp, 4.dp, 8.dp, 4.dp)
+                    .padding(4.dp, 4.dp, 8.dp, 4.dp)
             ) {
-                Row(horizontalArrangement = Arrangement.spacedBy(2.dp)) {
+                Row(
+                    modifier = Modifier.align(Alignment.Center),
+                    horizontalArrangement = Arrangement.spacedBy(2.dp)
+                ) {
                     Image(
-                        modifier = Modifier.padding(2.dp),
                         painter = painterResource(id = R.drawable.ic_veco_pts),
                         contentDescription = null
                     )
