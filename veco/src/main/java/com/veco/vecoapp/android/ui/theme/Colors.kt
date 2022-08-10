@@ -17,3 +17,19 @@ fun vecoLightColors() = lightColors(
 val Colors.lightGray: Color
     @Composable
     get() = Color(MR.colors.greyscale_light_grey.color.colorInt())
+
+val Colors.secondaryText: Color
+    @Composable
+    get() = Color(MR.colors.text_secondary.color.colorInt())
+
+val Colors.violet: Color
+    @Composable
+    get() = Color(MR.colors.violet.color.colorInt())
+
+val Colors.purple: Color
+    @Composable
+    get() = Color(MR.colors.purple.color.colorInt())
+
+val Colors.orange: Color
+    @Composable
+    get() = Color(MR.colors.orange.color.colorInt())
