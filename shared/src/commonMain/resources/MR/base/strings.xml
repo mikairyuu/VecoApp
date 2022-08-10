@@ -12,4 +12,9 @@
     <string name="task_monthly">Ежемесячное</string>
     <string name="task_deadline">Истекает:</string>
     <string name="task_points">Очки за задание:</string>
+    <string name="task_completed">Выполнено</string>
+    <string name="task_uncompleted">Не выполнено</string>
+    <string name="task_inprogress">На проверке</string>
+    <string name="task_type">Тип задания:</string>
+    <string name="button_next">Далее</string>
 </resources>

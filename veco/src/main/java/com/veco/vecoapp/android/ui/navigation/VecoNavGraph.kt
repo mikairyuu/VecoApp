@@ -1,7 +1,10 @@
+@file:OptIn(ExperimentalMaterialApi::class)
+
 package com.veco.vecoapp.android.ui.navigation
 
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
@@ -12,6 +15,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.veco.vecoapp.android.R
 import com.veco.vecoapp.MR
+import com.veco.vecoapp.android.ui.BottomSheetState
 import com.veco.vecoapp.android.ui.ScaffoldState
 import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.home.HomeRoute
@@ -36,7 +40,8 @@ fun VecoNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     startDestination: String = Screen.Home.route,
-    scaffoldState: MutableState<ScaffoldState>
+    scaffoldState: MutableState<ScaffoldState>,
+    bottomSheetState: MutableState<BottomSheetState>
 ) {
     NavHost(
         navController = navController,
@@ -49,7 +54,7 @@ fun VecoNavGraph(
                 true,
                 ToolbarState.Expandable
             )
-            HomeRoute()
+            HomeRoute(bottomSheetState)
         }
     }
 }

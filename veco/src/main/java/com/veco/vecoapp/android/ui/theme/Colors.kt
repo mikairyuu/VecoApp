@@ -22,6 +22,10 @@ val Colors.secondaryText: Color
     @Composable
     get() = Color(MR.colors.text_secondary.color.colorInt())
 
+val Colors.tertiaryText: Color
+    @Composable
+    get() = Color(MR.colors.text_tertiary.color.colorInt())
+
 val Colors.violet: Color
     @Composable
     get() = Color(MR.colors.violet.color.colorInt())
