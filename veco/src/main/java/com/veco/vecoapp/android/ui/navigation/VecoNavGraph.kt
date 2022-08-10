@@ -13,6 +13,7 @@ import androidx.navigation.compose.rememberNavController
 import com.veco.vecoapp.android.R
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.ui.ScaffoldState
+import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.home.HomeRoute
 
 sealed class Screen(val route: String, @StringRes val titleId: Int, @DrawableRes val icon: Int) {
@@ -45,7 +46,8 @@ fun VecoNavGraph(
         composable(Screen.Home.route) {
             scaffoldState.value = ScaffoldState(
                 stringResource(Screen.Home.titleId),
-                true
+                true,
+                ToolbarState.Expandable
             )
             HomeRoute()
         }
