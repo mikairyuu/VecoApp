@@ -53,4 +53,5 @@ dependencies {
     implementation("androidx.compose.material:material:$composeVersion")
 
     implementation("me.onebone:toolbar-compose:2.3.4")
+    implementation("com.google.accompanist:accompanist-systemuicontroller:0.25.0")
 }

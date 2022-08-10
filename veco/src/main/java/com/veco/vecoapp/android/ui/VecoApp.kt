@@ -10,7 +10,9 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.veco.vecoapp.android.ui.component.ExpandableToolbarScaffold
 import com.veco.vecoapp.android.ui.component.topbar.VecoTopBar
 import com.veco.vecoapp.android.ui.enums.ToolbarState
@@ -32,6 +34,10 @@ fun VecoApp() {
     VecoAppTheme {
         val navController = rememberNavController()
         val navigationProvider = VecoNavigationProvider(navController)
+        val systemUiController = rememberSystemUiController()
+        systemUiController.setSystemBarsColor(
+            color = Color.White
+        )
         val scaffoldState = rememberSaveable {
             mutableStateOf(ScaffoldState("", true, ToolbarState.None))
         }
