@@ -7,11 +7,11 @@ plugins {
 val composeVersion = "1.2.0"
 
 android {
-    compileSdk = 32
+    compileSdk = 33
     defaultConfig {
         applicationId = "com.veco.vecoapp.android"
         minSdk = 24
-        targetSdk = 32
+        targetSdk = 33
         versionCode = 1
         versionName = "1.0"
     }
