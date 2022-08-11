@@ -19,12 +19,13 @@ import com.veco.vecoapp.android.ui.theme.secondaryText
 
 @Composable
 fun DoubleInfoUnit(
+    modifier: Modifier = Modifier,
     first: String,
     second: String,
     isSmall: Boolean = true,
     needCoin: Boolean = false
 ) {
-    Column {
+    Column(modifier = modifier) {
         Text(
             text = first,
             color = MaterialTheme.colors.secondaryText,

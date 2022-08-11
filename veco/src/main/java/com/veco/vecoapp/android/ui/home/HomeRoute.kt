@@ -141,10 +141,12 @@ fun TaskCard(
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)) {
                     DoubleInfoUnit(
+                        modifier = Modifier.weight(1f),
                         first = stringResource(MR.strings.task_deadline.resourceId),
                         second = task.deadline
                     )
                     DoubleInfoUnit(
+                        modifier = Modifier.weight(1f),
                         first = stringResource(MR.strings.task_points.resourceId),
                         second = task.points.toString(),
                         needCoin = true

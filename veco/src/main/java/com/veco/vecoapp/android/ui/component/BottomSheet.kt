@@ -75,12 +75,14 @@ fun BottomSheetScaffold(
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)) {
                     DoubleInfoUnit(
+                        modifier = Modifier.weight(1f),
                         first = stringResource(MR.strings.task_points.resourceId),
                         second = bottomSheetState.points.toString(),
                         needCoin = true,
                         isSmall = false
                     )
                     DoubleInfoUnit(
+                        modifier = Modifier.weight(1f),
                         first = stringResource(MR.strings.task_deadline.resourceId),
                         second = bottomSheetState.deadline,
                         isSmall = false
