@@ -28,10 +28,8 @@ fun AccountData() {
             VecoButton(
                 modifier = Modifier.align(Alignment.BottomCenter),
                 text = stringResource(id = MR.strings.button_save.resourceId),
-                onClick = {})
+                onClick = {}
+            )
         }
-
     }
-
-
 }

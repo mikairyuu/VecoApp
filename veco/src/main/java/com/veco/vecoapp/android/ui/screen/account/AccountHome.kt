@@ -11,8 +11,6 @@ import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Card
 import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
@@ -30,7 +28,6 @@ import com.veco.vecoapp.android.R
 import com.veco.vecoapp.android.ui.component.misc.VecoSuggestionCard
 import com.veco.vecoapp.android.ui.theme.red
 import com.veco.vecoapp.android.ui.theme.regBody1
-import com.veco.vecoapp.android.ui.theme.secondaryBackground
 import com.veco.vecoapp.android.ui.theme.spacing
 import dev.icerock.moko.graphics.colorInt
 

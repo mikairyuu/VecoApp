@@ -2,6 +2,7 @@ plugins {
     id("com.android.application")
     kotlin("android")
     id("kotlin-parcelize")
+    id("org.jlleitschuh.gradle.ktlint")
 }
 
 val composeVersion = "1.2.0"

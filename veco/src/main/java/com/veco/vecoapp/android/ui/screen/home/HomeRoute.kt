@@ -33,7 +33,6 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.veco.vecoapp.dto.Task
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.ui.BottomSheetState
 import com.veco.vecoapp.android.ui.component.misc.DoubleInfoUnit
@@ -45,6 +44,7 @@ import com.veco.vecoapp.android.ui.theme.regBody3
 import com.veco.vecoapp.android.ui.theme.secondaryText
 import com.veco.vecoapp.android.ui.theme.spacing
 import com.veco.vecoapp.android.ui.theme.violet
+import com.veco.vecoapp.dto.Task
 import com.veco.vecoapp.enums.TaskFrequency
 import com.veco.vecoapp.enums.TaskStatus
 import com.veco.vecoapp.enums.convert
@@ -178,7 +178,7 @@ fun getTestTask(status: TaskStatus): Task {
     return Task(
         "Сходить в магазин с собственной сумкой",
         "Огромное количество людей летом проводят свой отдых в парке, часто забывая про" +
-                " санитарные правила, станьте волонтером и очистите свой парк от мусора",
+            " санитарные правила, станьте волонтером и очистите свой парк от мусора",
         "Сегодня, 19:00",
         TaskFrequency.values().random(),
         Random.nextInt(200, 2000),

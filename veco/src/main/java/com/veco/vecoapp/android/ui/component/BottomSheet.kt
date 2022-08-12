@@ -6,15 +6,10 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material.Button
-import androidx.compose.material.ButtonColors
-import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.Icon
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
 import androidx.compose.material.Text
@@ -22,19 +17,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.veco.vecoapp.MR
-import com.veco.vecoapp.android.R
 import com.veco.vecoapp.android.ui.BottomSheetState
 import com.veco.vecoapp.android.ui.component.misc.DoubleInfoUnit
 import com.veco.vecoapp.android.ui.component.misc.VecoButton
-import com.veco.vecoapp.android.ui.theme.regBody2
-import com.veco.vecoapp.android.ui.theme.regBody3
-import com.veco.vecoapp.android.ui.theme.secondaryText
 import com.veco.vecoapp.android.ui.theme.spacing
 import com.veco.vecoapp.android.ui.theme.tertiaryText
 

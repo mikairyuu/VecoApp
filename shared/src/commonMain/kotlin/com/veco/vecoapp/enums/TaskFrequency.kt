@@ -1,7 +1,7 @@
 package com.veco.vecoapp.enums
 
-import com.veco.vecoapp.getStr
 import com.veco.vecoapp.MR
+import com.veco.vecoapp.getStr
 import dev.icerock.moko.resources.desc.StringDesc
 
 enum class TaskFrequency {

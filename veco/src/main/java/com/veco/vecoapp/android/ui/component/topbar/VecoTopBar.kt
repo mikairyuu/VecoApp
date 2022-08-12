@@ -11,7 +11,8 @@ import androidx.navigation.NavController
 
 @Composable
 fun VecoTopBar(navController: NavController) {
-    TopAppBar(title = {},
+    TopAppBar(
+        title = {},
         backgroundColor = Color.White,
         navigationIcon = {
             IconButton(onClick = { navController.navigateUp() }) {
@@ -20,5 +21,6 @@ fun VecoTopBar(navController: NavController) {
                     contentDescription = "Back"
                 )
             }
-        })
+        }
+    )
 }
