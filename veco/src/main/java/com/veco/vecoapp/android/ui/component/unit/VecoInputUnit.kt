@@ -27,7 +27,8 @@ fun VecoInputUnit(
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.mini)
     ) {
         Text(
-            style = MaterialTheme.typography.regBody2, color = MaterialTheme.colors.secondaryText,
+            style = MaterialTheme.typography.regBody2,
+            color = MaterialTheme.colors.secondaryText,
             text = stringResource(id = title)
         )
         VecoTextField(textFieldValue = textFieldValue, onValueChange = onValueChange)

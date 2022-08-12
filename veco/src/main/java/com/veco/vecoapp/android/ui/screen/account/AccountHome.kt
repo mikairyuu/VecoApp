@@ -135,7 +135,8 @@ fun AccountOptionButton(
             contentDescription = null
         )
         Text(
-            text = stringResource(id = text), style = MaterialTheme.typography.regBody1,
+            text = stringResource(id = text),
+            style = MaterialTheme.typography.regBody1,
             color = labelColor
         )
 

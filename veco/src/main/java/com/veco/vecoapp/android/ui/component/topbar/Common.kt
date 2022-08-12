@@ -44,7 +44,7 @@ fun VecoPoints(boxScope: BoxScope) {
                     Text(
                         text = 150.toString(),
                         style = MaterialTheme.typography.body1,
-                        color = Color.White,
+                        color = Color.White
                     )
                 }
             }

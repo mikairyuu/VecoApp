@@ -34,7 +34,7 @@ import kotlinx.parcelize.Parcelize
 data class ScaffoldState(
     var screenTitle: String,
     var navigationVisible: Boolean,
-    var topBarExpandable: ToolbarState,
+    var topBarExpandable: ToolbarState
 ) : Parcelable
 
 data class BottomSheetState(
@@ -92,13 +92,13 @@ fun VecoApp() {
                     )
                 },
                 content = {
-                    if (scaffoldState.value.topBarExpandable == ToolbarState.Expandable)
+                    if (scaffoldState.value.topBarExpandable == ToolbarState.Expandable) {
                         ExpandableToolbarScaffold(
                             modifier = Modifier.padding(it),
                             scaffoldState.value,
                             content = navGraph
                         )
-                    else navGraph()
+                    } else navGraph()
                 }
             )
         }

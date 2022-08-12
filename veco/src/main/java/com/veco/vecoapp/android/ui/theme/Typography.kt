@@ -46,7 +46,7 @@ val VecoTypography = Typography(
         fontSize = 10.sp,
         lineHeight = 12.sp,
         letterSpacing = 0.2.sp
-    ),
+    )
 )
 
 val Typography.body3: TextStyle

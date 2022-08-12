@@ -17,6 +17,10 @@
     <string name="task_inprogress">На проверке</string>
     <string name="task_type">Тип задания:</string>
     <string name="button_next">Далее</string>
+    <string name="task_confirm">Подтвердите выполнение задания</string>
+    <string name="task_info_1"><string name="task_info_1">Для заданий данного типа вам \n необходимо отправить \n фотоподтверждение </string></string>
+    <string name="task_info_2"> (допускается \n максимум 5 фотографий)</string>
+    <string name="button_send">Отправить</string>
     <string name="button_save">Далее</string>
     <string name="account_data">Личные данные</string>
     <string name="account_change_pwd">Смена пароля</string>

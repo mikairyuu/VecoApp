@@ -106,7 +106,7 @@ fun topAppBarShadow(drawScope: DrawScope, expandProgress: Float) {
                 endY = size.height + 28f
             ),
             topLeft = Offset(0f, size.height),
-            size = Size(size.width, 28f),
+            size = Size(size.width, 28f)
         )
     }
 }

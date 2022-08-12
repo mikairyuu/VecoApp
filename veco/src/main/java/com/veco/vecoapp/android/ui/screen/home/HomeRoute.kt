@@ -85,8 +85,9 @@ fun SectionSelector(selectedTaskStatus: MutableState<TaskStatus>) {
                     .clickable { selectedTaskStatus.value = item }
                     .padding(MaterialTheme.spacing.medium, 0.dp),
                 text = item.convert().localized(),
-                color = if (item == selectedTaskStatus.value) MaterialTheme.colors.onBackground else
-                    MaterialTheme.colors.lightGray,
+                color = if (item == selectedTaskStatus.value) MaterialTheme.colors.onBackground else {
+                    MaterialTheme.colors.lightGray
+                },
                 style = MaterialTheme.typography.h2
             )
         }
@@ -168,7 +169,7 @@ fun showTask(
             points = task.points,
             deadline = task.deadline,
             frequency = task.frequency.convert().toString(context),
-            buttonText = task.frequency.convert().toString(context),
+            buttonText = task.frequency.convert().toString(context)
         )
         bottomSheetState.value.state.show()
     }

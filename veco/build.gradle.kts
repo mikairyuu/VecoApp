@@ -55,4 +55,5 @@ dependencies {
 
     implementation("me.onebone:toolbar-compose:2.3.4")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.25.0")
+    implementation("io.coil-kt:coil-compose:2.1.0")
 }
