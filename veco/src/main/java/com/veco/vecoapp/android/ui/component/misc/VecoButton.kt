@@ -12,8 +12,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 
 @Composable
-fun VecoButton(text: String, onClick: () -> Unit) {
-    Box(modifier = Modifier.padding(16.dp)) {
+fun VecoButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
+    Box(modifier = modifier.padding(16.dp)) {
         Button(
             onClick = onClick,
             modifier = Modifier

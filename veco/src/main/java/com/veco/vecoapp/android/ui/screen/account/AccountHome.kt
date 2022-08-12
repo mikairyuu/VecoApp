@@ -47,6 +47,7 @@ val accountOptions = listOf(
         icon = R.drawable.ic_account_profile,
         title = R.string.account_data,
         onClick = {
+            it.navigate(AccountScreen.PersonalData.route)
         }
     ),
     AccountOption(
