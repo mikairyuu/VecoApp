@@ -27,6 +27,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.R
+import com.veco.vecoapp.android.ui.component.misc.VecoSuggestionCard
 import com.veco.vecoapp.android.ui.theme.red
 import com.veco.vecoapp.android.ui.theme.regBody1
 import com.veco.vecoapp.android.ui.theme.secondaryBackground
@@ -85,40 +86,19 @@ val accountOptions = listOf(
 @Composable
 fun AccountHome(navController: NavController? = null) {
     Column(modifier = Modifier.padding(MaterialTheme.spacing.medium)) {
-        Card(
-            backgroundColor = MaterialTheme.colors.secondaryBackground,
-            shape = RoundedCornerShape(MaterialTheme.spacing.small),
-            modifier = Modifier
-                .padding(
-                    0.dp, MaterialTheme.spacing.small,
-                    0.dp, MaterialTheme.spacing.medium
-                )
-                .fillMaxWidth()
-        ) {
-            Row(
-                modifier = Modifier.padding(12.dp),
-                horizontalArrangement = Arrangement.spacedBy(12.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Image(
-                    modifier = Modifier
-                        .size(60.dp)
-                        .weight(2f, false),
-                    painter = painterResource(id = MR.images.gift_icon.drawableResId),
-                    contentDescription = null
-                )
-                Text(
-                    modifier = Modifier.weight(10f, true),
-                    text = "Обменивайте баллы на подарки от партнеров",
-                    style = MaterialTheme.typography.body1
-                )
-                Icon(
-                    modifier = Modifier.weight(1f),
-                    painter = painterResource(id = R.drawable.ic_veco_arrow),
-                    tint = Color.Unspecified,
-                    contentDescription = null
-                )
-            }
+        VecoSuggestionCard {
+            Image(
+                modifier = Modifier
+                    .size(60.dp)
+                    .weight(2f, false),
+                painter = painterResource(id = MR.images.gift_icon.drawableResId),
+                contentDescription = null
+            )
+            Text(
+                modifier = Modifier.weight(10f, true),
+                text = "Обменивайте баллы на подарки от партнеров",
+                style = MaterialTheme.typography.body1
+            )
         }
         Column(modifier = Modifier.padding(0.dp, MaterialTheme.spacing.medium)) {
             accountOptions.forEach {
