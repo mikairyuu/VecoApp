@@ -18,7 +18,8 @@ import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.ui.BottomSheetState
 import com.veco.vecoapp.android.ui.ScaffoldState
 import com.veco.vecoapp.android.ui.enums.ToolbarState
-import com.veco.vecoapp.android.ui.home.HomeRoute
+import com.veco.vecoapp.android.ui.screen.account.accountNavGraph
+import com.veco.vecoapp.android.ui.screen.home.HomeRoute
 
 sealed class Screen(val route: String, @StringRes val titleId: Int, @DrawableRes val icon: Int) {
     object Home : Screen("home", MR.strings.home_title.resourceId, R.drawable.ic_home_tasks)
@@ -56,5 +57,10 @@ fun VecoNavGraph(
             )
             HomeRoute(bottomSheetState)
         }
+
+        accountNavGraph(
+            navController,
+            scaffoldState
+        )
     }
 }

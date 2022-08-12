@@ -33,7 +33,7 @@ fun VecoBottomNavigation(navProvider: VecoNavigationProvider) {
                 selected = currentDestination?.hierarchy?.any { it.route == screen.route } == true,
                 unselectedContentColor = MaterialTheme.colors.lightGray,
                 selectedContentColor = MaterialTheme.colors.primary,
-                onClick = navProvider.navigateToHome
+                onClick = { navProvider.navController.navigate(screen.route) }
             )
         }
     }

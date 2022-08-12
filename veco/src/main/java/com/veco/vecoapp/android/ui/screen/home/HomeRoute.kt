@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterialApi::class)
 
-package com.veco.vecoapp.android.ui.home
+package com.veco.vecoapp.android.ui.screen.home
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.clickable
