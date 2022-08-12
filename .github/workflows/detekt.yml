@@ -20,14 +20,22 @@ jobs:
       run: |
         dest=$( mktemp -d )
         DETEKT_FILE=$dest/detekt-cli-all.jar
+        DETEKT_FORMAT=$dest/detekt-format.jar
         curl --request GET \
           --url https://github.com/detekt/detekt/releases/download/v1.21.0/detekt-cli-1.21.0-all.jar \
           --silent \
           --location \
           --output $DETEKT_FILE
+        curl --request GET \
+          --url https://repo1.maven.org/maven2/io/gitlab/arturbosch/detekt/detekt-formatting/1.21.0/detekt-formatting-1.21.0.jar \
+          --silent \
+          --location \
+          --output $DETEKT_FORMAT
+        
         echo "::set-output name=detekt_file::$DETEKT_FILE"
+        echo "::set-output name=detekt_format::$DETEKT_FORMAT"
 
     - name: Run Detekt
       continue-on-error: false
       run: |
-        java -jar ${{ steps.setup_detekt.outputs.detekt_file }} -c ${{ github.workspace }}/detekt_config.yml --build-upon-default-config  --input ${{ github.workspace }}
+        java -jar ${{ steps.setup_detekt.outputs.detekt_file }} -c ${{ github.workspace }}/detekt_config.yml --build-upon-default-config  --input ${{ github.workspace }} -p ${{ steps.setup_detekt.outputs.detekt_format }}

@@ -19,3 +19,7 @@ style:
         active: false
     UnusedPrivateMember:
         ignoreAnnotated: ['Preview']
+
+formatting:
+    FinalNewline:
+        active: false
