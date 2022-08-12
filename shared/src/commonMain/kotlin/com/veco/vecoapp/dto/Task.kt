@@ -9,5 +9,5 @@ data class Task(
     val deadline: String,
     val frequency: TaskFrequency,
     val points: Int,
-    val completed: TaskStatus
+    val status: TaskStatus
 )
