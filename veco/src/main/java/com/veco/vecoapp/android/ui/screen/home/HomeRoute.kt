@@ -33,9 +33,12 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavController
+import androidx.navigation.compose.rememberNavController
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.ui.BottomSheetState
 import com.veco.vecoapp.android.ui.component.misc.DoubleInfoUnit
+import com.veco.vecoapp.android.ui.navigation.Screen
 import com.veco.vecoapp.android.ui.theme.body3
 import com.veco.vecoapp.android.ui.theme.lightGray
 import com.veco.vecoapp.android.ui.theme.orange
@@ -49,13 +52,17 @@ import com.veco.vecoapp.enums.TaskFrequency
 import com.veco.vecoapp.enums.TaskStatus
 import com.veco.vecoapp.enums.convert
 import dev.icerock.moko.resources.compose.localized
+import dev.icerock.moko.resources.desc.desc
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 @Composable
-fun HomeRoute(bottomSheetState: MutableState<BottomSheetState>) {
-    val coroutineScope = rememberCoroutineScope()
+fun HomeRoute(
+    bottomSheetState: MutableState<BottomSheetState>,
+    navController: NavController,
+    coroutineScope: CoroutineScope
+) {
     val selectedTaskStatus = remember { mutableStateOf(TaskStatus.Uncompleted) }
     Column {
         LazyColumn {
@@ -63,7 +70,12 @@ fun HomeRoute(bottomSheetState: MutableState<BottomSheetState>) {
                 SectionSelector(selectedTaskStatus)
             }
             items(10) {
-                TaskCard(getTestTask(selectedTaskStatus.value), bottomSheetState, coroutineScope)
+                TaskCard(
+                    getTestTask(selectedTaskStatus.value),
+                    bottomSheetState,
+                    coroutineScope,
+                    navController
+                )
             }
         }
     }
@@ -98,7 +110,8 @@ fun SectionSelector(selectedTaskStatus: MutableState<TaskStatus>) {
 fun TaskCard(
     task: Task,
     bottomSheetState: MutableState<BottomSheetState>,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
+    navController: NavController
 ) {
     val context = LocalContext.current
     Card(
@@ -108,7 +121,7 @@ fun TaskCard(
             .padding(MaterialTheme.spacing.medium, 0.dp, MaterialTheme.spacing.medium, 12.dp),
         shape = RoundedCornerShape(8.dp),
         elevation = 8.dp,
-        onClick = { showTask(task, bottomSheetState, coroutineScope, context) },
+        onClick = { showTask(task, bottomSheetState, coroutineScope, context, navController) },
         enabled = task.status != TaskStatus.Completed
     ) {
         Box(modifier = Modifier.padding(12.dp)) {
@@ -159,7 +172,8 @@ fun showTask(
     task: Task,
     bottomSheetState: MutableState<BottomSheetState>,
     coroutineScope: CoroutineScope,
-    context: Context
+    context: Context,
+    navController: NavController
 ) {
     coroutineScope.launch {
         bottomSheetState.value = BottomSheetState(
@@ -169,7 +183,17 @@ fun showTask(
             points = task.points,
             deadline = task.deadline,
             frequency = task.frequency.convert().toString(context),
-            buttonText = task.frequency.convert().toString(context)
+            buttonText = MR.strings.button_next.desc().toString(context),
+            onClick = {
+                if (!(
+                    bottomSheetState.value.state.isAnimationRunning and
+                        (bottomSheetState.value.state.currentValue == ModalBottomSheetValue.Hidden)
+                    )
+                ) {
+                    coroutineScope.launch { bottomSheetState.value.state.hide() }
+                    navController.navigate(Screen.Confirmation.route)
+                }
+            }
         )
         bottomSheetState.value.state.show()
     }
@@ -200,6 +224,8 @@ fun HomeRoutePreview() {
                     ModalBottomSheetValue.Hidden
                 )
             )
-        )
+        ),
+        rememberNavController(),
+        rememberCoroutineScope()
     )
 }

@@ -1,4 +1,4 @@
-package com.veco.vecoapp.android.ui.confimation
+package com.veco.vecoapp.android.ui.screen.confimation
 
 import android.net.Uri
 import androidx.activity.compose.ManagedActivityResultLauncher

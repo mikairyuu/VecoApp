@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -16,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.ui.component.misc.VecoButton
 import com.veco.vecoapp.android.ui.component.unit.VecoInputUnit
+import com.veco.vecoapp.android.ui.theme.spacing
 
 @Composable
 fun AccountData() {
@@ -26,7 +28,9 @@ fun AccountData() {
         VecoInputUnit(title = MR.strings.account_email.resourceId, textFieldValue = emailField)
         Box(modifier = Modifier.fillMaxSize()) {
             VecoButton(
-                modifier = Modifier.align(Alignment.BottomCenter),
+                modifier = Modifier
+                    .padding(MaterialTheme.spacing.medium)
+                    .align(Alignment.BottomCenter),
                 text = stringResource(id = MR.strings.button_save.resourceId),
                 onClick = {}
             )

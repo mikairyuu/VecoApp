@@ -15,6 +15,7 @@ import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -60,6 +61,7 @@ fun VecoApp() {
                 skipHalfExpanded = true
             )
         val bottomSheetState = remember { mutableStateOf(BottomSheetState(modalBottomSheetState)) }
+        val globalCoroutineScope = rememberCoroutineScope()
         systemUiController.setSystemBarsColor(
             color = Color.White
         )
@@ -70,7 +72,8 @@ fun VecoApp() {
             VecoNavGraph(
                 navController = navController,
                 scaffoldState = scaffoldState,
-                bottomSheetState = bottomSheetState
+                bottomSheetState = bottomSheetState,
+                coroutineScope = globalCoroutineScope
             )
         }
         BottomSheetScaffold(bottomSheetState.value) {

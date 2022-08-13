@@ -36,19 +36,7 @@ fun BottomSheetScaffold(
         sheetState = bottomSheetState.state,
         sheetShape = RoundedCornerShape(8.dp),
         sheetContent = {
-            Box(
-                Modifier
-                    .padding(0.dp, 12.dp, 0.dp, 4.dp)
-                    .fillMaxWidth()
-            ) {
-                Box(
-                    modifier = Modifier
-                        .size(72.dp, 4.dp)
-                        .background(MaterialTheme.colors.tertiaryText, RoundedCornerShape(2.dp))
-                        .alpha(0.4f)
-                        .align(Alignment.Center)
-                )
-            }
+            SheetNotch()
             Column(
                 modifier = Modifier.padding(MaterialTheme.spacing.medium),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -82,9 +70,30 @@ fun BottomSheetScaffold(
                     isSmall = false
                 )
             }
-            VecoButton(text = bottomSheetState.buttonText, onClick = bottomSheetState.onClick)
+            VecoButton(
+                modifier = Modifier.padding(MaterialTheme.spacing.medium),
+                text = bottomSheetState.buttonText,
+                onClick = bottomSheetState.onClick
+            )
         }
     ) {
         content()
+    }
+}
+
+@Composable
+fun SheetNotch() {
+    Box(
+        Modifier
+            .padding(0.dp, 12.dp, 0.dp, 4.dp)
+            .fillMaxWidth()
+    ) {
+        Box(
+            modifier = Modifier
+                .size(72.dp, 4.dp)
+                .background(MaterialTheme.colors.tertiaryText, RoundedCornerShape(2.dp))
+                .alpha(0.4f)
+                .align(Alignment.Center)
+        )
     }
 }

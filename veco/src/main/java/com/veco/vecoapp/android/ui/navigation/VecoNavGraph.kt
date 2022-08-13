@@ -15,17 +15,23 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.R
+import com.veco.vecoapp.android.ui.BottomSheetState
 import com.veco.vecoapp.android.ui.ScaffoldState
-import com.veco.vecoapp.android.ui.confimation.ConfirmationRoute
 import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.screen.account.accountNavGraph
+import com.veco.vecoapp.android.ui.screen.confimation.ConfirmationRoute
+import com.veco.vecoapp.android.ui.screen.home.HomeRoute
+import kotlinx.coroutines.CoroutineScope
 
 sealed class Screen(val route: String, @StringRes val titleId: Int, @DrawableRes val icon: Int) {
     object Home : Screen("home", MR.strings.home_title.resourceId, R.drawable.ic_home_tasks)
     object Map : Screen("map", MR.strings.map_title.resourceId, R.drawable.ic_home_map)
     object Material :
         Screen("material", MR.strings.material_title.resourceId, R.drawable.ic_home_materials)
-    object Confirmation : Screen("confirmation", MR.strings.home_title.resourceId, R.drawable.ic_home_tasks)
+
+    object Confirmation :
+        Screen("confirmation", MR.strings.home_title.resourceId, R.drawable.ic_home_tasks)
+
     object Account :
         Screen("account", MR.strings.account_title.resourceId, R.drawable.ic_home_account)
 }
@@ -42,7 +48,9 @@ fun VecoNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     startDestination: String = Screen.Home.route,
-    scaffoldState: MutableState<ScaffoldState>
+    scaffoldState: MutableState<ScaffoldState>,
+    bottomSheetState: MutableState<BottomSheetState>,
+    coroutineScope: CoroutineScope
 ) {
     NavHost(
         navController = navController,
@@ -52,8 +60,16 @@ fun VecoNavGraph(
         composable(Screen.Home.route) {
             scaffoldState.value = ScaffoldState(
                 stringResource(Screen.Home.titleId),
+                true,
+                ToolbarState.Expandable
+            )
+            HomeRoute(bottomSheetState, navController, coroutineScope)
+        }
+        composable(Screen.Confirmation.route) {
+            scaffoldState.value = ScaffoldState(
+                "",
                 false,
-                ToolbarState.None
+                ToolbarState.Collapsed
             )
             ConfirmationRoute()
         }
