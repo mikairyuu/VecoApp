@@ -51,6 +51,7 @@ val accountOptions = listOf(
         icon = R.drawable.ic_account_lock,
         title = R.string.account_change_pwd,
         onClick = {
+            it.navigate(AccountScreen.ChangePassword.route)
         }
     ),
     AccountOption(

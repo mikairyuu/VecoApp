@@ -17,6 +17,8 @@ sealed class AccountScreen(val route: String, @StringRes val titleId: Int) {
     object PersonalData : AccountScreen("account_data", MR.strings.account_data.resourceId)
     object Notifications :
         AccountScreen("notifications", MR.strings.account_notifications.resourceId)
+    object ChangePassword :
+        AccountScreen("change_password", MR.strings.account_change_pwd.resourceId)
 }
 
 fun NavGraphBuilder.accountNavGraph(
@@ -50,6 +52,14 @@ fun NavGraphBuilder.accountNavGraph(
                 ToolbarState.Collapsed
             )
             AccountNotifications()
+        }
+        composable(AccountScreen.ChangePassword.route) {
+            scaffoldState.value = ScaffoldState(
+                stringResource(AccountScreen.ChangePassword.titleId),
+                false,
+                ToolbarState.Collapsed
+            )
+            AccountPassword()
         }
     }
 }

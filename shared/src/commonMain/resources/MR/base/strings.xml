@@ -22,6 +22,8 @@
     <string name="task_info_2"> (допускается \n максимум 5 фотографий)</string>
     <string name="button_send">Отправить</string>
     <string name="button_save">Далее</string>
+    <string name="button_continue">Продолжить</string>
+    <string name="button_save_changes">Сохранить изменения</string>
     <string name="account_data">Личные данные</string>
     <string name="account_change_pwd">Смена пароля</string>
     <string name="account_notifications">Уведомления</string>
@@ -31,6 +33,13 @@
     <string name="account_email">Email</string>
     <string name="notification_title_1">Зачисление баллов</string>
     <string name="notification_title_2">Истечение срока задания</string>
+    <string name="notification_title_3">Актуальные материалы</string>
+    <string name="account_pwd_title_1">Введите текущий пароль</string>
+    <string name="account_pwd_desc_1">Чтобы сбросить пароль, вам необходимо ввести данные ниже</string>
+    <string name="account_pwd_title_2">Введите новый пароль</string>
+    <string name="account_pwd_desc_2">Чтобы обновить пароль, вам необходимо ввести данные ниже</string>
+    <string name="string_password">Пароль</string>
+    <string name="string_password_conf">Подтверждение пароля</string>
     <string name="notification_title_3">Актуальные материалы</string>
     <string name="exit">Выйти</string>
 </resources>
