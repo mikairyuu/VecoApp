@@ -57,6 +57,7 @@ val accountOptions = listOf(
         icon = R.drawable.ic_account_notification,
         title = R.string.account_notifications,
         onClick = {
+            it.navigate(AccountScreen.Notifications.route)
         }
     ),
     AccountOption(

@@ -2,6 +2,8 @@ package com.veco.vecoapp.android.ui.theme
 
 import androidx.compose.material.Colors
 import androidx.compose.material.lightColors
+import androidx.compose.material3.SwitchColors
+import androidx.compose.material3.SwitchDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import com.veco.vecoapp.MR
@@ -44,3 +46,12 @@ val Colors.orange: Color
 val Colors.red: Color
     @Composable
     get() = Color(MR.colors.red.color.colorInt())
+
+val Colors.switchColors: SwitchColors
+    @Composable
+    get() = SwitchDefaults.colors(
+        uncheckedThumbColor = tertiaryText,
+        uncheckedTrackColor = secondaryBackground,
+        uncheckedBorderColor = tertiaryText,
+        checkedTrackColor = primary
+    )

@@ -29,5 +29,8 @@
     <string name="account_policy">Политика конфиденциальности</string>
     <string name="account_name">Ваше имя</string>
     <string name="account_email">Email</string>
+    <string name="notification_title_1">Зачисление баллов</string>
+    <string name="notification_title_2">Истечение срока задания</string>
+    <string name="notification_title_3">Актуальные материалы</string>
     <string name="exit">Выйти</string>
 </resources>

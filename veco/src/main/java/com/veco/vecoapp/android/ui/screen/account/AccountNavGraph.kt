@@ -15,6 +15,8 @@ import com.veco.vecoapp.android.ui.navigation.Screen
 sealed class AccountScreen(val route: String, @StringRes val titleId: Int) {
     object Home : AccountScreen("account_home", MR.strings.account_title.resourceId)
     object PersonalData : AccountScreen("account_data", MR.strings.account_data.resourceId)
+    object Notifications :
+        AccountScreen("notifications", MR.strings.account_notifications.resourceId)
 }
 
 fun NavGraphBuilder.accountNavGraph(
@@ -40,6 +42,14 @@ fun NavGraphBuilder.accountNavGraph(
                 ToolbarState.Collapsed
             )
             AccountData()
+        }
+        composable(AccountScreen.Notifications.route) {
+            scaffoldState.value = ScaffoldState(
+                stringResource(AccountScreen.Notifications.titleId),
+                false,
+                ToolbarState.Collapsed
+            )
+            AccountNotifications()
         }
     }
 }
