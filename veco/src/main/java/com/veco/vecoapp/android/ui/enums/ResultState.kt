@@ -5,5 +5,5 @@ enum class ResultState {
     SUCCESS,
     ERROR,
     CANCELED,
-    None
+    NONE
 }

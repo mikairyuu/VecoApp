@@ -18,7 +18,7 @@
     <string name="task_type">Тип задания:</string>
     <string name="button_next">Далее</string>
     <string name="task_confirm">Подтвердите выполнение задания</string>
-    <string name="task_info_1"><string name="task_info_1">Для заданий данного типа вам необходимо отправить фотоподтверждение </string></string>
+    <string name="task_info_1">Для заданий данного типа вам необходимо отправить фотоподтверждение </string>
     <string name="task_info_2"> (допускается максимум 5 фотографий)</string>
     <string name="button_send">Отправить</string>
     <string name="button_save">Далее</string>

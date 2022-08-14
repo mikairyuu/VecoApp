@@ -118,7 +118,7 @@ fun ImagePicker() {
     }
     repeat(5) {
         imageUri.add(null)
-        result.add(ResultState.None)
+        result.add(ResultState.NONE)
     }
 
     var imageCount = remember {
@@ -214,7 +214,7 @@ fun PhotoGrid(
                         ResultState.CANCELED -> {
                             photos.removeAt(i)
                             imageCount.value--
-                            result[i] = ResultState.None
+                            result[i] = ResultState.NONE
                         }
                         else -> {}
                     }
