@@ -13,6 +13,8 @@ complexity:
         functionThreshold: 10
     LongMethod:
         threshold: 80
+    NestedBlockDepth:
+        threshold: 5
 style:
     excludes: ['**/*.kts']
     MagicNumber:
