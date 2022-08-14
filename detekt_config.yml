@@ -11,6 +11,8 @@ complexity:
     LongParameterList:
         ignoreDefaultParameters: true
         functionThreshold: 10
+    LongMethod:
+        threshold: 80
 style:
     excludes: ['**/*.kts']
     MagicNumber:
