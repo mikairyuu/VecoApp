@@ -20,7 +20,6 @@ import com.veco.vecoapp.android.R
 import com.veco.vecoapp.android.ui.BottomSheetState
 import com.veco.vecoapp.android.ui.ScaffoldState
 import com.veco.vecoapp.android.ui.enums.ToolbarState
-import com.veco.vecoapp.android.ui.screen.account.accountNavGraph
 import com.veco.vecoapp.android.ui.screen.confimation.ConfirmationRoute
 import com.veco.vecoapp.android.ui.screen.home.HomeRoute
 import com.veco.vecoapp.android.ui.screen.materials.MaterialDetails

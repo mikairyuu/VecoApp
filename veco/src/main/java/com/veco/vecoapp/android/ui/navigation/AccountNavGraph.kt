@@ -1,4 +1,4 @@
-package com.veco.vecoapp.android.ui.screen.account
+package com.veco.vecoapp.android.ui.navigation
 
 import androidx.annotation.StringRes
 import androidx.compose.runtime.MutableState
@@ -10,7 +10,10 @@ import androidx.navigation.navigation
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.ui.ScaffoldState
 import com.veco.vecoapp.android.ui.enums.ToolbarState
-import com.veco.vecoapp.android.ui.navigation.Screen
+import com.veco.vecoapp.android.ui.screen.account.AccountData
+import com.veco.vecoapp.android.ui.screen.account.AccountHome
+import com.veco.vecoapp.android.ui.screen.account.AccountNotifications
+import com.veco.vecoapp.android.ui.screen.account.AccountPassword
 
 sealed class AccountScreen(val route: String, @StringRes val titleId: Int) {
     object Home : AccountScreen("account_home", MR.strings.account_title.resourceId)
