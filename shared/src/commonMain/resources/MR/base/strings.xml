@@ -46,4 +46,6 @@
     <string name="string_password_conf">Подтверждение пароля</string>
     <string name="notification_title_3">Актуальные материалы</string>
     <string name="exit">Выйти</string>
+    <string name="task_sent_1">Отчет о задании отправлен на проверку</string>
+    <string name="task_sent_2">Мы как можно скорее проверим ваш отчет и начислим баллы за задание</string>
 </resources>
