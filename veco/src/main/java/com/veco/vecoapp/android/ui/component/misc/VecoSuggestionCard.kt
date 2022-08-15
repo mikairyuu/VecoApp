@@ -24,11 +24,7 @@ fun VecoSuggestionCard(
     modifier: Modifier = Modifier,
     content: @Composable (scope: RowScope) -> Unit
 ) {
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        backgroundColor = MaterialTheme.colors.secondaryBackground,
-        shape = RoundedCornerShape(MaterialTheme.spacing.small)
-    ) {
+    SuggestionCardBase(modifier = modifier) {
         Row(
             modifier = Modifier.padding(12.dp),
             horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -42,5 +38,19 @@ fun VecoSuggestionCard(
                 contentDescription = null
             )
         }
+    }
+}
+
+@Composable
+fun SuggestionCardBase(
+    modifier: Modifier = Modifier,
+    content: @Composable () -> Unit
+) {
+    Card(
+        modifier = modifier.fillMaxWidth(),
+        backgroundColor = MaterialTheme.colors.secondaryBackground,
+        shape = RoundedCornerShape(MaterialTheme.spacing.small)
+    ) {
+        content()
     }
 }

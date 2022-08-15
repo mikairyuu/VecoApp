@@ -8,12 +8,15 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.veco.vecoapp.MR
+import com.veco.vecoapp.android.ui.BottomSheetState
 import com.veco.vecoapp.android.ui.ScaffoldState
 import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.screen.account.AccountData
 import com.veco.vecoapp.android.ui.screen.account.AccountHome
 import com.veco.vecoapp.android.ui.screen.account.AccountNotifications
 import com.veco.vecoapp.android.ui.screen.account.AccountPassword
+import com.veco.vecoapp.android.ui.screen.account.AccountPrizes
+import kotlinx.coroutines.CoroutineScope
 
 sealed class AccountScreen(val route: String, @StringRes val titleId: Int) {
     object Home : AccountScreen("account_home", MR.strings.account_title.resourceId)
@@ -22,11 +25,15 @@ sealed class AccountScreen(val route: String, @StringRes val titleId: Int) {
         AccountScreen("notifications", MR.strings.account_notifications.resourceId)
     object ChangePassword :
         AccountScreen("change_password", MR.strings.account_change_pwd.resourceId)
+    object Prizes :
+        AccountScreen("account_prizes", MR.strings.account_prizes.resourceId)
 }
 
 fun NavGraphBuilder.accountNavGraph(
     navController: NavController,
-    scaffoldState: MutableState<ScaffoldState>
+    scaffoldState: MutableState<ScaffoldState>,
+    bottomSheetState: MutableState<BottomSheetState>,
+    coroutineScope: CoroutineScope
 ) {
     navigation(
         startDestination = AccountScreen.Home.route,
@@ -63,6 +70,14 @@ fun NavGraphBuilder.accountNavGraph(
                 ToolbarState.Collapsed
             )
             AccountPassword()
+        }
+        composable(AccountScreen.Prizes.route) {
+            scaffoldState.value = ScaffoldState(
+                stringResource(AccountScreen.Prizes.titleId),
+                false,
+                ToolbarState.Collapsed
+            )
+            AccountPrizes(bottomSheetState, coroutineScope)
         }
     }
 }

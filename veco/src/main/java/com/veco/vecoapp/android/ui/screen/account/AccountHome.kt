@@ -87,7 +87,7 @@ val accountOptions = listOf(
 @Composable
 fun AccountHome(navController: NavController? = null) {
     Column(modifier = Modifier.padding(MaterialTheme.spacing.medium, MaterialTheme.spacing.small)) {
-        VecoSuggestionCard {
+        VecoSuggestionCard(modifier = Modifier.clickable { navController?.navigate(AccountScreen.Prizes.route) }) {
             Image(
                 modifier = Modifier
                     .size(60.dp)

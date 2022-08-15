@@ -46,6 +46,7 @@ data class BottomSheetState(
     val deadline: String = "",
     val frequency: String = "",
     val buttonText: String = "",
+    val color: Color? = null, // Change to bitmap later
     val onClick: () -> Unit = {}
 )
 

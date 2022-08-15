@@ -24,11 +24,15 @@
     <string name="button_save">Далее</string>
     <string name="button_continue">Продолжить</string>
     <string name="button_save_changes">Сохранить изменения</string>
+    <string name="button_acquire">Получить</string>
     <string name="account_data">Личные данные</string>
     <string name="account_change_pwd">Смена пароля</string>
     <string name="account_notifications">Уведомления</string>
     <string name="account_feedback">Обратная связь</string>
     <string name="account_policy">Политика конфиденциальности</string>
+    <string name="account_prizes">Каталог призов</string>
+    <string name="account_point_count">У вас %d баллов</string>
+    <string name="prize_cost">Стоимость</string>
     <string name="account_name">Ваше имя</string>
     <string name="account_email">Email</string>
     <string name="notification_title_1">Зачисление баллов</string>

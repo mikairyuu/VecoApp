@@ -105,7 +105,9 @@ fun VecoNavGraph(
 
         accountNavGraph(
             navController,
-            scaffoldState
+            scaffoldState,
+            bottomSheetState,
+            coroutineScope
         )
     }
 }

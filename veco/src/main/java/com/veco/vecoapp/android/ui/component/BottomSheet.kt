@@ -6,6 +6,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -23,6 +24,7 @@ import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.ui.BottomSheetState
 import com.veco.vecoapp.android.ui.component.misc.DoubleInfoUnit
 import com.veco.vecoapp.android.ui.component.misc.VecoButton
+import com.veco.vecoapp.android.ui.theme.regBody1
 import com.veco.vecoapp.android.ui.theme.spacing
 import com.veco.vecoapp.android.ui.theme.tertiaryText
 
@@ -32,11 +34,19 @@ fun BottomSheetScaffold(
     bottomSheetState: BottomSheetState,
     content: @Composable () -> Unit
 ) {
+    val photoMode = bottomSheetState.color != null
     ModalBottomSheetLayout(
         sheetState = bottomSheetState.state,
         sheetShape = RoundedCornerShape(8.dp),
         sheetContent = {
-            SheetNotch()
+            Box(
+                modifier = Modifier
+                    .height(if (photoMode) 240.dp else 20.dp)
+                    .background(color = bottomSheetState.color ?: MaterialTheme.colors.background)
+                    .fillMaxWidth()
+            ) {
+                SheetNotch()
+            }
             Column(
                 modifier = Modifier.padding(MaterialTheme.spacing.medium),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
@@ -47,7 +57,7 @@ fun BottomSheetScaffold(
                 )
                 Text(
                     text = bottomSheetState.desc,
-                    style = MaterialTheme.typography.body1
+                    style = MaterialTheme.typography.regBody1
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)) {
                     DoubleInfoUnit(
@@ -57,18 +67,22 @@ fun BottomSheetScaffold(
                         needCoin = true,
                         isSmall = false
                     )
+                    if (bottomSheetState.deadline != "") {
+                        DoubleInfoUnit(
+                            modifier = Modifier.weight(1f),
+                            first = stringResource(MR.strings.task_deadline.resourceId),
+                            second = bottomSheetState.deadline,
+                            isSmall = false
+                        )
+                    }
+                }
+                if (bottomSheetState.frequency != "") {
                     DoubleInfoUnit(
-                        modifier = Modifier.weight(1f),
-                        first = stringResource(MR.strings.task_deadline.resourceId),
-                        second = bottomSheetState.deadline,
+                        first = stringResource(MR.strings.task_type.resourceId),
+                        second = bottomSheetState.frequency,
                         isSmall = false
                     )
                 }
-                DoubleInfoUnit(
-                    first = stringResource(MR.strings.task_type.resourceId),
-                    second = bottomSheetState.frequency,
-                    isSmall = false
-                )
             }
             VecoButton(
                 modifier = Modifier.padding(MaterialTheme.spacing.medium),
