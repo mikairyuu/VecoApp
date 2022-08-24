@@ -27,3 +27,5 @@ style:
 formatting:
     FinalNewline:
         active: false
+    ImportOrdering:
+        active: false
