@@ -39,7 +39,7 @@ android {
 dependencies {
     implementation(project(":shared"))
     implementation("com.google.android.material:material:1.6.1")
-    implementation("androidx.appcompat:appcompat:1.4.2")
+    implementation("androidx.appcompat:appcompat:1.5.0")
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
 
     // Compose
@@ -55,7 +55,8 @@ dependencies {
 
     implementation("me.onebone:toolbar-compose:2.3.4")
     implementation("com.google.accompanist:accompanist-systemuicontroller:0.25.0")
-    implementation("io.coil-kt:coil-compose:2.1.0")
+    implementation("io.coil-kt:coil-compose:2.2.0")
     implementation("androidx.compose.material3:material3:1.0.0-alpha16")
     implementation("androidx.compose.material3:material3-window-size-class:1.0.0-alpha16")
+    implementation("com.google.accompanist:accompanist-placeholder-material:0.25.1")
 }

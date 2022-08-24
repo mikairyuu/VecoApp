@@ -81,10 +81,12 @@ fun VecoApp() {
             Scaffold(
                 // If topbar is expandable, we handle it in expandable scaffold instead
                 topBar = {
-                    if (scaffoldState.value.topBarExpandable == ToolbarState.Collapsed) VecoTopBar(
-                        navController = navController,
-                        title = scaffoldState.value.screenTitle
-                    )
+                    if (scaffoldState.value.topBarExpandable == ToolbarState.Collapsed) {
+                        VecoTopBar(
+                            navController = navController,
+                            title = scaffoldState.value.screenTitle
+                        )
+                    }
                 },
                 bottomBar = {
                     AnimatedVisibility(
@@ -103,7 +105,9 @@ fun VecoApp() {
                             scaffoldState.value,
                             content = navGraph
                         )
-                    } else navGraph()
+                    } else {
+                        navGraph()
+                    }
                 }
             )
         }

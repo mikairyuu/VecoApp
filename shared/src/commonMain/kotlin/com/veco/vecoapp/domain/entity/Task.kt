@@ -1,7 +1,7 @@
-package com.veco.vecoapp.dto
+package com.veco.vecoapp.domain.entity
 
-import com.veco.vecoapp.enums.TaskFrequency
-import com.veco.vecoapp.enums.TaskStatus
+import com.veco.vecoapp.domain.entity.enums.TaskFrequency
+import com.veco.vecoapp.domain.entity.enums.TaskStatus
 
 data class Task(
     val title: String,

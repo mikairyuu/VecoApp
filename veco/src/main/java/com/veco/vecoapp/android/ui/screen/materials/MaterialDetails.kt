@@ -60,8 +60,11 @@ fun MaterialDetails(id: Int) {
                     else -> {
                         Text(
                             text = it.data as String,
-                            style = if (it.type == MaterialElemType.B1R) MaterialTheme.typography.regBody1
-                            else MaterialTheme.typography.body1
+                            style = if (it.type == MaterialElemType.B1R) {
+                                MaterialTheme.typography.regBody1
+                            } else {
+                                MaterialTheme.typography.body1
+                            }
                         )
                     }
                 }

@@ -6,6 +6,8 @@ plugins {
 }
 
 version = "1.0"
+val mvvmVersion = "0.13.1"
+val ktorVersion = "2.1.0"
 
 kotlin {
     android()
@@ -24,7 +26,16 @@ kotlin {
     }
 
     sourceSets {
-        val commonMain by getting
+        val commonMain by getting {
+            dependencies {
+                api("org.kodein.di:kodein-di:7.14.0")
+                api("dev.icerock.moko:mvvm-core:$mvvmVersion")
+                api("dev.icerock.moko:mvvm-flow:$mvvmVersion")
+                implementation("io.ktor:ktor-client-core:$ktorVersion")
+                implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
+                implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+            }
+        }
         val commonTest by getting {
             dependencies {
                 implementation(kotlin("test"))
@@ -34,11 +45,22 @@ kotlin {
         val androidMain by getting {
             dependencies {
                 api("dev.icerock.moko:resources-compose:0.20.1")
+                api("dev.icerock.moko:mvvm-flow-compose:$mvvmVersion")
+                implementation("io.ktor:ktor-client-android:$ktorVersion")
             }
         }
         val androidTest by getting
         val iosX64Main by getting
-        val iosArm64Main by getting
+        val iosArm64Main by getting {
+            dependencies {
+                implementation("io.ktor:ktor-client-ios:$ktorVersion")
+                implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.0-native-mt") {
+                    version {
+                        strictly("1.6.0-native-mt")
+                    }
+                }
+            }
+        }
         val iosSimulatorArm64Main by getting
         val iosMain by creating {
             dependsOn(commonMain)

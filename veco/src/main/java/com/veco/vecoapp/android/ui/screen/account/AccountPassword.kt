@@ -43,13 +43,17 @@ fun AccountPassword() {
             Text(
                 text = if (step == PasswordChangeStep.OLD_PASSWORD) {
                     stringResource(MR.strings.account_pwd_title_1.resourceId)
-                } else stringResource(MR.strings.account_pwd_title_2.resourceId),
+                } else {
+                    stringResource(MR.strings.account_pwd_title_2.resourceId)
+                },
                 style = MaterialTheme.typography.h1
             )
             Text(
                 text = if (step == PasswordChangeStep.OLD_PASSWORD) {
                     stringResource(MR.strings.account_pwd_desc_1.resourceId)
-                } else stringResource(MR.strings.account_pwd_desc_2.resourceId),
+                } else {
+                    stringResource(MR.strings.account_pwd_desc_2.resourceId)
+                },
                 style = MaterialTheme.typography.regBody1
             )
         }
@@ -70,8 +74,11 @@ fun AccountPassword() {
                     .padding(MaterialTheme.spacing.medium)
                     .align(Alignment.BottomCenter),
                 text = stringResource(
-                    id = if (step == PasswordChangeStep.OLD_PASSWORD) MR.strings.button_continue.resourceId
-                    else MR.strings.button_save.resourceId
+                    id = if (step == PasswordChangeStep.OLD_PASSWORD) {
+                        MR.strings.button_continue.resourceId
+                    } else {
+                        MR.strings.button_save.resourceId
+                    }
                 ),
                 onClick = {
                     if (step == PasswordChangeStep.OLD_PASSWORD) {

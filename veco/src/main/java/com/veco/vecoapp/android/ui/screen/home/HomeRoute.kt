@@ -23,6 +23,8 @@ import androidx.compose.material.Text
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -33,6 +35,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.veco.vecoapp.MR
@@ -47,36 +50,54 @@ import com.veco.vecoapp.android.ui.theme.regBody3
 import com.veco.vecoapp.android.ui.theme.secondaryText
 import com.veco.vecoapp.android.ui.theme.spacing
 import com.veco.vecoapp.android.ui.theme.violet
-import com.veco.vecoapp.dto.Task
-import com.veco.vecoapp.enums.TaskFrequency
-import com.veco.vecoapp.enums.TaskStatus
-import com.veco.vecoapp.enums.convert
+import com.veco.vecoapp.domain.entity.Task
+import com.veco.vecoapp.domain.entity.enums.TaskFrequency
+import com.veco.vecoapp.domain.entity.enums.TaskStatus
+import com.veco.vecoapp.domain.entity.enums.convert
+import com.veco.vecoapp.presentation.UIState
+import com.veco.vecoapp.presentation.home.HomeViewModel
 import dev.icerock.moko.resources.compose.localized
 import dev.icerock.moko.resources.desc.desc
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
-import kotlin.random.Random
 
 @Composable
 fun HomeRoute(
     bottomSheetState: MutableState<BottomSheetState>,
     navController: NavController,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
+    viewModel: HomeViewModel = viewModel()
 ) {
-    val selectedTaskStatus = remember { mutableStateOf(TaskStatus.Uncompleted) }
-    Column {
-        LazyColumn {
-            item {
-                SectionSelector(selectedTaskStatus)
+    val selectedTaskSection = remember { mutableStateOf(TaskStatus.Uncompleted) }
+    val tasks by viewModel.taskListState.collectAsState()
+    LazyColumn {
+        when (tasks) {
+            is UIState.Loading -> {
+                item {
+                    Text(text = "Loading...") // TEMP
+                }
             }
-            items(10) {
-                TaskCard(
-                    getTestTask(selectedTaskStatus.value),
-                    bottomSheetState,
-                    coroutineScope,
-                    navController
-                )
+            is UIState.Success -> {
+                item {
+                    SectionSelector(selectedTaskSection)
+                }
+                items((tasks as UIState.Success<List<Task>>).data) {
+                    if (it.status == selectedTaskSection.value) {
+                        TaskCard(
+                            it,
+                            bottomSheetState,
+                            coroutineScope,
+                            navController
+                        )
+                    }
+                }
             }
+            is UIState.Error -> {
+                item {
+                    Text(text = "Error") // TEMP
+                }
+            }
+            is UIState.Idle -> {}
         }
     }
 }
@@ -97,7 +118,9 @@ fun SectionSelector(selectedTaskStatus: MutableState<TaskStatus>) {
                     .clickable { selectedTaskStatus.value = item }
                     .padding(MaterialTheme.spacing.medium, 0.dp),
                 text = item.convert().localized(),
-                color = if (item == selectedTaskStatus.value) MaterialTheme.colors.onBackground else {
+                color = if (item == selectedTaskStatus.value) {
+                    MaterialTheme.colors.onBackground
+                } else {
                     MaterialTheme.colors.lightGray
                 },
                 style = MaterialTheme.typography.h2
@@ -197,18 +220,6 @@ fun showTask(
         )
         bottomSheetState.value.state.show()
     }
-}
-
-fun getTestTask(status: TaskStatus): Task {
-    return Task(
-        "Сходить в магазин с собственной сумкой",
-        "Огромное количество людей летом проводят свой отдых в парке, часто забывая про" +
-            " санитарные правила, станьте волонтером и очистите свой парк от мусора",
-        "Сегодня, 19:00",
-        TaskFrequency.values().random(),
-        Random.nextInt(200, 2000),
-        status
-    )
 }
 
 @OptIn(ExperimentalMaterialApi::class)

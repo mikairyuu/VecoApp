@@ -1,4 +1,4 @@
-package com.veco.vecoapp.enums
+package com.veco.vecoapp.domain.entity.enums
 
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.getStr
