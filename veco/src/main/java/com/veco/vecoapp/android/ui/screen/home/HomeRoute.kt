@@ -50,6 +50,7 @@ import com.veco.vecoapp.android.ui.theme.regBody3
 import com.veco.vecoapp.android.ui.theme.secondaryText
 import com.veco.vecoapp.android.ui.theme.spacing
 import com.veco.vecoapp.android.ui.theme.violet
+import com.veco.vecoapp.android.ui.utils.shimmer
 import com.veco.vecoapp.domain.entity.Task
 import com.veco.vecoapp.domain.entity.enums.TaskFrequency
 import com.veco.vecoapp.domain.entity.enums.TaskStatus
@@ -71,16 +72,24 @@ fun HomeRoute(
     val selectedTaskSection = remember { mutableStateOf(TaskStatus.Uncompleted) }
     val tasks by viewModel.taskListState.collectAsState()
     LazyColumn {
+        if (tasks is UIState.Loading || tasks is UIState.Success) {
+            item {
+                SectionSelector(selectedTaskSection)
+            }
+        }
         when (tasks) {
             is UIState.Loading -> {
-                item {
-                    Text(text = "Loading...") // TEMP
+                items(3) {
+                    TaskCard(
+                        viewModel.placeholderTask,
+                        bottomSheetState,
+                        coroutineScope,
+                        navController,
+                        true
+                    )
                 }
             }
             is UIState.Success -> {
-                item {
-                    SectionSelector(selectedTaskSection)
-                }
                 items((tasks as UIState.Success<List<Task>>).data) {
                     if (it.status == selectedTaskSection.value) {
                         TaskCard(
@@ -134,7 +143,8 @@ fun TaskCard(
     task: Task,
     bottomSheetState: MutableState<BottomSheetState>,
     coroutineScope: CoroutineScope,
-    navController: NavController
+    navController: NavController,
+    loading: Boolean = false
 ) {
     val context = LocalContext.current
     Card(
@@ -151,7 +161,7 @@ fun TaskCard(
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Box(modifier = Modifier.fillMaxWidth()) {
                     Text(
-                        modifier = Modifier.align(Alignment.CenterStart),
+                        modifier = Modifier.align(Alignment.CenterStart).shimmer(loading),
                         text = task.frequency.convert().localized(),
                         color = when (task.frequency) {
                             TaskFrequency.Daily -> MaterialTheme.colors.violet
@@ -170,17 +180,18 @@ fun TaskCard(
                     }
                 }
                 Text(
+                    modifier = Modifier.shimmer(loading),
                     text = task.title,
                     style = MaterialTheme.typography.body1
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)) {
                     DoubleInfoUnit(
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(1f).shimmer(loading),
                         first = stringResource(MR.strings.task_deadline.resourceId),
                         second = task.deadline
                     )
                     DoubleInfoUnit(
-                        modifier = Modifier.weight(1f),
+                        modifier = Modifier.weight(1f).shimmer(loading),
                         first = stringResource(MR.strings.task_points.resourceId),
                         second = task.points.toString(),
                         needCoin = true
