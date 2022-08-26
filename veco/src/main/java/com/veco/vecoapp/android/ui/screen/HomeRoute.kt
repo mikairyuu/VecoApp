@@ -1,8 +1,7 @@
 @file:OptIn(ExperimentalMaterialApi::class)
 
-package com.veco.vecoapp.android.ui.screen.home
+package com.veco.vecoapp.android.ui.screen
 
-import android.annotation.SuppressLint
 import android.content.Context
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -20,27 +19,26 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
-import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
-import androidx.navigation.compose.rememberNavController
+import androidx.navigation.NavHostController
 import com.veco.vecoapp.MR
-import com.veco.vecoapp.android.ui.BottomSheetState
+import com.veco.vecoapp.android.ui.SheetSettings
+import com.veco.vecoapp.android.ui.component.MainScaffold
 import com.veco.vecoapp.android.ui.component.misc.DoubleInfoUnit
+import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.navigation.Screen
 import com.veco.vecoapp.android.ui.theme.body3
 import com.veco.vecoapp.android.ui.theme.lightGray
@@ -64,10 +62,28 @@ import kotlinx.coroutines.launch
 
 @Composable
 fun HomeRoute(
-    bottomSheetState: MutableState<BottomSheetState>,
-    navController: NavController,
+    navController: NavHostController,
     coroutineScope: CoroutineScope,
+    sheetSettings: MutableState<SheetSettings>,
     viewModel: HomeViewModel = viewModel()
+) {
+    MainScaffold(
+        stringResource(Screen.Home.titleId),
+        true,
+        ToolbarState.Expandable,
+        navController = navController,
+        bottomSheetState = sheetSettings.value
+    ) {
+        HomeRouteContent(sheetSettings, navController, viewModel, coroutineScope)
+    }
+}
+
+@Composable
+fun HomeRouteContent(
+    bottomSheetState: MutableState<SheetSettings>,
+    navController: NavController,
+    viewModel: HomeViewModel,
+    coroutineScope: CoroutineScope
 ) {
     val selectedTaskSection = remember { mutableStateOf(TaskStatus.Uncompleted) }
     val tasks by viewModel.taskListState.collectAsState()
@@ -141,7 +157,7 @@ fun SectionSelector(selectedTaskStatus: MutableState<TaskStatus>) {
 @Composable
 fun TaskCard(
     task: Task,
-    bottomSheetState: MutableState<BottomSheetState>,
+    bottomSheetState: MutableState<SheetSettings>,
     coroutineScope: CoroutineScope,
     navController: NavController,
     loading: Boolean = false
@@ -154,14 +170,26 @@ fun TaskCard(
             .padding(MaterialTheme.spacing.medium, 0.dp, MaterialTheme.spacing.medium, 12.dp),
         shape = RoundedCornerShape(8.dp),
         elevation = 8.dp,
-        onClick = { showTask(task, bottomSheetState, coroutineScope, context, navController) },
+        onClick = {
+            if (!loading) {
+                showTask(
+                    task,
+                    bottomSheetState,
+                    coroutineScope,
+                    context,
+                    navController
+                )
+            }
+        },
         enabled = task.status != TaskStatus.Completed
     ) {
         Box(modifier = Modifier.padding(12.dp)) {
             Column(verticalArrangement = Arrangement.spacedBy(6.dp)) {
                 Box(modifier = Modifier.fillMaxWidth()) {
                     Text(
-                        modifier = Modifier.align(Alignment.CenterStart).shimmer(loading),
+                        modifier = Modifier
+                            .align(Alignment.CenterStart)
+                            .shimmer(loading),
                         text = task.frequency.convert().localized(),
                         color = when (task.frequency) {
                             TaskFrequency.Daily -> MaterialTheme.colors.violet
@@ -186,12 +214,16 @@ fun TaskCard(
                 )
                 Row(horizontalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.small)) {
                     DoubleInfoUnit(
-                        modifier = Modifier.weight(1f).shimmer(loading),
+                        modifier = Modifier
+                            .weight(1f)
+                            .shimmer(loading),
                         first = stringResource(MR.strings.task_deadline.resourceId),
                         second = task.deadline
                     )
                     DoubleInfoUnit(
-                        modifier = Modifier.weight(1f).shimmer(loading),
+                        modifier = Modifier
+                            .weight(1f)
+                            .shimmer(loading),
                         first = stringResource(MR.strings.task_points.resourceId),
                         second = task.points.toString(),
                         needCoin = true
@@ -204,14 +236,14 @@ fun TaskCard(
 
 fun showTask(
     task: Task,
-    bottomSheetState: MutableState<BottomSheetState>,
+    sheetSettings: MutableState<SheetSettings>,
     coroutineScope: CoroutineScope,
     context: Context,
     navController: NavController
 ) {
     coroutineScope.launch {
-        bottomSheetState.value = BottomSheetState(
-            state = bottomSheetState.value.state,
+        sheetSettings.value = SheetSettings(
+            state = sheetSettings.value.state,
             title = task.title,
             desc = task.desc,
             points = task.points,
@@ -220,34 +252,15 @@ fun showTask(
             buttonText = MR.strings.button_next.desc().toString(context),
             onClick = {
                 if (!(
-                    bottomSheetState.value.state.isAnimationRunning and
-                        (bottomSheetState.value.state.currentValue == ModalBottomSheetValue.Hidden)
+                    sheetSettings.value.state.isAnimationRunning and
+                        (sheetSettings.value.state.currentValue == ModalBottomSheetValue.Hidden)
                     )
                 ) {
-                    coroutineScope.launch { bottomSheetState.value.state.hide() }
+                    coroutineScope.launch { sheetSettings.value.state.hide() }
                     navController.navigate(Screen.Confirmation.route)
                 }
             }
         )
-        bottomSheetState.value.state.show()
+        sheetSettings.value.state.show()
     }
-}
-
-@OptIn(ExperimentalMaterialApi::class)
-@SuppressLint("UnrememberedMutableState")
-@Preview
-@Composable
-fun HomeRoutePreview() {
-    HomeRoute(
-        mutableStateOf(
-            BottomSheetState(
-                rememberModalBottomSheetState(
-                    initialValue =
-                    ModalBottomSheetValue.Hidden
-                )
-            )
-        ),
-        rememberNavController(),
-        rememberCoroutineScope()
-    )
 }

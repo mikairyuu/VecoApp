@@ -7,7 +7,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.unit.dp
-import com.veco.vecoapp.android.ui.ScaffoldState
 import com.veco.vecoapp.android.ui.component.topbar.VecoExpandableTopBar
 import com.veco.vecoapp.android.ui.component.topbar.topAppBarShadow
 import me.onebone.toolbar.CollapsingToolbarScaffold
@@ -17,7 +16,7 @@ import me.onebone.toolbar.rememberCollapsingToolbarScaffoldState
 @Composable
 fun ExpandableToolbarScaffold(
     modifier: Modifier = Modifier,
-    scaffoldState: ScaffoldState,
+    screenTitle: String,
     content: @Composable () -> Unit
 ) {
     val toolbarScaffoldState = rememberCollapsingToolbarScaffoldState()
@@ -29,7 +28,7 @@ fun ExpandableToolbarScaffold(
             VecoExpandableTopBar(
                 this,
                 toolbarScaffoldState,
-                scaffoldState.screenTitle
+                screenTitle
             )
         },
         scrollStrategy = ScrollStrategy.ExitUntilCollapsed,

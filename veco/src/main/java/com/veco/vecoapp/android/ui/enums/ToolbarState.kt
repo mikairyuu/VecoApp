@@ -1,7 +1,8 @@
 package com.veco.vecoapp.android.ui.enums
 
-enum class ToolbarState {
-    Expandable,
-    Collapsed,
-    None
+sealed class ToolbarState {
+    object Expandable : ToolbarState()
+    object Collapsed : ToolbarState()
+    class Button(val callback: () -> Unit) : ToolbarState()
+    object None : ToolbarState()
 }

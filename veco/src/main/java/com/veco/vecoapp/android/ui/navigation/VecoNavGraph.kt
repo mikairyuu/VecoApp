@@ -8,7 +8,6 @@ import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -17,13 +16,12 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.R
-import com.veco.vecoapp.android.ui.BottomSheetState
-import com.veco.vecoapp.android.ui.ScaffoldState
-import com.veco.vecoapp.android.ui.enums.ToolbarState
-import com.veco.vecoapp.android.ui.screen.confimation.ConfirmationRoute
-import com.veco.vecoapp.android.ui.screen.home.HomeRoute
+import com.veco.vecoapp.android.ui.SheetSettings
+import com.veco.vecoapp.android.ui.screen.HomeRoute
+import com.veco.vecoapp.android.ui.screen.misc.ConfirmationRoute
 import com.veco.vecoapp.android.ui.screen.materials.MaterialDetails
 import com.veco.vecoapp.android.ui.screen.materials.MaterialHome
+import com.veco.vecoapp.android.ui.screen.misc.ReviewRoute
 import kotlinx.coroutines.CoroutineScope
 
 sealed class Screen(
@@ -44,22 +42,17 @@ sealed class Screen(
 
     object Account :
         Screen("account", MR.strings.account_title.resourceId, R.drawable.ic_home_account)
-}
 
-val destinationList = listOf(
-    Screen.Home,
-    Screen.Map,
-    Screen.Material,
-    Screen.Account
-)
+    object Review :
+        Screen("review", MR.strings.account_title.resourceId, R.drawable.ic_home_account)
+}
 
 @Composable
 fun VecoNavGraph(
     modifier: Modifier = Modifier,
     navController: NavHostController = rememberNavController(),
     startDestination: String = Screen.Home.route,
-    scaffoldState: MutableState<ScaffoldState>,
-    bottomSheetState: MutableState<BottomSheetState>,
+    sheetSettings: MutableState<SheetSettings>,
     coroutineScope: CoroutineScope
 ) {
     NavHost(
@@ -68,45 +61,28 @@ fun VecoNavGraph(
         modifier = modifier
     ) {
         composable(Screen.Home.route) {
-            scaffoldState.value = ScaffoldState(
-                stringResource(Screen.Home.titleId),
-                true,
-                ToolbarState.Expandable
-            )
-            HomeRoute(bottomSheetState, navController, coroutineScope)
+            HomeRoute(navController, coroutineScope, sheetSettings)
         }
         composable(Screen.Confirmation.route) {
-            scaffoldState.value = ScaffoldState(
-                "",
-                false,
-                ToolbarState.Collapsed
-            )
-            ConfirmationRoute()
+            ConfirmationRoute(navController)
         }
         composable(Screen.Material.route) {
-            scaffoldState.value = ScaffoldState(
-                stringResource(Screen.Material.titleId),
-                true,
-                ToolbarState.Expandable
-            )
             MaterialHome(navController)
         }
         composable(
             Screen.MaterialDetails.route + "/{matId}",
             arguments = listOf(navArgument("matId") { type = NavType.IntType })
         ) {
-            scaffoldState.value = ScaffoldState(
-                "",
-                false,
-                ToolbarState.Collapsed
-            )
-            MaterialDetails(it.arguments?.getInt("matId") ?: 0)
+            MaterialDetails(it.arguments?.getInt("matId") ?: 0, navController)
+        }
+
+        composable(Screen.Review.route) {
+            ReviewRoute(navController)
         }
 
         accountNavGraph(
             navController,
-            scaffoldState,
-            bottomSheetState,
+            sheetSettings,
             coroutineScope
         )
     }

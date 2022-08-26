@@ -20,13 +20,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import androidx.navigation.NavHostController
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.R
+import com.veco.vecoapp.android.ui.component.MainScaffold
 import com.veco.vecoapp.android.ui.component.misc.VecoSuggestionCard
+import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.navigation.AccountScreen
+import com.veco.vecoapp.android.ui.navigation.AuthScreen
 import com.veco.vecoapp.android.ui.theme.red
 import com.veco.vecoapp.android.ui.theme.regBody1
 import com.veco.vecoapp.android.ui.theme.spacing
@@ -80,37 +83,50 @@ val accountOptions = listOf(
         labelColor = Color(MR.colors.red.color.colorInt()),
         hasArrow = false,
         onClick = {
+            it.navigate(AuthScreen.Home.route)
         }
     )
 )
 
 @Composable
-fun AccountHome(navController: NavController? = null) {
-    Column(modifier = Modifier.padding(MaterialTheme.spacing.medium, MaterialTheme.spacing.small)) {
-        VecoSuggestionCard(modifier = Modifier.clickable { navController?.navigate(AccountScreen.Prizes.route) }) {
-            Image(
-                modifier = Modifier
-                    .size(60.dp)
-                    .weight(2f, false),
-                painter = painterResource(id = MR.images.gift_icon.drawableResId),
-                contentDescription = null
+fun AccountHome(navController: NavHostController) {
+    MainScaffold(
+        stringResource(AccountScreen.Home.titleId),
+        true,
+        ToolbarState.Expandable,
+        navController
+    ) {
+        Column(
+            modifier = Modifier.padding(
+                MaterialTheme.spacing.medium,
+                MaterialTheme.spacing.small
             )
-            Text(
-                modifier = Modifier.weight(10f, true),
-                text = "Обменивайте баллы на подарки от партнеров",
-                style = MaterialTheme.typography.body1
-            )
-        }
-        Column(modifier = Modifier.padding(0.dp, MaterialTheme.spacing.medium)) {
-            accountOptions.forEach {
-                AccountOptionButton(
-                    icon = it.icon,
-                    text = it.title,
-                    onClick = it.onClick,
-                    navController = navController!!,
-                    labelColor = it.labelColor,
-                    hasArrow = it.hasArrow
+        ) {
+            VecoSuggestionCard(modifier = Modifier.clickable { navController.navigate(AccountScreen.Prizes.route) }) {
+                Image(
+                    modifier = Modifier
+                        .size(60.dp)
+                        .weight(2f, false),
+                    painter = painterResource(id = MR.images.gift_icon.drawableResId),
+                    contentDescription = null
                 )
+                Text(
+                    modifier = Modifier.weight(10f, true),
+                    text = "Обменивайте баллы на подарки от партнеров",
+                    style = MaterialTheme.typography.body1
+                )
+            }
+            Column(modifier = Modifier.padding(0.dp, MaterialTheme.spacing.medium)) {
+                accountOptions.forEach {
+                    AccountOptionButton(
+                        icon = it.icon,
+                        text = it.title,
+                        onClick = it.onClick,
+                        navController = navController!!,
+                        labelColor = it.labelColor,
+                        hasArrow = it.hasArrow
+                    )
+                }
             }
         }
     }
@@ -154,10 +170,4 @@ fun AccountOptionButton(
             }
         }
     }
-}
-
-@Preview
-@Composable
-fun AccountHomePreview() {
-    AccountHome()
 }

@@ -19,9 +19,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.veco.vecoapp.MR
+import com.veco.vecoapp.android.ui.component.MainScaffold
 import com.veco.vecoapp.android.ui.component.input.VecoTextField
 import com.veco.vecoapp.android.ui.component.misc.VecoButton
+import com.veco.vecoapp.android.ui.enums.ToolbarState
+import com.veco.vecoapp.android.ui.navigation.AccountScreen
 import com.veco.vecoapp.android.ui.theme.regBody1
 import com.veco.vecoapp.android.ui.theme.spacing
 
@@ -31,7 +35,19 @@ enum class PasswordChangeStep {
 }
 
 @Composable
-fun AccountPassword() {
+fun AccountPassword(navController: NavHostController) {
+    MainScaffold(
+        stringResource(AccountScreen.ChangePassword.titleId),
+        false,
+        ToolbarState.Collapsed,
+        navController
+    ) {
+        AccountPasswordContents()
+    }
+}
+
+@Composable
+fun AccountPasswordContents() {
     var step by remember { mutableStateOf(PasswordChangeStep.OLD_PASSWORD) }
     val oldPwdFieldValue = remember { mutableStateOf(TextFieldValue()) }
     val newPwdFieldValue = remember { mutableStateOf(TextFieldValue()) }

@@ -1,4 +1,4 @@
-package com.veco.vecoapp.android.ui.screen.confimation
+package com.veco.vecoapp.android.ui.screen.misc
 
 import android.net.Uri
 import androidx.activity.compose.ManagedActivityResultLauncher
@@ -52,32 +52,37 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.R
+import com.veco.vecoapp.android.ui.component.MainScaffold
 import com.veco.vecoapp.android.ui.component.misc.VecoButton
 import com.veco.vecoapp.android.ui.enums.ResultState
+import com.veco.vecoapp.android.ui.enums.ToolbarState
+import com.veco.vecoapp.android.ui.navigation.Screen
 
 @Composable
-fun ConfirmationRoute() {
-    Column(modifier = Modifier.padding(16.dp)) {
-        Headline(stringResource(MR.strings.task_confirm.resourceId))
+fun ConfirmationRoute(navController: NavHostController) {
+    MainScaffold("", false, ToolbarState.Collapsed, navController = navController) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Headline(stringResource(MR.strings.task_confirm.resourceId))
 
-        Instruction(
-            stringResource(MR.strings.task_info_1.resourceId),
-            stringResource(MR.strings.task_info_2.resourceId)
-        )
+            Instruction(
+                stringResource(MR.strings.task_info_1.resourceId),
+                stringResource(MR.strings.task_info_2.resourceId)
+            )
 
-        ImagePicker()
+            ImagePicker()
 
-        Box(Modifier.fillMaxSize()) {
-            VecoButton(
-                text = stringResource(MR.strings.button_send.resourceId),
-                modifier = Modifier.align(Alignment.BottomCenter)
-            ) {}
+            Box(Modifier.fillMaxSize()) {
+                VecoButton(
+                    text = stringResource(MR.strings.button_send.resourceId),
+                    modifier = Modifier.align(Alignment.BottomCenter)
+                ) { navController.navigate(Screen.Review.route) }
+            }
         }
     }
 }
@@ -204,7 +209,7 @@ fun PhotoGrid(
                             }
                         }
                         ResultState.ERROR -> {
-                            ImageButton(R.drawable.ic_resend_img) {
+                            ImageButton(R.drawable.ic_resend) {
                                 result[i] = ResultState.LOADING
                             }
                             Box(modifier = Modifier.align(Alignment.TopEnd)) {
@@ -340,10 +345,4 @@ fun ImageButton(id: Int, func: () -> Unit) {
         contentDescription = "cross",
         tint = Color.White
     )
-}
-
-@Preview
-@Composable
-fun ConfirmationPreview() {
-    ConfirmationRoute()
 }

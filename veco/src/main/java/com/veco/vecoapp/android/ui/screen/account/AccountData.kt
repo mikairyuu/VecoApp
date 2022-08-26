@@ -13,23 +13,37 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
+import androidx.navigation.NavHostController
 import com.veco.vecoapp.MR
+import com.veco.vecoapp.android.ui.component.MainScaffold
 import com.veco.vecoapp.android.ui.component.misc.VecoButton
 import com.veco.vecoapp.android.ui.component.unit.VecoInputUnit
+import com.veco.vecoapp.android.ui.enums.ToolbarState
+import com.veco.vecoapp.android.ui.navigation.AccountScreen
 
 @Composable
-fun AccountData() {
-    val nameField = remember { mutableStateOf(TextFieldValue("")) }
-    val emailField = remember { mutableStateOf(TextFieldValue("")) }
-    Column(modifier = Modifier.padding(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        VecoInputUnit(title = MR.strings.account_name.resourceId, textFieldValue = nameField)
-        VecoInputUnit(title = MR.strings.account_email.resourceId, textFieldValue = emailField)
-        Box(modifier = Modifier.fillMaxSize()) {
-            VecoButton(
-                modifier = Modifier.align(Alignment.BottomCenter),
-                text = stringResource(id = MR.strings.button_save.resourceId),
-                onClick = {}
-            )
+fun AccountData(navController: NavHostController) {
+    MainScaffold(
+        stringResource(AccountScreen.PersonalData.titleId),
+        false,
+        ToolbarState.Collapsed,
+        navController = navController
+    ) {
+        val nameField = remember { mutableStateOf(TextFieldValue("")) }
+        val emailField = remember { mutableStateOf(TextFieldValue("")) }
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(12.dp)
+        ) {
+            VecoInputUnit(title = MR.strings.account_name.resourceId, textFieldValue = nameField)
+            VecoInputUnit(title = MR.strings.account_email.resourceId, textFieldValue = emailField)
+            Box(modifier = Modifier.fillMaxSize()) {
+                VecoButton(
+                    modifier = Modifier.align(Alignment.BottomCenter),
+                    text = stringResource(id = MR.strings.button_save.resourceId),
+                    onClick = {}
+                )
+            }
         }
     }
 }
