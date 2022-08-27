@@ -87,9 +87,7 @@ fun VecoNavGraph(
         )
 
         authNavGraph(
-            navController,
-            sheetSettings,
-            coroutineScope
+            navController
         )
     }
 }

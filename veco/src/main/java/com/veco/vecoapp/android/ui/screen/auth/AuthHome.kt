@@ -36,8 +36,8 @@ import com.veco.vecoapp.android.R
 import com.veco.vecoapp.android.ui.component.MainScaffold
 import com.veco.vecoapp.android.ui.component.input.VecoTextField
 import com.veco.vecoapp.android.ui.component.misc.VecoButton
+import com.veco.vecoapp.android.ui.component.misc.VecoHeadline
 import com.veco.vecoapp.android.ui.enums.ToolbarState
-import com.veco.vecoapp.android.ui.theme.regBody1
 import com.veco.vecoapp.android.ui.theme.regBody3
 import com.veco.vecoapp.android.ui.theme.secondaryText
 import com.veco.vecoapp.android.ui.theme.tertiaryText
@@ -68,7 +68,22 @@ fun AuthHome(
             modifier = Modifier.padding(16.dp, 24.dp, 16.dp, 0.dp),
             verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-            AuthHeadline(authState)
+            VecoHeadline(
+                stringResource(
+                    id = if (authState == AuthState.LOGIN) {
+                        MR.strings.auth_login_title.resourceId
+                    } else {
+                        MR.strings.string_register.resourceId
+                    }
+                ),
+                stringResource(
+                    id = if (authState == AuthState.LOGIN) {
+                        MR.strings.auth_login_desc.resourceId
+                    } else {
+                        MR.strings.auth_register_desc.resourceId
+                    }
+                )
+            )
             AuthInputArea(authState)
             Text(
                 modifier = Modifier.fillMaxWidth(),
@@ -91,32 +106,6 @@ fun AuthHome(
                 textAlign = TextAlign.Center
             )
         }
-    }
-}
-
-@Composable
-fun AuthHeadline(authState: AuthState) {
-    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        Text(
-            text = stringResource(
-                id = if (authState == AuthState.LOGIN) {
-                    MR.strings.auth_login_title.resourceId
-                } else {
-                    MR.strings.string_register.resourceId
-                }
-            ),
-            style = MaterialTheme.typography.h1
-        )
-        Text(
-            text = stringResource(
-                id = if (authState == AuthState.LOGIN) {
-                    MR.strings.auth_login_desc.resourceId
-                } else {
-                    MR.strings.auth_register_desc.resourceId
-                }
-            ),
-            style = MaterialTheme.typography.regBody1
-        )
     }
 }
 

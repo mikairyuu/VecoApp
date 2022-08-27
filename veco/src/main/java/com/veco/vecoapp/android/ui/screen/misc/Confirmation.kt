@@ -28,7 +28,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
 import androidx.compose.material.ButtonDefaults
 import androidx.compose.material.Icon
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -60,6 +59,7 @@ import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.R
 import com.veco.vecoapp.android.ui.component.MainScaffold
 import com.veco.vecoapp.android.ui.component.misc.VecoButton
+import com.veco.vecoapp.android.ui.component.misc.VecoHeadline
 import com.veco.vecoapp.android.ui.enums.ResultState
 import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.navigation.Screen
@@ -67,16 +67,9 @@ import com.veco.vecoapp.android.ui.navigation.Screen
 @Composable
 fun ConfirmationRoute(navController: NavHostController) {
     MainScaffold("", false, ToolbarState.Collapsed, navController = navController) {
-        Column(modifier = Modifier.padding(16.dp)) {
-            Headline(stringResource(MR.strings.task_confirm.resourceId))
-
-            Instruction(
-                stringResource(MR.strings.task_info_1.resourceId),
-                stringResource(MR.strings.task_info_2.resourceId)
-            )
-
+        Column(modifier = Modifier.padding(16.dp, 24.dp, 16.dp, 16.dp)) {
+            Headline()
             ImagePicker()
-
             Box(Modifier.fillMaxSize()) {
                 VecoButton(
                     text = stringResource(MR.strings.button_send.resourceId),
@@ -88,29 +81,15 @@ fun ConfirmationRoute(navController: NavHostController) {
 }
 
 @Composable
-fun Headline(text: String) {
-    Text(
-        text = text,
-        color = MaterialTheme.colors.onBackground,
-        style = MaterialTheme.typography.h1
-    )
-}
-
-@Composable
-fun Instruction(instruction: String, warning: String) {
-    val text = buildAnnotatedString {
-        append(instruction)
+fun Headline() {
+    val desc = buildAnnotatedString {
+        append(stringResource(MR.strings.task_info_1.resourceId))
         append(" ")
         pushStyle(SpanStyle(fontWeight = Bold))
-        append(warning)
+        append(stringResource(MR.strings.task_info_2.resourceId))
         toString()
     }
-    Text(
-        text = text,
-        color = MaterialTheme.colors.onBackground,
-        style = MaterialTheme.typography.body1,
-        modifier = Modifier.padding(top = 12.dp)
-    )
+    VecoHeadline(text1 = stringResource(MR.strings.task_confirm.resourceId), text2 = desc)
 }
 
 @Composable

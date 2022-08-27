@@ -83,7 +83,10 @@ val accountOptions = listOf(
         labelColor = Color(MR.colors.red.color.colorInt()),
         hasArrow = false,
         onClick = {
-            it.navigate(AuthScreen.Home.route)
+            it.navigate(AuthScreen.Home.route) {
+                popUpTo(0)
+                launchSingleTop = true
+            }
         }
     )
 )

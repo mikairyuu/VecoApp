@@ -1,104 +1,97 @@
 package com.veco.vecoapp.android.ui.screen.account
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material3.Text
+import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.ui.component.MainScaffold
 import com.veco.vecoapp.android.ui.component.input.VecoTextField
 import com.veco.vecoapp.android.ui.component.misc.VecoButton
+import com.veco.vecoapp.android.ui.component.misc.VecoHeadline
 import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.navigation.AccountScreen
-import com.veco.vecoapp.android.ui.theme.regBody1
 import com.veco.vecoapp.android.ui.theme.spacing
-
-enum class PasswordChangeStep {
-    OLD_PASSWORD,
-    NEW_PASSWORD
-}
+import com.veco.vecoapp.presentation.account.AccountPasswordViewModel
+import com.veco.vecoapp.presentation.account.PasswordChangeStep
 
 @Composable
-fun AccountPassword(navController: NavHostController) {
+fun AccountPassword(
+    navController: NavHostController,
+    viewModel: AccountPasswordViewModel = viewModel()
+) {
     MainScaffold(
         stringResource(AccountScreen.ChangePassword.titleId),
         false,
         ToolbarState.Collapsed,
         navController
     ) {
-        AccountPasswordContents()
-    }
-}
-
-@Composable
-fun AccountPasswordContents() {
-    var step by remember { mutableStateOf(PasswordChangeStep.OLD_PASSWORD) }
-    Column(modifier = Modifier.padding(MaterialTheme.spacing.medium, 0.dp)) {
+        val step by viewModel.step.collectAsState()
         Column(
-            modifier = Modifier.padding(0.dp, 24.dp),
-            verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.mini)
+            modifier = Modifier.padding(MaterialTheme.spacing.medium, 24.dp),
+            verticalArrangement = Arrangement.spacedBy(24.dp)
         ) {
-            Text(
-                text = if (step == PasswordChangeStep.OLD_PASSWORD) {
+            VecoHeadline(
+                text1 = if (step == PasswordChangeStep.OLD_PASSWORD) {
                     stringResource(MR.strings.account_pwd_title_1.resourceId)
                 } else {
                     stringResource(MR.strings.account_pwd_title_2.resourceId)
                 },
-                style = MaterialTheme.typography.h1
-            )
-            Text(
-                text = if (step == PasswordChangeStep.OLD_PASSWORD) {
+                text2 = if (step == PasswordChangeStep.OLD_PASSWORD) {
                     stringResource(MR.strings.account_pwd_desc_1.resourceId)
                 } else {
                     stringResource(MR.strings.account_pwd_desc_2.resourceId)
-                },
-                style = MaterialTheme.typography.regBody1
+                }
             )
+            AccountPasswordContents(step, viewModel)
         }
+    }
+}
+
+@Composable
+fun AccountPasswordContents(step: PasswordChangeStep, viewModel: AccountPasswordViewModel) {
+    Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         VecoTextField(
             hint = stringResource(MR.strings.string_password.resourceId),
             onValueChange = { true }
         )
-        Spacer(modifier = Modifier.height(12.dp))
         if (step == PasswordChangeStep.NEW_PASSWORD) {
             VecoTextField(
                 hint = stringResource(MR.strings.string_password_conf.resourceId),
                 onValueChange = { true }
             )
         }
-        Box(modifier = Modifier.fillMaxSize()) {
-            VecoButton(
+        if (step == PasswordChangeStep.OLD_PASSWORD) {
+            Text(
                 modifier = Modifier
-                    .padding(MaterialTheme.spacing.medium)
-                    .align(Alignment.BottomCenter),
-                text = stringResource(
-                    id = if (step == PasswordChangeStep.OLD_PASSWORD) {
-                        MR.strings.button_continue.resourceId
-                    } else {
-                        MR.strings.button_save.resourceId
-                    }
-                ),
-                onClick = {
-                    if (step == PasswordChangeStep.OLD_PASSWORD) {
-                        step = PasswordChangeStep.NEW_PASSWORD
-                    }
-                }
+                    .fillMaxWidth()
+                    .clickable { },
+                text = stringResource(id = MR.strings.button_forgot_pwd.resourceId),
+                style = MaterialTheme.typography.body2
             )
         }
+        VecoButton(
+            text = stringResource(
+                id = if (step == PasswordChangeStep.OLD_PASSWORD) {
+                    MR.strings.button_continue.resourceId
+                } else {
+                    MR.strings.button_save_changes.resourceId
+                }
+            ),
+            onClick = {
+                viewModel.changeStep()
+            }
+        )
     }
 }
