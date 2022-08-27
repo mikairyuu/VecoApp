@@ -22,6 +22,7 @@ import com.veco.vecoapp.android.ui.component.misc.VecoButton
 import com.veco.vecoapp.android.ui.component.misc.VecoHeadline
 import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.navigation.AccountScreen
+import com.veco.vecoapp.android.ui.navigation.AuthScreen
 import com.veco.vecoapp.android.ui.theme.spacing
 import com.veco.vecoapp.presentation.account.AccountPasswordViewModel
 import com.veco.vecoapp.presentation.account.PasswordChangeStep
@@ -54,13 +55,17 @@ fun AccountPassword(
                     stringResource(MR.strings.account_pwd_desc_2.resourceId)
                 }
             )
-            AccountPasswordContents(step, viewModel)
+            AccountPasswordContents(step, navController, viewModel)
         }
     }
 }
 
 @Composable
-fun AccountPasswordContents(step: PasswordChangeStep, viewModel: AccountPasswordViewModel) {
+fun AccountPasswordContents(
+    step: PasswordChangeStep,
+    navController: NavHostController,
+    viewModel: AccountPasswordViewModel
+) {
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         VecoTextField(
             hint = stringResource(MR.strings.string_password.resourceId),
@@ -76,7 +81,7 @@ fun AccountPasswordContents(step: PasswordChangeStep, viewModel: AccountPassword
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { },
+                    .clickable { navController.navigate(AuthScreen.PasswordEmail.route) },
                 text = stringResource(id = MR.strings.button_forgot_pwd.resourceId),
                 style = MaterialTheme.typography.body2
             )

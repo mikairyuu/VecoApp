@@ -140,7 +140,7 @@ fun AuthInputArea(
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .clickable { },
+                    .clickable { navController.navigate(AuthScreen.PasswordEmail.route) },
                 text = stringResource(id = MR.strings.button_forgot_pwd.resourceId),
                 style = MaterialTheme.typography.body2
             )
@@ -158,19 +158,19 @@ fun AuthInputArea(
                 viewModel.proceed(onError = {
                     Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
                 }, onProceed = {
-                    if (authState == AuthState.REGISTER) {
-                        navController.navigate(
-                            AuthScreen.RegisterEmail.route
-                        )
-                    } else {
-                        navController.navigate(
-                            Screen.Home.route
-                        ) {
-                            popUpTo(0)
-                            launchSingleTop
+                        if (authState == AuthState.REGISTER) {
+                            navController.navigate(
+                                AuthScreen.RegisterEmail.route
+                            )
+                        } else {
+                            navController.navigate(
+                                Screen.Home.route
+                            ) {
+                                popUpTo(0)
+                                launchSingleTop
+                            }
                         }
-                    }
-                })
+                    })
             }
         )
     }

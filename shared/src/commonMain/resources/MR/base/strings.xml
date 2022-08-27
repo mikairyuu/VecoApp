@@ -46,6 +46,7 @@
     <string name="string_register">Регистрация</string>
     <string name="string_login">Войти</string>
     <string name="string_name">Имя</string>
+    <string name="string_code">Код</string>
     <string name="string_password_conf">Подтверждение пароля</string>
     <string name="notification_title_3">Актуальные материалы</string>
     <string name="exit">Выйти</string>
@@ -71,4 +72,13 @@
     <string name="auth_register_title2">Осталось совсем немного</string>
     <string name="auth_register_desc2">Введите ваше имя, чтобы мы могли знать, как к вам обращаться</string>
     <string name="auth_register_button">Зарегистрироваться</string>
+    <string name="auth_pwd_restore">Восстановление пароля</string>
+    <string name="auth_pwd_title1">Введите вашу почту</string>
+    <string name="auth_pwd_desc1">Чтобы сбросить пароль, вам необходимо ввести данные ниже</string>
+    <string name="auth_pwd_title2">Введите код</string>
+    <string name="auth_pwd_desc2">Мы отправили на вашу почту уникальный код, никому не показывайте его.</string>
+    <string name="auth_pwd_title3">Введите новый пароль</string>
+    <string name="auth_pwd_desc3">Чтобы обновить пароль, вам необходимо ввести данные ниже</string>
+    <string name="auth_pwd_reset">Сбросить пароль</string>
+    <string name="auth_pwd_update">Обновить пароль</string>
 </resources>
