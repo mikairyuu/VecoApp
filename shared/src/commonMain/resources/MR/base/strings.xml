@@ -34,7 +34,6 @@
     <string name="account_point_count">У вас %d баллов</string>
     <string name="prize_cost">Стоимость</string>
     <string name="account_name">Ваше имя</string>
-    <string name="account_email">Email</string>
     <string name="notification_title_1">Зачисление баллов</string>
     <string name="notification_title_2">Истечение срока задания</string>
     <string name="notification_title_3">Актуальные материалы</string>
@@ -43,9 +42,25 @@
     <string name="account_pwd_title_2">Введите новый пароль</string>
     <string name="account_pwd_desc_2">Чтобы обновить пароль, вам необходимо ввести данные ниже</string>
     <string name="string_password">Пароль</string>
+    <string name="string_email">Email</string>
+    <string name="string_register">Регистрация</string>
+    <string name="string_login">Войти</string>
     <string name="string_password_conf">Подтверждение пароля</string>
     <string name="notification_title_3">Актуальные материалы</string>
     <string name="exit">Выйти</string>
     <string name="task_sent_1">Отчет о задании отправлен на проверку</string>
     <string name="task_sent_2">Мы как можно скорее проверим ваш отчет и начислим баллы за задание</string>
+    <string name="auth_register_desc">Создайте аккаунт, чтобы продолжить использовать приложение</string>
+    <string name="auth_login_button">Войти в аккаунт</string>
+    <string name="auth_login_title">Вход в аккаунт</string>
+    <string name="auth_login_desc">Выполните вход в аккаунт, чтобы начать пользоваться приложением</string>
+    <string name="auth_other_ways">Другие способы входа:</string>
+    <string name="auth_sber">Продолжить со Сбер ID</string>
+    <string name="auth_google">Продолжить с Google</string>
+    <string name="auth_vk">Продолжить с VK ID</string>
+    <string name="auth_login_policy">Нажимая войти, вы соглашаетесь с правилами использования
+        сервиса и политикой конфиденциальности</string>
+    <string name="auth_register_policy">Нажимая продолжить, вы соглашаетесь с правилами использования
+        сервиса и политикой конфиденциальности</string>
+    <string name="button_forgot_pwd">Забыли пароль?</string>
 </resources>

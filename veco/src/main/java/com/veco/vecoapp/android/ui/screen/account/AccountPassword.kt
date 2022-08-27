@@ -17,7 +17,6 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.veco.vecoapp.MR
@@ -49,8 +48,6 @@ fun AccountPassword(navController: NavHostController) {
 @Composable
 fun AccountPasswordContents() {
     var step by remember { mutableStateOf(PasswordChangeStep.OLD_PASSWORD) }
-    val oldPwdFieldValue = remember { mutableStateOf(TextFieldValue()) }
-    val newPwdFieldValue = remember { mutableStateOf(TextFieldValue()) }
     Column(modifier = Modifier.padding(MaterialTheme.spacing.medium, 0.dp)) {
         Column(
             modifier = Modifier.padding(0.dp, 24.dp),
@@ -74,14 +71,14 @@ fun AccountPasswordContents() {
             )
         }
         VecoTextField(
-            textFieldValue = oldPwdFieldValue,
-            hint = stringResource(MR.strings.string_password.resourceId)
+            hint = stringResource(MR.strings.string_password.resourceId),
+            onValueChange = { true }
         )
         Spacer(modifier = Modifier.height(12.dp))
         if (step == PasswordChangeStep.NEW_PASSWORD) {
             VecoTextField(
-                textFieldValue = newPwdFieldValue,
-                hint = stringResource(MR.strings.string_password_conf.resourceId)
+                hint = stringResource(MR.strings.string_password_conf.resourceId),
+                onValueChange = { true }
             )
         }
         Box(modifier = Modifier.fillMaxSize()) {

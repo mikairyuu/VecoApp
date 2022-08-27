@@ -18,9 +18,9 @@ import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.R
 import com.veco.vecoapp.android.ui.SheetSettings
 import com.veco.vecoapp.android.ui.screen.HomeRoute
-import com.veco.vecoapp.android.ui.screen.misc.ConfirmationRoute
 import com.veco.vecoapp.android.ui.screen.materials.MaterialDetails
 import com.veco.vecoapp.android.ui.screen.materials.MaterialHome
+import com.veco.vecoapp.android.ui.screen.misc.ConfirmationRoute
 import com.veco.vecoapp.android.ui.screen.misc.ReviewRoute
 import kotlinx.coroutines.CoroutineScope
 
@@ -81,6 +81,12 @@ fun VecoNavGraph(
         }
 
         accountNavGraph(
+            navController,
+            sheetSettings,
+            coroutineScope
+        )
+
+        authNavGraph(
             navController,
             sheetSettings,
             coroutineScope

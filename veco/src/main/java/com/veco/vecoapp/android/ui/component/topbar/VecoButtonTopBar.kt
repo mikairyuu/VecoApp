@@ -18,13 +18,13 @@ fun VecoButtonTopBar(title: String, onClick: () -> Unit) {
     TopAppBar(
         title = {
             Box(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .clickable(onClick = onClick)
-                    .padding(16.dp)
+                modifier = Modifier.fillMaxSize()
             ) {
                 Text(
-                    modifier = Modifier.align(Alignment.CenterEnd),
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .clickable(onClick = onClick)
+                        .padding(12.dp, 16.dp),
                     text = title,
                     style = MaterialTheme.typography.body1
                 )
