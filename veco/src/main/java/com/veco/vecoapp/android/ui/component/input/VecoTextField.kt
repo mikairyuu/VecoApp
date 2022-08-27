@@ -51,7 +51,7 @@ fun VecoTextField(
         singleLine = singleLine,
         keyboardOptions = KeyboardOptions(imeAction = imeAction, keyboardType = keyboardType),
         decorationBox = {
-            if (!textFieldFocused) {
+            if (text.isEmpty() && !textFieldFocused) {
                 Text(
                     text = hint,
                     style = MaterialTheme.typography.regBody1,

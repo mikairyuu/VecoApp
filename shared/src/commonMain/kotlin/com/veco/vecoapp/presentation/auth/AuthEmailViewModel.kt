@@ -7,22 +7,9 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-enum class AuthState {
-    LOGIN,
-    REGISTER
-}
-
-class AuthHomeViewModel : ViewModel() {
-    private val _authState = MutableStateFlow(AuthState.LOGIN)
-    val authState: StateFlow<AuthState> = _authState
-
+class AuthEmailViewModel : ViewModel() {
     private val _uiState: MutableStateFlow<UIState<Nothing?>> = MutableStateFlow(UIState.Idle())
     val uiState: StateFlow<UIState<Nothing?>> = _uiState
-
-    fun changeAuthState() {
-        _authState.value =
-            if (authState.value == AuthState.LOGIN) AuthState.REGISTER else AuthState.LOGIN
-    }
 
     fun proceed(onProceed: () -> Unit, onError: (String) -> Unit) {
         viewModelScope.launch {

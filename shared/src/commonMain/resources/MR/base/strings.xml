@@ -45,6 +45,7 @@
     <string name="string_email">Email</string>
     <string name="string_register">Регистрация</string>
     <string name="string_login">Войти</string>
+    <string name="string_name">Имя</string>
     <string name="string_password_conf">Подтверждение пароля</string>
     <string name="notification_title_3">Актуальные материалы</string>
     <string name="exit">Выйти</string>
@@ -63,4 +64,11 @@
     <string name="auth_register_policy">Нажимая продолжить, вы соглашаетесь с правилами использования
         сервиса и политикой конфиденциальности</string>
     <string name="button_forgot_pwd">Забыли пароль?</string>
+    <string name="auth_register_title">Проверьте свою почту</string>
+    <string name="auth_register_desc">Мы отправили на ваш электронный адрес письмо с уникальной ссылкой,
+        перейдите по ней, чтобы продолжить регистрацию.</string>
+    <string name="auth_register_send_again">Отправить еще раз</string>
+    <string name="auth_register_title2">Осталось совсем немного</string>
+    <string name="auth_register_desc2">Введите ваше имя, чтобы мы могли знать, как к вам обращаться</string>
+    <string name="auth_register_button">Зарегистрироваться</string>
 </resources>

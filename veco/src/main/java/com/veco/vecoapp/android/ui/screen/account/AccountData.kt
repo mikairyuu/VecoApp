@@ -35,7 +35,7 @@ fun AccountData(navController: NavHostController) {
             Box(modifier = Modifier.fillMaxSize()) {
                 VecoButton(
                     modifier = Modifier.align(Alignment.BottomCenter),
-                    text = stringResource(id = MR.strings.button_save.resourceId),
+                    text = stringResource(id = MR.strings.button_save_changes.resourceId),
                     onClick = {}
                 )
             }
