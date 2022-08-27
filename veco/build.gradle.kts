@@ -6,6 +6,7 @@ plugins {
 }
 
 val composeVersion = "1.2.0"
+val accompanistVersion = "0.25.1"
 
 android {
     compileSdk = 33
@@ -54,10 +55,12 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:2.5.1")
     implementation("androidx.compose.material:material:$composeVersion")
 
+    // Accompanist
+    implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion")
+    implementation("com.google.accompanist:accompanist-placeholder-material:$accompanistVersion")
+
     implementation("me.onebone:toolbar-compose:2.3.4")
-    implementation("com.google.accompanist:accompanist-systemuicontroller:0.25.0")
     implementation("io.coil-kt:coil-compose:2.2.0")
     implementation("androidx.compose.material3:material3:1.0.0-alpha16")
     implementation("androidx.compose.material3:material3-window-size-class:1.0.0-alpha16")
-    implementation("com.google.accompanist:accompanist-placeholder-material:0.25.1")
 }
