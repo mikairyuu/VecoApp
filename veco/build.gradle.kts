@@ -61,6 +61,6 @@ dependencies {
 
     implementation("me.onebone:toolbar-compose:2.3.4")
     implementation("io.coil-kt:coil-compose:2.2.0")
-    implementation("androidx.compose.material3:material3:1.0.0-alpha16")
-    implementation("androidx.compose.material3:material3-window-size-class:1.0.0-alpha16")
+    implementation("androidx.compose.material3:material3:1.0.0-beta01")
+    implementation("androidx.compose.material3:material3-window-size-class:1.0.0-beta01")
 }
