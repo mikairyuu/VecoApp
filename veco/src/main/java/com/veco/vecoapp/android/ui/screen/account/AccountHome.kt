@@ -25,9 +25,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.R
-import com.veco.vecoapp.android.ui.component.MainScaffold
 import com.veco.vecoapp.android.ui.component.misc.VecoSuggestionCard
-import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.navigation.AccountScreen
 import com.veco.vecoapp.android.ui.navigation.AuthScreen
 import com.veco.vecoapp.android.ui.theme.red
@@ -93,43 +91,36 @@ val accountOptions = listOf(
 
 @Composable
 fun AccountHome(navController: NavHostController) {
-    MainScaffold(
-        stringResource(AccountScreen.Home.titleId),
-        true,
-        ToolbarState.Expandable,
-        navController
+    Column(
+        modifier = Modifier.padding(
+            MaterialTheme.spacing.medium,
+            MaterialTheme.spacing.small
+        )
     ) {
-        Column(
-            modifier = Modifier.padding(
-                MaterialTheme.spacing.medium,
-                MaterialTheme.spacing.small
+        VecoSuggestionCard(modifier = Modifier.clickable { navController.navigate(AccountScreen.Prizes.route) }) {
+            Image(
+                modifier = Modifier
+                    .size(60.dp)
+                    .weight(2f, false),
+                painter = painterResource(id = MR.images.gift_icon.drawableResId),
+                contentDescription = null
             )
-        ) {
-            VecoSuggestionCard(modifier = Modifier.clickable { navController.navigate(AccountScreen.Prizes.route) }) {
-                Image(
-                    modifier = Modifier
-                        .size(60.dp)
-                        .weight(2f, false),
-                    painter = painterResource(id = MR.images.gift_icon.drawableResId),
-                    contentDescription = null
+            Text(
+                modifier = Modifier.weight(10f, true),
+                text = "Обменивайте баллы на подарки от партнеров",
+                style = MaterialTheme.typography.body1
+            )
+        }
+        Column(modifier = Modifier.padding(0.dp, MaterialTheme.spacing.medium)) {
+            accountOptions.forEach {
+                AccountOptionButton(
+                    icon = it.icon,
+                    text = it.title,
+                    onClick = it.onClick,
+                    navController = navController!!,
+                    labelColor = it.labelColor,
+                    hasArrow = it.hasArrow
                 )
-                Text(
-                    modifier = Modifier.weight(10f, true),
-                    text = "Обменивайте баллы на подарки от партнеров",
-                    style = MaterialTheme.typography.body1
-                )
-            }
-            Column(modifier = Modifier.padding(0.dp, MaterialTheme.spacing.medium)) {
-                accountOptions.forEach {
-                    AccountOptionButton(
-                        icon = it.icon,
-                        text = it.title,
-                        onClick = it.onClick,
-                        navController = navController!!,
-                        labelColor = it.labelColor,
-                        hasArrow = it.hasArrow
-                    )
-                }
             }
         }
     }

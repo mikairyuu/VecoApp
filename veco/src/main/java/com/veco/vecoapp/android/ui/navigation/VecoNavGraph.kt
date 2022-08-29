@@ -1,13 +1,12 @@
-@file:OptIn(ExperimentalMaterialApi::class)
-
 package com.veco.vecoapp.android.ui.navigation
 
+import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
-import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -17,6 +16,8 @@ import androidx.navigation.navArgument
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.R
 import com.veco.vecoapp.android.ui.SheetSettings
+import com.veco.vecoapp.android.ui.component.ScaffoldState
+import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.screen.HomeRoute
 import com.veco.vecoapp.android.ui.screen.materials.MaterialDetails
 import com.veco.vecoapp.android.ui.screen.materials.MaterialHome
@@ -53,7 +54,8 @@ fun VecoNavGraph(
     navController: NavHostController = rememberNavController(),
     startDestination: String = Screen.Home.route,
     sheetSettings: MutableState<SheetSettings>,
-    coroutineScope: CoroutineScope
+    coroutineScope: CoroutineScope,
+    scaffoldState: MutableState<ScaffoldState>
 ) {
     NavHost(
         navController = navController,
@@ -73,7 +75,7 @@ fun VecoNavGraph(
             Screen.MaterialDetails.route + "/{matId}",
             arguments = listOf(navArgument("matId") { type = NavType.IntType })
         ) {
-            MaterialDetails(it.arguments?.getInt("matId") ?: 0, navController)
+            MaterialDetails(it.arguments?.getInt("matId") ?: 0)
         }
 
         composable(Screen.Review.route) {
@@ -87,7 +89,54 @@ fun VecoNavGraph(
         )
 
         authNavGraph(
-            navController
+            navController,
+            scaffoldState
         )
+    }
+}
+
+fun vecoScaffoldGraph(
+    backStackEntry: NavBackStackEntry,
+    context: Context
+): ScaffoldState? {
+    return when (backStackEntry.destination.route) {
+        Screen.Home.route -> {
+            ScaffoldState(
+                context.getString(Screen.Home.titleId),
+                true,
+                ToolbarState.Expandable
+            )
+        }
+        Screen.Material.route -> {
+            ScaffoldState(
+                context.getString(Screen.Material.titleId),
+                true,
+                ToolbarState.Expandable
+            )
+        }
+        Screen.MaterialDetails.route -> {
+            ScaffoldState(
+                "",
+                false,
+                ToolbarState.Collapsed
+            )
+        }
+        Screen.Confirmation.route -> {
+            ScaffoldState(
+                "",
+                false,
+                ToolbarState.Collapsed
+            )
+        }
+        Screen.Review.route -> {
+            ScaffoldState(
+                "",
+                false,
+                ToolbarState.None
+            )
+        }
+        else -> {
+            null
+        }
     }
 }

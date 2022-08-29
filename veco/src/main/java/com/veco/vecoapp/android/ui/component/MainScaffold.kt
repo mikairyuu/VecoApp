@@ -14,11 +14,15 @@ import com.veco.vecoapp.android.ui.component.topbar.VecoTopBar
 import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.navigation.VecoBottomNavigation
 
+data class ScaffoldState(
+    val screenTitle: String,
+    val navigationVisible: Boolean,
+    val toolbarState: ToolbarState
+)
+
 @Composable
 fun MainScaffold(
-    screenTitle: String,
-    navigationVisible: Boolean,
-    toolbarState: ToolbarState,
+    scaffoldState: ScaffoldState,
     navController: NavHostController,
     bottomSheetState: SheetSettings? = null,
     content: @Composable () -> Unit
@@ -27,17 +31,17 @@ fun MainScaffold(
         Scaffold(
             // If topbar is expandable, we handle it in expandable scaffold instead
             topBar = {
-                when (toolbarState) {
+                when (scaffoldState.toolbarState) {
                     ToolbarState.Collapsed -> {
                         VecoTopBar(
                             navController = navController,
-                            title = screenTitle
+                            title = scaffoldState.screenTitle
                         )
                     }
                     is ToolbarState.Button -> {
                         VecoButtonTopBar(
-                            title = screenTitle,
-                            onClick = toolbarState.callback
+                            title = scaffoldState.screenTitle,
+                            onClick = scaffoldState.toolbarState.callback
                         )
                     }
                     else -> {}
@@ -45,7 +49,7 @@ fun MainScaffold(
             },
             bottomBar = {
                 AnimatedVisibility(
-                    visible = navigationVisible,
+                    visible = scaffoldState.navigationVisible,
                     enter = slideInVertically(initialOffsetY = { it }),
                     exit = slideOutVertically(targetOffsetY = { it }),
                     content = {
@@ -56,10 +60,10 @@ fun MainScaffold(
                 )
             },
             content = {
-                if (toolbarState == ToolbarState.Expandable) {
+                if (scaffoldState.toolbarState == ToolbarState.Expandable) {
                     ExpandableToolbarScaffold(
                         modifier = Modifier.padding(it),
-                        screenTitle = screenTitle,
+                        screenTitle = scaffoldState.screenTitle,
                         content = content
                     )
                 } else {

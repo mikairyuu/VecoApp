@@ -24,12 +24,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.ImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.imageResource
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.veco.vecoapp.android.R
-import com.veco.vecoapp.android.ui.component.MainScaffold
-import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.navigation.Screen
 import com.veco.vecoapp.android.ui.testMaterialText
 import com.veco.vecoapp.android.ui.theme.body3
@@ -68,22 +65,15 @@ val materialList =
 
 @Composable
 fun MaterialHome(navController: NavHostController) {
-    MainScaffold(
-        stringResource(Screen.Material.titleId),
-        true,
-        ToolbarState.Expandable,
-        navController = navController
-    ) {
-        LazyColumn(contentPadding = PaddingValues(16.dp)) {
-            items(materialList) { item ->
-                MaterialCard(
-                    image = ImageBitmap.imageResource(R.drawable.test_material_img),
-                    title = item.title,
-                    isPopular = Random.nextBoolean(),
-                    onClick = { navController.navigate("${Screen.MaterialDetails.route}/${item.id}") }
-                )
-                Spacer(modifier = Modifier.height(12.dp))
-            }
+    LazyColumn(contentPadding = PaddingValues(16.dp)) {
+        items(materialList) { item ->
+            MaterialCard(
+                image = ImageBitmap.imageResource(R.drawable.test_material_img),
+                title = item.title,
+                isPopular = Random.nextBoolean(),
+                onClick = { navController.navigate("${Screen.MaterialDetails.route}/${item.id}") }
+            )
+            Spacer(modifier = Modifier.height(12.dp))
         }
     }
 }

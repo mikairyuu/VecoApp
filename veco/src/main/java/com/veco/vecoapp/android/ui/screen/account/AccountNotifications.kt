@@ -20,11 +20,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.veco.vecoapp.MR
-import com.veco.vecoapp.android.ui.component.MainScaffold
-import com.veco.vecoapp.android.ui.enums.ToolbarState
-import com.veco.vecoapp.android.ui.navigation.AccountScreen
 import com.veco.vecoapp.android.ui.theme.regBody1
 import com.veco.vecoapp.android.ui.theme.spacing
 import com.veco.vecoapp.android.ui.theme.switchColors
@@ -41,17 +37,10 @@ val notificationOptions = listOf(
 )
 
 @Composable
-fun AccountNotifications(navController: NavHostController) {
-    MainScaffold(
-        stringResource(AccountScreen.Notifications.titleId),
-        false,
-        ToolbarState.Collapsed,
-        navController
-    ) {
-        Column(modifier = Modifier.padding(0.dp, MaterialTheme.spacing.small)) {
-            notificationOptions.forEach {
-                ToggleUnit(title = it.title, onCheckedChange = it.onClick)
-            }
+fun AccountNotifications() {
+    Column(modifier = Modifier.padding(0.dp, MaterialTheme.spacing.small)) {
+        notificationOptions.forEach {
+            ToggleUnit(title = it.title, onCheckedChange = it.onClick)
         }
     }
 }

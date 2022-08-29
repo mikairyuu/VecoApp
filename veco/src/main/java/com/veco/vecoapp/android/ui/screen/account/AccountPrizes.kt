@@ -30,14 +30,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.R
 import com.veco.vecoapp.android.ui.SheetSettings
-import com.veco.vecoapp.android.ui.component.MainScaffold
 import com.veco.vecoapp.android.ui.component.misc.SuggestionCardBase
-import com.veco.vecoapp.android.ui.enums.ToolbarState
-import com.veco.vecoapp.android.ui.navigation.AccountScreen
 import com.veco.vecoapp.android.ui.theme.regBody3
 import com.veco.vecoapp.android.ui.theme.secondaryText
 import com.veco.vecoapp.android.ui.theme.spacing
@@ -73,51 +69,42 @@ val prizeList = listOf(
 @Composable
 fun AccountPrizes(
     bottomSheetState: MutableState<SheetSettings>,
-    coroutineScope: CoroutineScope,
-    navController: NavHostController
+    coroutineScope: CoroutineScope
 ) {
-    MainScaffold(
-        stringResource(AccountScreen.Prizes.titleId),
-        false,
-        ToolbarState.Collapsed,
-        navController,
-        bottomSheetState.value
-    ) {
-        val context = LocalContext.current
-        Column(modifier = Modifier.padding(MaterialTheme.spacing.medium)) {
-            SuggestionCardBase {
-                Text(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(12.dp),
-                    text = stringResource(id = MR.strings.account_point_count.resourceId, 150),
-                    style = MaterialTheme.typography.body1,
-                    fontWeight = FontWeight(700),
-                    textAlign = TextAlign.Center
-                )
-            }
-            Spacer(modifier = Modifier.size(MaterialTheme.spacing.medium))
-            LazyColumn {
-                items(10) {
-                    val prize = prizeList.random()
-                    val color = Color(Random.nextInt())
-                    PrizeRow(
+    val context = LocalContext.current
+    Column(modifier = Modifier.padding(MaterialTheme.spacing.medium)) {
+        SuggestionCardBase {
+            Text(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(12.dp),
+                text = stringResource(id = MR.strings.account_point_count.resourceId, 150),
+                style = MaterialTheme.typography.body1,
+                fontWeight = FontWeight(700),
+                textAlign = TextAlign.Center
+            )
+        }
+        Spacer(modifier = Modifier.size(MaterialTheme.spacing.medium))
+        LazyColumn {
+            items(10) {
+                val prize = prizeList.random()
+                val color = Color(Random.nextInt())
+                PrizeRow(
+                    title = prize.name,
+                    price = prize.price,
+                    desc = prize.description,
+                    color = color
+                ) {
+                    bottomSheetState.value = SheetSettings(
+                        state = bottomSheetState.value.state,
                         title = prize.name,
-                        price = prize.price,
                         desc = prize.description,
+                        points = prize.price,
+                        buttonText = context.getString(MR.strings.button_acquire.resourceId),
                         color = color
-                    ) {
-                        bottomSheetState.value = SheetSettings(
-                            state = bottomSheetState.value.state,
-                            title = prize.name,
-                            desc = prize.description,
-                            points = prize.price,
-                            buttonText = context.getString(MR.strings.button_acquire.resourceId),
-                            color = color
-                        )
-                        coroutineScope.launch {
-                            bottomSheetState.value.state.show()
-                        }
+                    )
+                    coroutineScope.launch {
+                        bottomSheetState.value.state.show()
                     }
                 }
             }

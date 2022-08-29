@@ -1,13 +1,17 @@
 package com.veco.vecoapp.android.ui.navigation
 
+import android.content.Context
 import androidx.annotation.StringRes
 import androidx.compose.runtime.MutableState
+import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.composable
 import androidx.navigation.navigation
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.ui.SheetSettings
+import com.veco.vecoapp.android.ui.component.ScaffoldState
+import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.screen.account.AccountData
 import com.veco.vecoapp.android.ui.screen.account.AccountHome
 import com.veco.vecoapp.android.ui.screen.account.AccountNotifications
@@ -41,16 +45,62 @@ fun NavGraphBuilder.accountNavGraph(
             AccountHome(navController)
         }
         composable(AccountScreen.PersonalData.route) {
-            AccountData(navController)
+            AccountData()
         }
         composable(AccountScreen.Notifications.route) {
-            AccountNotifications(navController)
+            AccountNotifications()
         }
         composable(AccountScreen.ChangePassword.route) {
             AccountPassword(navController)
         }
         composable(AccountScreen.Prizes.route) {
-            AccountPrizes(bottomSheetState, coroutineScope, navController)
+            AccountPrizes(bottomSheetState, coroutineScope)
+        }
+    }
+}
+
+fun accountScaffoldGraph(
+    backStackEntry: NavBackStackEntry,
+    context: Context
+): ScaffoldState? {
+    return when (backStackEntry.destination.route) {
+        AccountScreen.Home.route -> {
+            ScaffoldState(
+                context.getString(AccountScreen.Home.titleId),
+                true,
+                ToolbarState.Expandable
+            )
+        }
+        AccountScreen.PersonalData.route -> {
+            ScaffoldState(
+                context.getString(AccountScreen.PersonalData.titleId),
+                false,
+                ToolbarState.Collapsed
+            )
+        }
+        AccountScreen.Notifications.route -> {
+            ScaffoldState(
+                context.getString(AccountScreen.Notifications.titleId),
+                false,
+                ToolbarState.Collapsed
+            )
+        }
+        AccountScreen.ChangePassword.route -> {
+            ScaffoldState(
+                context.getString(AccountScreen.ChangePassword.titleId),
+                false,
+                ToolbarState.Collapsed
+            )
+        }
+        AccountScreen.Prizes.route -> {
+            ScaffoldState(
+                context.getString(AccountScreen.Prizes.titleId),
+                false,
+                ToolbarState.Collapsed
+            )
+        }
+        else -> {
+            null
         }
     }
 }

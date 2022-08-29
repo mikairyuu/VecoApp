@@ -18,8 +18,6 @@ fun AuthPasswordEmail(navController: NavHostController, viewModel: AuthPasswordV
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
     FieldButtonTemplate(
-        screenTitle = stringResource(id = MR.strings.auth_pwd_restore.resourceId),
-        navController = navController,
         uiState = uiState,
         onValueChange = { true },
         onClick = {

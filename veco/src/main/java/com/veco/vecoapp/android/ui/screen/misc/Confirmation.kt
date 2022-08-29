@@ -57,25 +57,21 @@ import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.R
-import com.veco.vecoapp.android.ui.component.MainScaffold
 import com.veco.vecoapp.android.ui.component.misc.VecoButton
 import com.veco.vecoapp.android.ui.component.misc.VecoHeadline
 import com.veco.vecoapp.android.ui.enums.ResultState
-import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.navigation.Screen
 
 @Composable
 fun ConfirmationRoute(navController: NavHostController) {
-    MainScaffold("", false, ToolbarState.Collapsed, navController = navController) {
-        Column(modifier = Modifier.padding(16.dp, 24.dp, 16.dp, 16.dp)) {
-            Headline()
-            ImagePicker()
-            Box(Modifier.fillMaxSize()) {
-                VecoButton(
-                    text = stringResource(MR.strings.button_send.resourceId),
-                    modifier = Modifier.align(Alignment.BottomCenter)
-                ) { navController.navigate(Screen.Review.route) }
-            }
+    Column(modifier = Modifier.padding(16.dp, 24.dp, 16.dp, 16.dp)) {
+        Headline()
+        ImagePicker()
+        Box(Modifier.fillMaxSize()) {
+            VecoButton(
+                text = stringResource(MR.strings.button_send.resourceId),
+                modifier = Modifier.align(Alignment.BottomCenter)
+            ) { navController.navigate(Screen.Review.route) }
         }
     }
 }

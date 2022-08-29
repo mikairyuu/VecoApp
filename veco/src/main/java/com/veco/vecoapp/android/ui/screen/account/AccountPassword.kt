@@ -16,12 +16,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.veco.vecoapp.MR
-import com.veco.vecoapp.android.ui.component.MainScaffold
 import com.veco.vecoapp.android.ui.component.input.VecoTextField
 import com.veco.vecoapp.android.ui.component.misc.VecoButton
 import com.veco.vecoapp.android.ui.component.misc.VecoHeadline
-import com.veco.vecoapp.android.ui.enums.ToolbarState
-import com.veco.vecoapp.android.ui.navigation.AccountScreen
 import com.veco.vecoapp.android.ui.navigation.AuthScreen
 import com.veco.vecoapp.android.ui.theme.spacing
 import com.veco.vecoapp.presentation.account.AccountPasswordViewModel
@@ -32,31 +29,24 @@ fun AccountPassword(
     navController: NavHostController,
     viewModel: AccountPasswordViewModel = viewModel()
 ) {
-    MainScaffold(
-        stringResource(AccountScreen.ChangePassword.titleId),
-        false,
-        ToolbarState.Collapsed,
-        navController
+    val step by viewModel.step.collectAsState()
+    Column(
+        modifier = Modifier.padding(MaterialTheme.spacing.medium, 24.dp),
+        verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        val step by viewModel.step.collectAsState()
-        Column(
-            modifier = Modifier.padding(MaterialTheme.spacing.medium, 24.dp),
-            verticalArrangement = Arrangement.spacedBy(24.dp)
-        ) {
-            VecoHeadline(
-                text1 = if (step == PasswordChangeStep.OLD_PASSWORD) {
-                    stringResource(MR.strings.account_pwd_title_1.resourceId)
-                } else {
-                    stringResource(MR.strings.account_pwd_title_2.resourceId)
-                },
-                text2 = if (step == PasswordChangeStep.OLD_PASSWORD) {
-                    stringResource(MR.strings.account_pwd_desc_1.resourceId)
-                } else {
-                    stringResource(MR.strings.account_pwd_desc_2.resourceId)
-                }
-            )
-            AccountPasswordContents(step, navController, viewModel)
-        }
+        VecoHeadline(
+            text1 = if (step == PasswordChangeStep.OLD_PASSWORD) {
+                stringResource(MR.strings.account_pwd_title_1.resourceId)
+            } else {
+                stringResource(MR.strings.account_pwd_title_2.resourceId)
+            },
+            text2 = if (step == PasswordChangeStep.OLD_PASSWORD) {
+                stringResource(MR.strings.account_pwd_desc_1.resourceId)
+            } else {
+                stringResource(MR.strings.account_pwd_desc_2.resourceId)
+            }
+        )
+        AccountPasswordContents(step, navController, viewModel)
     }
 }
 

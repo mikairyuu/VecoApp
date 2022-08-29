@@ -19,9 +19,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
-import androidx.navigation.NavHostController
-import com.veco.vecoapp.android.ui.component.MainScaffold
-import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.theme.regBody1
 import com.veco.vecoapp.android.ui.theme.regBody2
 import com.veco.vecoapp.android.ui.theme.secondaryText
@@ -29,15 +26,8 @@ import com.veco.vecoapp.android.ui.theme.spacing
 import com.veco.vecoapp.utils.MaterialElemType
 
 @Composable
-fun MaterialDetails(id: Int, navController: NavHostController) {
-    MainScaffold(
-        "",
-        false,
-        ToolbarState.Collapsed,
-        navController = navController
-    ) {
-        MaterialContents(material = materialList[id])
-    }
+fun MaterialDetails(id: Int) {
+    MaterialContents(material = materialList[id])
 }
 
 @Composable

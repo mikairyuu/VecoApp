@@ -12,6 +12,8 @@ import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
@@ -27,7 +29,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.R
-import com.veco.vecoapp.android.ui.component.MainScaffold
+import com.veco.vecoapp.android.ui.component.ScaffoldState
 import com.veco.vecoapp.android.ui.component.input.VecoTextField
 import com.veco.vecoapp.android.ui.component.misc.VecoButton
 import com.veco.vecoapp.android.ui.component.misc.VecoHeadline
@@ -45,66 +47,68 @@ import com.veco.vecoapp.presentation.auth.AuthState
 @Composable
 fun AuthHome(
     navController: NavHostController,
+    scaffoldState: MutableState<ScaffoldState>,
     viewModel: AuthHomeViewModel = viewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
     val authState by viewModel.authState.collectAsState()
-    MainScaffold(
-        stringResource(
-            id = if (authState == AuthState.LOGIN) {
-                MR.strings.string_register.resourceId
-            } else {
-                MR.strings.auth_login_button.resourceId
+    val context = LocalContext.current
+    LaunchedEffect(key1 = authState) {
+        scaffoldState.value = ScaffoldState(
+            context.getString(
+                if (authState == AuthState.LOGIN) {
+                    MR.strings.string_register.resourceId
+                } else {
+                    MR.strings.auth_login_button.resourceId
+                }
+            ),
+            false,
+            ToolbarState.Button {
+                viewModel.changeAuthState()
             }
-        ),
-        false,
-        ToolbarState.Button {
-            viewModel.changeAuthState()
-        },
-        navController = navController
+        )
+    }
+    Column(
+        modifier = Modifier.padding(16.dp, 24.dp, 16.dp, 0.dp),
+        verticalArrangement = Arrangement.spacedBy(24.dp)
     ) {
-        Column(
-            modifier = Modifier.padding(16.dp, 24.dp, 16.dp, 0.dp),
-            verticalArrangement = Arrangement.spacedBy(24.dp)
-        ) {
-            VecoHeadline(
-                stringResource(
-                    id = if (authState == AuthState.LOGIN) {
-                        MR.strings.auth_login_title.resourceId
-                    } else {
-                        MR.strings.string_register.resourceId
-                    }
-                ),
-                stringResource(
-                    id = if (authState == AuthState.LOGIN) {
-                        MR.strings.auth_login_desc.resourceId
-                    } else {
-                        MR.strings.auth_register_desc.resourceId
-                    }
-                )
+        VecoHeadline(
+            stringResource(
+                id = if (authState == AuthState.LOGIN) {
+                    MR.strings.auth_login_title.resourceId
+                } else {
+                    MR.strings.string_register.resourceId
+                }
+            ),
+            stringResource(
+                id = if (authState == AuthState.LOGIN) {
+                    MR.strings.auth_login_desc.resourceId
+                } else {
+                    MR.strings.auth_register_desc.resourceId
+                }
             )
-            AuthInputArea(authState, viewModel, navController, uiState)
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(id = MR.strings.auth_other_ways.resourceId),
-                style = MaterialTheme.typography.body2,
-                textAlign = TextAlign.Center
-            )
-            AuthSocialButtons()
-            Text(
-                modifier = Modifier.fillMaxWidth(),
-                text = stringResource(
-                    id = if (authState == AuthState.LOGIN) {
-                        MR.strings.auth_login_policy.resourceId
-                    } else {
-                        MR.strings.auth_register_policy.resourceId
-                    }
-                ),
-                style = MaterialTheme.typography.regBody3,
-                color = MaterialTheme.colors.secondaryText,
-                textAlign = TextAlign.Center
-            )
-        }
+        )
+        AuthInputArea(authState, viewModel, navController, uiState)
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = stringResource(id = MR.strings.auth_other_ways.resourceId),
+            style = MaterialTheme.typography.body2,
+            textAlign = TextAlign.Center
+        )
+        AuthSocialButtons()
+        Text(
+            modifier = Modifier.fillMaxWidth(),
+            text = stringResource(
+                id = if (authState == AuthState.LOGIN) {
+                    MR.strings.auth_login_policy.resourceId
+                } else {
+                    MR.strings.auth_register_policy.resourceId
+                }
+            ),
+            style = MaterialTheme.typography.regBody3,
+            color = MaterialTheme.colors.secondaryText,
+            textAlign = TextAlign.Center
+        )
     }
 }
 

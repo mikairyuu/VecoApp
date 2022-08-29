@@ -36,9 +36,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.ui.SheetSettings
-import com.veco.vecoapp.android.ui.component.MainScaffold
 import com.veco.vecoapp.android.ui.component.misc.DoubleInfoUnit
-import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.navigation.Screen
 import com.veco.vecoapp.android.ui.theme.body3
 import com.veco.vecoapp.android.ui.theme.lightGray
@@ -67,15 +65,7 @@ fun HomeRoute(
     sheetSettings: MutableState<SheetSettings>,
     viewModel: HomeViewModel = viewModel()
 ) {
-    MainScaffold(
-        stringResource(Screen.Home.titleId),
-        true,
-        ToolbarState.Expandable,
-        navController = navController,
-        bottomSheetState = sheetSettings.value
-    ) {
-        HomeRouteContent(sheetSettings, navController, viewModel, coroutineScope)
-    }
+    HomeRouteContent(sheetSettings, navController, viewModel, coroutineScope)
 }
 
 @Composable

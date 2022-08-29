@@ -18,8 +18,6 @@ fun AuthName(navController: NavHostController, viewModel: AuthNameViewModel = vi
     val uiState by viewModel.uiState.collectAsState()
     val context = LocalContext.current
     FieldButtonTemplate(
-        screenTitle = "",
-        navController = navController,
         uiState = uiState,
         onValueChange = { true },
         onClick = {
