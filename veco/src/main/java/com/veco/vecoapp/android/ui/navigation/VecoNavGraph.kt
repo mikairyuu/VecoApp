@@ -3,22 +3,27 @@ package com.veco.vecoapp.android.ui.navigation
 import android.content.Context
 import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.fadeIn
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.google.accompanist.navigation.animation.AnimatedNavHost
+import com.google.accompanist.navigation.animation.composable
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.R
 import com.veco.vecoapp.android.ui.SheetSettings
 import com.veco.vecoapp.android.ui.component.ScaffoldState
 import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.screen.HomeRoute
+import com.veco.vecoapp.android.ui.screen.map.MapHome
 import com.veco.vecoapp.android.ui.screen.materials.MaterialDetails
 import com.veco.vecoapp.android.ui.screen.materials.MaterialHome
 import com.veco.vecoapp.android.ui.screen.misc.ConfirmationRoute
@@ -42,12 +47,13 @@ sealed class Screen(
         Screen("confirmation", MR.strings.home_title.resourceId)
 
     object Account :
-        Screen("account", MR.strings.account_title.resourceId, R.drawable.ic_home_account)
+        Screen("account_home", MR.strings.account_title.resourceId, R.drawable.ic_home_account)
 
     object Review :
         Screen("review", MR.strings.account_title.resourceId, R.drawable.ic_home_account)
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun VecoNavGraph(
     modifier: Modifier = Modifier,
@@ -57,18 +63,38 @@ fun VecoNavGraph(
     coroutineScope: CoroutineScope,
     scaffoldState: MutableState<ScaffoldState>
 ) {
-    NavHost(
+    AnimatedNavHost(
         navController = navController,
         startDestination = startDestination,
         modifier = modifier
     ) {
-        composable(Screen.Home.route) {
+        composable(Screen.Home.route, enterTransition = {
+            if (destinationList.find { screen -> screen.route == initialState.destination.route } != null) {
+                slideIntoContainer(AnimatedContentScope.SlideDirection.Right)
+            } else {
+                fadeIn()
+            }
+        }, exitTransition = { ExitTransition.None }) {
             HomeRoute(navController, coroutineScope, sheetSettings)
         }
-        composable(Screen.Confirmation.route) {
-            ConfirmationRoute(navController)
+        composable(Screen.Map.route, enterTransition = {
+            when (initialState.destination.route) {
+                Screen.Home.route -> slideIntoContainer(AnimatedContentScope.SlideDirection.Left)
+                Screen.Material.route -> slideIntoContainer(AnimatedContentScope.SlideDirection.Right)
+                Screen.Account.route -> slideIntoContainer(AnimatedContentScope.SlideDirection.Right)
+                else -> fadeIn()
+            }
+        }, exitTransition = { ExitTransition.None }) {
+            MapHome(navController)
         }
-        composable(Screen.Material.route) {
+        composable(Screen.Material.route, enterTransition = {
+            when (initialState.destination.route) {
+                Screen.Home.route -> slideIntoContainer(AnimatedContentScope.SlideDirection.Left)
+                Screen.Map.route -> slideIntoContainer(AnimatedContentScope.SlideDirection.Left)
+                Screen.Account.route -> slideIntoContainer(AnimatedContentScope.SlideDirection.Right)
+                else -> fadeIn()
+            }
+        }, exitTransition = { ExitTransition.None }) {
             MaterialHome(navController)
         }
         composable(
@@ -77,17 +103,17 @@ fun VecoNavGraph(
         ) {
             MaterialDetails(it.arguments?.getInt("matId") ?: 0)
         }
-
+        composable(Screen.Confirmation.route) {
+            ConfirmationRoute(navController)
+        }
         composable(Screen.Review.route) {
             ReviewRoute(navController)
         }
-
         accountNavGraph(
             navController,
             sheetSettings,
             coroutineScope
         )
-
         authNavGraph(
             navController,
             scaffoldState

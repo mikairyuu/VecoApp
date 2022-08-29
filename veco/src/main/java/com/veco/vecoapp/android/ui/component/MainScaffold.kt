@@ -3,6 +3,7 @@ package com.veco.vecoapp.android.ui.component
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.slideInVertically
 import androidx.compose.animation.slideOutVertically
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -60,14 +61,15 @@ fun MainScaffold(
                 )
             },
             content = {
-                if (scaffoldState.toolbarState == ToolbarState.Expandable) {
-                    ExpandableToolbarScaffold(
-                        modifier = Modifier.padding(it),
-                        screenTitle = scaffoldState.screenTitle,
-                        content = content
-                    )
-                } else {
-                    content()
+                Box(modifier = Modifier.padding(it)) {
+                    if (scaffoldState.toolbarState == ToolbarState.Expandable) {
+                        ExpandableToolbarScaffold(
+                            screenTitle = scaffoldState.screenTitle,
+                            content = content
+                        )
+                    } else {
+                        content()
+                    }
                 }
             }
         )

@@ -2,12 +2,16 @@ package com.veco.vecoapp.android.ui.navigation
 
 import android.content.Context
 import androidx.annotation.StringRes
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.EnterTransition
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.MutableState
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.composable
-import androidx.navigation.navigation
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.navigation
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.ui.SheetSettings
 import com.veco.vecoapp.android.ui.component.ScaffoldState
@@ -32,6 +36,7 @@ sealed class AccountScreen(val route: String, @StringRes val titleId: Int) {
         AccountScreen("account_prizes", MR.strings.account_prizes.resourceId)
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.accountNavGraph(
     navController: NavHostController,
     bottomSheetState: MutableState<SheetSettings>,
@@ -39,21 +44,42 @@ fun NavGraphBuilder.accountNavGraph(
 ) {
     navigation(
         startDestination = AccountScreen.Home.route,
-        route = Screen.Account.route
+        route = "account"
     ) {
-        composable(AccountScreen.Home.route) {
+        composable(AccountScreen.Home.route, enterTransition = {
+            if (initialState.destination.route == AccountScreen.Home.route) {
+                EnterTransition.None
+            } else if (destinationList.find { screen -> screen.route == initialState.destination.route } != null) {
+                slideIntoContainer(AnimatedContentScope.SlideDirection.Left)
+            } else {
+                slideIntoContainer(AnimatedContentScope.SlideDirection.Right)
+            }
+        }, exitTransition = { ExitTransition.None }) {
             AccountHome(navController)
         }
-        composable(AccountScreen.PersonalData.route) {
+        composable(
+            AccountScreen.PersonalData.route,
+            enterTransition = { slideIntoContainer(AnimatedContentScope.SlideDirection.Left) },
+            exitTransition = { ExitTransition.None }
+        ) {
             AccountData()
         }
-        composable(AccountScreen.Notifications.route) {
+        composable(
+            AccountScreen.Notifications.route,
+            enterTransition = { slideIntoContainer(AnimatedContentScope.SlideDirection.Left) }
+        ) {
             AccountNotifications()
         }
-        composable(AccountScreen.ChangePassword.route) {
+        composable(
+            AccountScreen.ChangePassword.route,
+            enterTransition = { slideIntoContainer(AnimatedContentScope.SlideDirection.Left) }
+        ) {
             AccountPassword(navController)
         }
-        composable(AccountScreen.Prizes.route) {
+        composable(
+            AccountScreen.Prizes.route,
+            enterTransition = { slideIntoContainer(AnimatedContentScope.SlideDirection.Left) }
+        ) {
             AccountPrizes(bottomSheetState, coroutineScope)
         }
     }

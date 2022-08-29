@@ -2,6 +2,7 @@
 
 package com.veco.vecoapp.android.ui
 
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
@@ -12,7 +13,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
-import androidx.navigation.compose.rememberNavController
+import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.veco.vecoapp.android.ui.component.MainScaffold
 import com.veco.vecoapp.android.ui.component.ScaffoldState
@@ -33,10 +34,11 @@ data class SheetSettings(
     val onClick: () -> Unit = {}
 )
 
+@OptIn(ExperimentalAnimationApi::class)
 @Composable
 fun VecoApp() {
     VecoAppTheme {
-        val navController = rememberNavController()
+        val navController = rememberAnimatedNavController()
         val systemUiController = rememberSystemUiController()
         val modalBottomSheetState =
             rememberModalBottomSheetState(
