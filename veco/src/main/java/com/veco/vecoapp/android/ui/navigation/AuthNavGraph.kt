@@ -1,12 +1,15 @@
 package com.veco.vecoapp.android.ui.navigation
 
 import android.content.Context
+import androidx.compose.animation.AnimatedContentScope
+import androidx.compose.animation.ExitTransition
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.MutableState
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavHostController
-import androidx.navigation.compose.composable
-import androidx.navigation.navigation
+import com.google.accompanist.navigation.animation.composable
+import com.google.accompanist.navigation.animation.navigation
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.ui.component.ScaffoldState
 import com.veco.vecoapp.android.ui.enums.ToolbarState
@@ -26,6 +29,7 @@ sealed class AuthScreen(val route: String) {
     object PasswordInput : AuthScreen("auth_pwd_input")
 }
 
+@OptIn(ExperimentalAnimationApi::class)
 fun NavGraphBuilder.authNavGraph(
     navController: NavHostController,
     scaffoldState: MutableState<ScaffoldState>
@@ -34,22 +38,34 @@ fun NavGraphBuilder.authNavGraph(
         startDestination = AuthScreen.Home.route,
         route = "auth"
     ) {
-        composable(AuthScreen.Home.route) {
+        composable(AuthScreen.Home.route, enterTransition = {
+            slideIntoContainer(AnimatedContentScope.SlideDirection.Right)
+        }, exitTransition = { ExitTransition.None }) {
             AuthHome(navController, scaffoldState)
         }
-        composable(AuthScreen.RegisterEmail.route) {
+        composable(AuthScreen.RegisterEmail.route, enterTransition = {
+            slideIntoContainer(AnimatedContentScope.SlideDirection.Left)
+        }, exitTransition = { ExitTransition.None }) {
             AuthEmail(navController)
         }
-        composable(AuthScreen.RegisterName.route) {
+        composable(AuthScreen.RegisterName.route, enterTransition = {
+            slideIntoContainer(AnimatedContentScope.SlideDirection.Left)
+        }, exitTransition = { ExitTransition.None }) {
             AuthName(navController)
         }
-        composable(AuthScreen.PasswordEmail.route) {
+        composable(AuthScreen.PasswordEmail.route, enterTransition = {
+            slideIntoContainer(AnimatedContentScope.SlideDirection.Left)
+        }, exitTransition = { ExitTransition.None }) {
             AuthPasswordEmail(navController)
         }
-        composable(AuthScreen.PasswordCode.route) {
+        composable(AuthScreen.PasswordCode.route, enterTransition = {
+            slideIntoContainer(AnimatedContentScope.SlideDirection.Left)
+        }, exitTransition = { ExitTransition.None }) {
             AuthPasswordCode(navController)
         }
-        composable(AuthScreen.PasswordInput.route) {
+        composable(AuthScreen.PasswordInput.route, enterTransition = {
+            slideIntoContainer(AnimatedContentScope.SlideDirection.Left)
+        }, exitTransition = { ExitTransition.None }) {
             AuthPasswordInput(navController)
         }
     }
