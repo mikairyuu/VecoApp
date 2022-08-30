@@ -13,20 +13,33 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.ExperimentalMaterialApi
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetLayout
+import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.alpha
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.veco.vecoapp.MR
-import com.veco.vecoapp.android.ui.SheetSettings
 import com.veco.vecoapp.android.ui.component.misc.DoubleInfoUnit
 import com.veco.vecoapp.android.ui.component.misc.VecoButton
 import com.veco.vecoapp.android.ui.theme.regBody1
 import com.veco.vecoapp.android.ui.theme.spacing
 import com.veco.vecoapp.android.ui.theme.tertiaryText
+
+data class SheetSettings @OptIn(ExperimentalMaterialApi::class) constructor(
+    val state: ModalBottomSheetState,
+    val title: String = "",
+    val desc: String = "",
+    val points: Int = 0,
+    val deadline: String = "",
+    val frequency: String = "",
+    val buttonText: String = "",
+    val color: Color? = null, // Change to bitmap later
+    val onClick: () -> Unit = {}
+)
 
 @OptIn(ExperimentalMaterialApi::class)
 @Composable

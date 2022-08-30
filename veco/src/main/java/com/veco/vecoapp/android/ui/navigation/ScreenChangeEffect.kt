@@ -17,8 +17,8 @@ fun ScreenChangeEffect(
 ) {
     LaunchedEffect(navController) {
         navController.currentBackStackEntryFlow.collect { backStackEntry ->
-            for (func in scaffoldGraphs) {
-                func.invoke(backStackEntry, context)?.let { scaffoldState.value = it }
+            scaffoldGraphs.forEach loop@{ func ->
+                func.invoke(backStackEntry, context)?.let { scaffoldState.value = it; return@loop }
             }
         }
     }

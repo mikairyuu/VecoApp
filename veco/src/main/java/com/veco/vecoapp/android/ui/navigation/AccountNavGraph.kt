@@ -13,8 +13,8 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.navigation
 import com.veco.vecoapp.MR
-import com.veco.vecoapp.android.ui.SheetSettings
 import com.veco.vecoapp.android.ui.component.ScaffoldState
+import com.veco.vecoapp.android.ui.component.SheetSettings
 import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.screen.account.AccountData
 import com.veco.vecoapp.android.ui.screen.account.AccountHome
@@ -66,19 +66,22 @@ fun NavGraphBuilder.accountNavGraph(
         }
         composable(
             AccountScreen.Notifications.route,
-            enterTransition = { slideIntoContainer(AnimatedContentScope.SlideDirection.Left) }
+            enterTransition = { slideIntoContainer(AnimatedContentScope.SlideDirection.Left) },
+            exitTransition = { ExitTransition.None }
         ) {
             AccountNotifications()
         }
         composable(
             AccountScreen.ChangePassword.route,
-            enterTransition = { slideIntoContainer(AnimatedContentScope.SlideDirection.Left) }
+            enterTransition = { slideIntoContainer(AnimatedContentScope.SlideDirection.Left) },
+            exitTransition = { ExitTransition.None }
         ) {
             AccountPassword(navController)
         }
         composable(
             AccountScreen.Prizes.route,
-            enterTransition = { slideIntoContainer(AnimatedContentScope.SlideDirection.Left) }
+            enterTransition = { slideIntoContainer(AnimatedContentScope.SlideDirection.Left) },
+            exitTransition = { ExitTransition.None }
         ) {
             AccountPrizes(bottomSheetState, coroutineScope)
         }
@@ -94,7 +97,7 @@ fun accountScaffoldGraph(
             ScaffoldState(
                 context.getString(AccountScreen.Home.titleId),
                 true,
-                ToolbarState.Expandable
+                ToolbarState.ExpandableExpanded
             )
         }
         AccountScreen.PersonalData.route -> {

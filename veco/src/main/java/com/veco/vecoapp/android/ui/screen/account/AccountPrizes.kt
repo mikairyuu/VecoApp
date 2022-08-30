@@ -32,7 +32,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.R
-import com.veco.vecoapp.android.ui.SheetSettings
+import com.veco.vecoapp.android.ui.component.SheetSettings
 import com.veco.vecoapp.android.ui.component.misc.SuggestionCardBase
 import com.veco.vecoapp.android.ui.theme.regBody3
 import com.veco.vecoapp.android.ui.theme.secondaryText

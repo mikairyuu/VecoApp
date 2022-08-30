@@ -4,7 +4,6 @@ package com.veco.vecoapp.android.ui
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.material.ExperimentalMaterialApi
-import androidx.compose.material.ModalBottomSheetState
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.rememberModalBottomSheetState
 import androidx.compose.runtime.Composable
@@ -17,22 +16,11 @@ import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import com.veco.vecoapp.android.ui.component.MainScaffold
 import com.veco.vecoapp.android.ui.component.ScaffoldState
+import com.veco.vecoapp.android.ui.component.SheetSettings
 import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.navigation.ScreenChangeEffect
 import com.veco.vecoapp.android.ui.navigation.VecoNavGraph
 import com.veco.vecoapp.android.ui.theme.VecoAppTheme
-
-data class SheetSettings(
-    val state: ModalBottomSheetState,
-    val title: String = "",
-    val desc: String = "",
-    val points: Int = 0,
-    val deadline: String = "",
-    val frequency: String = "",
-    val buttonText: String = "",
-    val color: Color? = null, // Change to bitmap later
-    val onClick: () -> Unit = {}
-)
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
@@ -50,7 +38,7 @@ fun VecoApp() {
         systemUiController.setSystemBarsColor(
             color = Color.White
         )
-        val scaffoldState = remember { mutableStateOf(ScaffoldState("", false, ToolbarState.None)) }
+        val scaffoldState = remember { mutableStateOf(ScaffoldState("", false, ToolbarState.Expandable)) }
         val context = LocalContext.current
         ScreenChangeEffect(navController, context, scaffoldState)
         MainScaffold(scaffoldState = scaffoldState.value, navController = navController) {

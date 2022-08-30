@@ -19,8 +19,8 @@ import com.google.accompanist.navigation.animation.AnimatedNavHost
 import com.google.accompanist.navigation.animation.composable
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.R
-import com.veco.vecoapp.android.ui.SheetSettings
 import com.veco.vecoapp.android.ui.component.ScaffoldState
+import com.veco.vecoapp.android.ui.component.SheetSettings
 import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.screen.HomeRoute
 import com.veco.vecoapp.android.ui.screen.map.MapHome
@@ -85,7 +85,7 @@ fun VecoNavGraph(
                 else -> fadeIn()
             }
         }, exitTransition = { ExitTransition.None }) {
-            MapHome(navController)
+            MapHome()
         }
         composable(Screen.Material.route, enterTransition = {
             when (initialState.destination.route) {
