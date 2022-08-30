@@ -5,7 +5,8 @@ plugins {
     id("org.jlleitschuh.gradle.ktlint")
 }
 
-val composeVersion = "1.2.0"
+val composeVersion = "1.2.1"
+val composeCompilerVersion = "1.2.0"
 val accompanistVersion = "0.25.1"
 
 android {
@@ -21,7 +22,7 @@ android {
         compose = true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion = composeVersion
+        kotlinCompilerExtensionVersion = composeCompilerVersion
     }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
