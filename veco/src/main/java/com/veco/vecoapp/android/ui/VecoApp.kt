@@ -38,10 +38,15 @@ fun VecoApp() {
         systemUiController.setSystemBarsColor(
             color = Color.White
         )
-        val scaffoldState = remember { mutableStateOf(ScaffoldState("", false, ToolbarState.Expandable)) }
+        val scaffoldState =
+            remember { mutableStateOf(ScaffoldState("", false, ToolbarState.Expandable)) }
         val context = LocalContext.current
         ScreenChangeEffect(navController, context, scaffoldState)
-        MainScaffold(scaffoldState = scaffoldState.value, navController = navController) {
+        MainScaffold(
+            scaffoldState = scaffoldState.value,
+            bottomSheetState = sheetSettings.value,
+            navController = navController
+        ) {
             VecoNavGraph(
                 navController = navController,
                 sheetSettings = sheetSettings,
