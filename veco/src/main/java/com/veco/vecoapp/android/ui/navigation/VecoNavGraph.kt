@@ -130,7 +130,7 @@ fun vecoScaffoldGraph(
             ScaffoldState(
                 context.getString(Screen.Home.titleId),
                 true,
-                ToolbarState.Expandable
+                ToolbarState.ExpandableExpanded
             )
         }
         Screen.Material.route -> {
