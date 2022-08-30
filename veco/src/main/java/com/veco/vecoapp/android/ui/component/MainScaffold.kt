@@ -1,8 +1,5 @@
 package com.veco.vecoapp.android.ui.component
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.animation.slideInVertically
-import androidx.compose.animation.slideOutVertically
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
@@ -49,16 +46,9 @@ fun MainScaffold(
                 }
             },
             bottomBar = {
-                AnimatedVisibility(
-                    visible = scaffoldState.navigationVisible,
-                    enter = slideInVertically(initialOffsetY = { it }),
-                    exit = slideOutVertically(targetOffsetY = { it }),
-                    content = {
-                        VecoBottomNavigation(
-                            navController = navController
-                        )
-                    }
-                )
+                if (scaffoldState.navigationVisible) {
+                    VecoBottomNavigation(navController = navController)
+                }
             },
             content = {
                 Box(modifier = Modifier.padding(it)) {
