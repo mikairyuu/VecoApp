@@ -34,6 +34,7 @@ kotlin {
                 implementation("io.ktor:ktor-client-core:$ktorVersion")
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
+                implementation("io.ktor:ktor-client-auth:$ktorVersion")
             }
         }
         val commonTest by getting {
@@ -47,6 +48,7 @@ kotlin {
                 api("dev.icerock.moko:resources-compose:0.20.1")
                 api("dev.icerock.moko:mvvm-flow-compose:$mvvmVersion")
                 implementation("io.ktor:ktor-client-android:$ktorVersion")
+                implementation("androidx.security:security-crypto-ktx:1.1.0-alpha03")
             }
         }
         val androidTest by getting

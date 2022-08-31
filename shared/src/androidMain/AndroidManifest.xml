@@ -3,4 +3,6 @@
     package="com.veco.vecoapp">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <application
+        android:name = ".VecoAndroidApp"/>
 </manifest>
