@@ -28,7 +28,6 @@ import com.veco.vecoapp.android.R
 import com.veco.vecoapp.android.ui.component.misc.VecoSuggestionCard
 import com.veco.vecoapp.android.ui.navigation.AccountScreen
 import com.veco.vecoapp.android.ui.navigation.AuthScreen
-import com.veco.vecoapp.android.ui.theme.red
 import com.veco.vecoapp.android.ui.theme.regBody1
 import com.veco.vecoapp.android.ui.theme.spacing
 import dev.icerock.moko.graphics.colorInt

@@ -44,7 +44,7 @@ fun NavGraphBuilder.accountNavGraph(
 ) {
     navigation(
         startDestination = AccountScreen.Home.route,
-        route = "account"
+        route = Screen.Account.route
     ) {
         composable(AccountScreen.Home.route, enterTransition = {
             if (initialState.destination.route == AccountScreen.Home.route) {

@@ -16,10 +16,10 @@ import com.veco.vecoapp.android.ui.component.misc.VecoIconButton
 import com.veco.vecoapp.android.ui.navigation.AuthScreen
 import com.veco.vecoapp.android.ui.theme.secondaryBackground
 import com.veco.vecoapp.android.ui.theme.spacing
-import com.veco.vecoapp.presentation.auth.AuthEmailViewModel
+import com.veco.vecoapp.presentation.auth.AuthVerificationViewModel
 
 @Composable
-fun AuthEmail(navController: NavHostController, viewModel: AuthEmailViewModel = viewModel()) {
+fun AuthEmail(navController: NavHostController, viewModel: AuthVerificationViewModel = viewModel()) {
     Column(
         modifier = Modifier.padding(MaterialTheme.spacing.medium, MaterialTheme.spacing.big),
         verticalArrangement = Arrangement.spacedBy(MaterialTheme.spacing.big)

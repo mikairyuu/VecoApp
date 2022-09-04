@@ -8,7 +8,6 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material.Button
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -68,6 +67,43 @@ fun AuthHome(
             }
         )
     }
+    LaunchedEffect(key1 = uiState) {
+        when (uiState) {
+            is UIState.Success -> {
+                if (authState == AuthState.REGISTER) {
+                    navController.navigate(
+                        AuthScreen.RegisterEmail.route
+                    )
+                } else {
+                    navController.navigate(
+                        Screen.Home.route
+                    ) {
+                        popUpTo(0)
+                        launchSingleTop
+                    }
+                }
+            }
+            is UIState.Error -> {
+                Toast.makeText(context, "", Toast.LENGTH_SHORT).show()
+            }
+            else -> {}
+        }
+    }
+    AuthContents(
+        authState = authState,
+        viewModel = viewModel,
+        navController = navController,
+        uiState = uiState
+    )
+}
+
+@Composable
+fun AuthContents(
+    authState: AuthState,
+    viewModel: AuthHomeViewModel,
+    navController: NavHostController,
+    uiState: UIState<Nothing?>
+) {
     Column(
         modifier = Modifier.padding(16.dp, 24.dp, 16.dp, 0.dp),
         verticalArrangement = Arrangement.spacedBy(24.dp)
@@ -119,26 +155,30 @@ fun AuthInputArea(
     navController: NavHostController,
     uiState: UIState<Nothing?>
 ) {
-    val context = LocalContext.current
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
         VecoTextField(
+            textState = viewModel.email,
             hint = stringResource(id = MR.strings.string_email.resourceId),
             imeAction = ImeAction.Next,
             keyboardType = KeyboardType.Email,
-            onValueChange = { true }
+            onValueChange = { viewModel.setAndValidate(viewModel.email, it) }
         )
         VecoTextField(
             hint = stringResource(id = MR.strings.string_password.resourceId),
             imeAction = if (authState == AuthState.LOGIN) ImeAction.Done else ImeAction.Next,
             keyboardType = KeyboardType.Password,
-            onValueChange = { true }
+            textState = viewModel.password,
+            onValueChange = { viewModel.setAndValidate(viewModel.password, it) }
         )
         if (authState == AuthState.REGISTER) {
+            val isPwdValid by viewModel.passwordConfValidState.collectAsState()
             VecoTextField(
                 hint = stringResource(id = MR.strings.string_password_conf.resourceId),
                 imeAction = ImeAction.Done,
                 keyboardType = KeyboardType.Password,
-                onValueChange = { true }
+                textState = viewModel.passwordConf,
+                onValueChange = { viewModel.setAndValidate(viewModel.passwordConf, it) },
+                isError = isPwdValid
             )
         } else {
             Text(
@@ -149,6 +189,7 @@ fun AuthInputArea(
                 style = MaterialTheme.typography.body2
             )
         }
+        val buttonEnabled by viewModel.buttonEnabledState.collectAsState()
         VecoButton(
             text = stringResource(
                 id = if (authState == AuthState.LOGIN) {
@@ -159,23 +200,9 @@ fun AuthInputArea(
             ),
             isLoading = uiState is UIState.Loading,
             onClick = {
-                viewModel.proceed(onError = {
-                    Toast.makeText(context, it, Toast.LENGTH_SHORT).show()
-                }, onProceed = {
-                        if (authState == AuthState.REGISTER) {
-                            navController.navigate(
-                                AuthScreen.RegisterEmail.route
-                            )
-                        } else {
-                            navController.navigate(
-                                Screen.Home.route
-                            ) {
-                                popUpTo(0)
-                                launchSingleTop
-                            }
-                        }
-                    })
-            }
+                viewModel.proceed()
+            },
+            enabled = buttonEnabled
         )
     }
 }

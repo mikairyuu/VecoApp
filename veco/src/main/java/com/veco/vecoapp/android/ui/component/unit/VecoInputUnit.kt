@@ -6,14 +6,13 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.veco.vecoapp.android.ui.component.input.VecoTextField
 import com.veco.vecoapp.android.ui.theme.regBody2
 import com.veco.vecoapp.android.ui.theme.secondaryText
 import com.veco.vecoapp.android.ui.theme.spacing
+import kotlinx.coroutines.flow.MutableStateFlow
 
 /**
  * A component that allows the user to enter a value in a text field and display a label to the left
@@ -21,8 +20,9 @@ import com.veco.vecoapp.android.ui.theme.spacing
 @Composable
 fun VecoInputUnit(
     modifier: Modifier = Modifier,
+    textState: MutableStateFlow<String>,
     @StringRes title: Int,
-    onValueChange: (String) -> Boolean = { true }
+    onValueChange: (String) -> Unit = { textState.value = it }
 ) {
     Column(
         modifier = modifier,
@@ -33,6 +33,6 @@ fun VecoInputUnit(
             color = MaterialTheme.colors.secondaryText,
             text = stringResource(id = title)
         )
-        VecoTextField(onValueChange = onValueChange)
+        VecoTextField(onValueChange = onValueChange, textState = textState)
     }
 }

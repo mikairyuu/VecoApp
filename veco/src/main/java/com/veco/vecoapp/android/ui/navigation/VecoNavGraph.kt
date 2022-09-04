@@ -47,10 +47,13 @@ sealed class Screen(
         Screen("confirmation", MR.strings.home_title.resourceId)
 
     object Account :
-        Screen("account_home", MR.strings.account_title.resourceId, R.drawable.ic_home_account)
+        Screen("account", MR.strings.account_title.resourceId, R.drawable.ic_home_account)
 
     object Review :
         Screen("review", MR.strings.account_title.resourceId, R.drawable.ic_home_account)
+
+    object Auth :
+        Screen("auth", MR.strings.material_title.resourceId, R.drawable.ic_home_materials)
 }
 
 @OptIn(ExperimentalAnimationApi::class)

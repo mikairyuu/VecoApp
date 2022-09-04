@@ -6,11 +6,11 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class AuthNameViewModel : VecoVM() {
+class AuthPwdEmailViewModel : VecoVM() {
     private val _uiState: MutableStateFlow<UIState<Nothing?>> = MutableStateFlow(UIState.Idle())
     val uiState: StateFlow<UIState<Nothing?>> = _uiState
 
-    val name = MutableStateFlow("")
+    val email = MutableStateFlow("")
 
     fun proceed() {
         super.proceed(_uiState) {

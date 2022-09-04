@@ -1,6 +1,6 @@
 package com.veco.vecoapp.storage
 
-expect class KeyValueStorage () {
+expect class KeyValueStorage() {
     fun getString(key: String, encrypted: Boolean = false): String?
     fun getBoolean(key: String, encrypted: Boolean = false): Boolean
     fun getInt(key: String, encrypted: Boolean = false): Int

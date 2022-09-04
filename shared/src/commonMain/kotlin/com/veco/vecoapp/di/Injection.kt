@@ -1,17 +1,23 @@
 package com.veco.vecoapp.di
 
+import com.veco.vecoapp.data.repository.AuthRepository
 import com.veco.vecoapp.data.repository.mock.MockTaskRepository
+import com.veco.vecoapp.domain.repository.IAuthRepository
 import com.veco.vecoapp.domain.repository.ITaskRepository
+import com.veco.vecoapp.storage.KeyDefaults
 import com.veco.vecoapp.storage.KeyValueStorage
 import io.ktor.client.HttpClient
-import io.ktor.client.plugins.auth.*
-import io.ktor.client.plugins.auth.providers.*
-import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.plugins.auth.Auth
+import io.ktor.client.plugins.auth.providers.BearerTokens
+import io.ktor.client.plugins.auth.providers.bearer
 import io.ktor.client.plugins.contentnegotiation.ContentNegotiation
+import io.ktor.client.plugins.defaultRequest
+import io.ktor.client.request.header
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.kodein.di.DI
 import org.kodein.di.bindSingleton
+import org.kodein.di.instance
 
 val di = DI {
     bindSingleton {
@@ -19,8 +25,11 @@ val di = DI {
             install(Auth) {
                 bearer {
                     loadTokens {
-                        // BearerTokens(instance<KeyValueStorage>().getString(KeyDefaults.KEY_USER_TOKEN),"")
-                        BearerTokens("asdf", "")
+                        val str = instance<KeyValueStorage>().getString(KeyDefaults.KEY_USER_TOKEN)
+                        return@loadTokens if (str != null) BearerTokens(
+                            str,
+                            ""
+                        ) else BearerTokens("noToken", "")
                     }
                 }
             }
@@ -34,6 +43,7 @@ val di = DI {
             }
             defaultRequest {
                 url("http://lightfire.duckdns.org/")
+                header("Content-Type", "application/json")
             }
         }
     }
@@ -42,4 +52,5 @@ val di = DI {
 
     // repository
     bindSingleton<ITaskRepository> { MockTaskRepository() }
+    bindSingleton<IAuthRepository> { AuthRepository() }
 }

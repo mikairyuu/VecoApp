@@ -6,11 +6,14 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 
-class AuthNameViewModel : VecoVM() {
+class AuthPwdInputViewModel : VecoVM() {
+
     private val _uiState: MutableStateFlow<UIState<Nothing?>> = MutableStateFlow(UIState.Idle())
     val uiState: StateFlow<UIState<Nothing?>> = _uiState
 
-    val name = MutableStateFlow("")
+    val password = MutableStateFlow("")
+
+    val passwordConf = MutableStateFlow("")
 
     fun proceed() {
         super.proceed(_uiState) {

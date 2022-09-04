@@ -10,18 +10,26 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.ui.component.misc.VecoButton
 import com.veco.vecoapp.android.ui.component.unit.VecoInputUnit
+import com.veco.vecoapp.presentation.account.AccountDataViewModel
 
 @Composable
-fun AccountData() {
+fun AccountData(viewModel: AccountDataViewModel = viewModel()) {
     Column(
         modifier = Modifier.padding(16.dp),
         verticalArrangement = Arrangement.spacedBy(12.dp)
     ) {
-        VecoInputUnit(title = MR.strings.account_name.resourceId)
-        VecoInputUnit(title = MR.strings.string_email.resourceId)
+        VecoInputUnit(
+            title = MR.strings.account_name.resourceId,
+            textState = viewModel.name
+        )
+        VecoInputUnit(
+            title = MR.strings.string_email.resourceId,
+            textState = viewModel.email
+        )
         Box(modifier = Modifier.fillMaxSize()) {
             VecoButton(
                 modifier = Modifier.align(Alignment.BottomCenter),

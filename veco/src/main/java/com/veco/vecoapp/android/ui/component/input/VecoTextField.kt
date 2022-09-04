@@ -12,41 +12,51 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
+import androidx.compose.ui.text.input.PasswordVisualTransformation
+import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.unit.dp
 import com.veco.vecoapp.android.ui.theme.regBody1
 import com.veco.vecoapp.android.ui.theme.secondaryBackground
 import com.veco.vecoapp.android.ui.theme.secondaryText
 import com.veco.vecoapp.android.ui.theme.spacing
+import kotlinx.coroutines.flow.MutableStateFlow
 
 @Composable
 fun VecoTextField(
     modifier: Modifier = Modifier,
+    textState: MutableStateFlow<String>,
     singleLine: Boolean = true,
     imeAction: ImeAction = ImeAction.Done,
     keyboardType: KeyboardType = KeyboardType.Text,
     hint: String = "",
-    onValueChange: (String) -> Boolean
+    isError: Boolean = false,
+    onValueChange: (String) -> Unit = { textState.value = it }
 ) {
     val textFieldInteraction = remember { MutableInteractionSource() }
     val textFieldFocused = textFieldInteraction.collectIsFocusedAsState().value
-    var text by remember { mutableStateOf("") }
+    val text by textState.collectAsState()
     BasicTextField(
         modifier = modifier
             .fillMaxWidth()
             .height(48.dp)
             .clip(shape = RoundedCornerShape(MaterialTheme.spacing.small))
-            .background(color = MaterialTheme.colors.secondaryBackground)
+            .background(
+                color = if (isError) {
+                    MaterialTheme.colors.error
+                } else {
+                    MaterialTheme.colors.secondaryBackground
+                }
+            )
             .padding(12.dp),
         value = text,
-        onValueChange = { if (onValueChange(it)) text = it },
+        onValueChange = onValueChange,
         textStyle = MaterialTheme.typography.regBody1,
         singleLine = singleLine,
         keyboardOptions = KeyboardOptions(imeAction = imeAction, keyboardType = keyboardType),
@@ -61,6 +71,11 @@ fun VecoTextField(
                 it()
             }
         },
-        interactionSource = textFieldInteraction
+        interactionSource = textFieldInteraction,
+        visualTransformation = if (keyboardType == KeyboardType.Password) {
+            PasswordVisualTransformation()
+        } else {
+            VisualTransformation.None
+        }
     )
 }

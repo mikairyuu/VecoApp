@@ -24,7 +24,7 @@ import com.veco.vecoapp.android.ui.theme.VecoAppTheme
 
 @OptIn(ExperimentalAnimationApi::class)
 @Composable
-fun VecoApp() {
+fun VecoApp(startDestination: String) {
     VecoAppTheme {
         val navController = rememberAnimatedNavController()
         val systemUiController = rememberSystemUiController()
@@ -51,7 +51,8 @@ fun VecoApp() {
                 navController = navController,
                 sheetSettings = sheetSettings,
                 coroutineScope = globalCoroutineScope,
-                scaffoldState = scaffoldState
+                scaffoldState = scaffoldState,
+                startDestination = startDestination
             )
         }
     }

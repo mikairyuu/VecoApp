@@ -12,7 +12,8 @@ import dev.icerock.moko.graphics.colorInt
 @Composable
 fun vecoLightColors() = lightColors(
     primary = Color(MR.colors.brand_default.color.colorInt()),
-    onBackground = Color(MR.colors.greyscale_black.color.colorInt())
+    onBackground = Color(MR.colors.greyscale_black.color.colorInt()),
+    error = Color(MR.colors.error.color.colorInt())
 )
 
 val Colors.lightGray: Color

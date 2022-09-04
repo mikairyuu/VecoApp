@@ -36,7 +36,7 @@ fun NavGraphBuilder.authNavGraph(
 ) {
     navigation(
         startDestination = AuthScreen.Home.route,
-        route = "auth"
+        route = Screen.Auth.route
     ) {
         composable(AuthScreen.Home.route, enterTransition = {
             slideIntoContainer(AnimatedContentScope.SlideDirection.Right)

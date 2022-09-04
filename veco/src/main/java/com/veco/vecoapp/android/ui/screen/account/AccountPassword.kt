@@ -57,23 +57,26 @@ fun AccountPasswordContents(
     viewModel: AccountPasswordViewModel
 ) {
     Column(verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        VecoTextField(
-            hint = stringResource(MR.strings.string_password.resourceId),
-            onValueChange = { true }
-        )
-        if (step == PasswordChangeStep.NEW_PASSWORD) {
-            VecoTextField(
-                hint = stringResource(MR.strings.string_password_conf.resourceId),
-                onValueChange = { true }
-            )
-        }
         if (step == PasswordChangeStep.OLD_PASSWORD) {
+            VecoTextField(
+                hint = stringResource(MR.strings.string_password.resourceId),
+                textState = viewModel.oldPwd
+            )
             Text(
                 modifier = Modifier
                     .fillMaxWidth()
                     .clickable { navController.navigate(AuthScreen.PasswordEmail.route) },
                 text = stringResource(id = MR.strings.button_forgot_pwd.resourceId),
                 style = MaterialTheme.typography.body2
+            )
+        } else {
+            VecoTextField(
+                hint = stringResource(MR.strings.string_password.resourceId),
+                textState = viewModel.newPwd
+            )
+            VecoTextField(
+                hint = stringResource(MR.strings.string_password_conf.resourceId),
+                textState = viewModel.newPwdConf
             )
         }
         VecoButton(

@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 
-class AuthEmailViewModel : ViewModel() {
+class AuthVerificationViewModel : ViewModel() {
     private val _uiState: MutableStateFlow<UIState<Nothing?>> = MutableStateFlow(UIState.Idle())
     val uiState: StateFlow<UIState<Nothing?>> = _uiState
 

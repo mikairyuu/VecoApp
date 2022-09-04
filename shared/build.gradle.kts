@@ -3,6 +3,7 @@ plugins {
     kotlin("native.cocoapods")
     id("com.android.library")
     id("dev.icerock.mobile.multiplatform-resources")
+    id("org.jetbrains.kotlin.plugin.serialization") version("1.7.0")
 }
 
 version = "1.0"

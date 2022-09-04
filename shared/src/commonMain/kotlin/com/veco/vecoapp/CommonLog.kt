@@ -1,6 +1,6 @@
 package com.veco.vecoapp
 
-expect fun commonLog(tag: String = "", msg: String, severity: LogSeverity = LogSeverity.DEBUG)
+expect fun commonLog(tag: String = "Veco", msg: String, severity: LogSeverity = LogSeverity.DEBUG)
 
 enum class LogSeverity {
     ERROR,

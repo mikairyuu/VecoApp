@@ -13,4 +13,5 @@
     <color name="purple">#CA0E8A</color>
     <color name="orange">#EE741C</color>
     <color name="red">#BB2727</color>
+    <color name="error">#EE741C33</color>
 </resources>
