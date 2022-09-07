@@ -15,8 +15,11 @@ class AccountDataViewModel : VecoVM() {
     val uiState: StateFlow<UIState<Nothing?>> = _uiState
 
     fun proceed() {
-        super.proceed(_uiState) {
-            delay(1000)
+        super.proceed(
+            _uiState,
+            handleErrors = true,
+            request = { delay(1000); successfulResponse }
+        ) {
             _uiState.emit(UIState.Success(null))
         }
     }

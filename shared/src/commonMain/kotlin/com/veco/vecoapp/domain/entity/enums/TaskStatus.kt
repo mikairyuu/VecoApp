@@ -3,10 +3,16 @@ package com.veco.vecoapp.domain.entity.enums
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.getStr
 import dev.icerock.moko.resources.desc.StringDesc
+import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
+@Serializable
 enum class TaskStatus {
+    @SerialName("0")
     Uncompleted,
+    @SerialName("1")
     InProgress,
+    @SerialName("2")
     Completed
 }
 

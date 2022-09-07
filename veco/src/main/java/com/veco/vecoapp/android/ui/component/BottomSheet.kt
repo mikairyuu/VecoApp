@@ -29,7 +29,8 @@ import com.veco.vecoapp.android.ui.theme.regBody1
 import com.veco.vecoapp.android.ui.theme.spacing
 import com.veco.vecoapp.android.ui.theme.tertiaryText
 
-data class SheetSettings @OptIn(ExperimentalMaterialApi::class) constructor(
+data class SheetSettings @OptIn(ExperimentalMaterialApi::class)
+constructor(
     val state: ModalBottomSheetState,
     val title: String = "",
     val desc: String = "",

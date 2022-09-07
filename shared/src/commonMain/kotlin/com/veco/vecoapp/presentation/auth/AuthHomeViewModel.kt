@@ -1,7 +1,7 @@
 package com.veco.vecoapp.presentation.auth
 
 import com.veco.vecoapp.di.di
-import com.veco.vecoapp.domain.usecase.auth.LoginUseCase
+import com.veco.vecoapp.domain.usecase.user.LoginUseCase
 import com.veco.vecoapp.presentation.UIState
 import com.veco.vecoapp.presentation.VecoVM
 import com.veco.vecoapp.storage.KeyDefaults
@@ -65,12 +65,23 @@ class AuthHomeViewModel : VecoVM() {
     }
 
     fun proceed() {
-        super.proceed(_uiState) {
-            if (authState.value == AuthState.LOGIN) {
-                val result = LoginUseCase()(email.value, password.value)
-                di.direct.instance<KeyValueStorage>().set(KeyDefaults.KEY_USER_TOKEN, result, true)
-            }
-            _uiState.emit(UIState.Success(null))
-        }
+        if (authState.value == AuthState.LOGIN)
+            super.proceed(
+                _uiState,
+                request = {
+                    LoginUseCase()(
+                        email.value,
+                        password.value
+                    )
+                }, handleErrors = true,
+                block = {
+                    if (authState.value == AuthState.LOGIN) {
+                        di.direct.instance<KeyValueStorage>()
+                            .set(KeyDefaults.KEY_USER_TOKEN, it.data!!, true)
+                    }
+                    _uiState.emit(UIState.Success(null))
+                }
+            )
+        else _uiState.value = UIState.Success(null)
     }
 }

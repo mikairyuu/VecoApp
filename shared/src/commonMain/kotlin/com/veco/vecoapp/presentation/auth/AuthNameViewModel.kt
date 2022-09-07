@@ -13,9 +13,11 @@ class AuthNameViewModel : VecoVM() {
     val name = MutableStateFlow("")
 
     fun proceed() {
-        super.proceed(_uiState) {
-            _uiState.emit(UIState.Loading())
-            delay(1000)
+        super.proceed(
+            _uiState,
+            handleErrors = true,
+            request = { delay(1000); successfulResponse }
+        ) {
             _uiState.emit(UIState.Success(null))
         }
     }

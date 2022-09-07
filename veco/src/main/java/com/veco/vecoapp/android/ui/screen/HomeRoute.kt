@@ -3,6 +3,7 @@
 package com.veco.vecoapp.android.ui.screen
 
 import android.content.Context
+import android.widget.Toast
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -20,6 +21,7 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.ModalBottomSheetValue
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
@@ -77,24 +79,21 @@ fun HomeRouteContent(
 ) {
     val selectedTaskSection = remember { mutableStateOf(TaskStatus.Uncompleted) }
     val tasks by viewModel.taskListState.collectAsState()
+    val context = LocalContext.current
+    LaunchedEffect(tasks) {
+        if (tasks is UIState.Error) {
+            Toast.makeText(
+                context,
+                (tasks as UIState.Error<List<Task>>).str.toString(context),
+                Toast.LENGTH_SHORT
+            ).show()
+        }
+    }
     LazyColumn {
-        if (tasks is UIState.Loading || tasks is UIState.Success) {
-            item {
-                SectionSelector(selectedTaskSection)
-            }
+        item {
+            SectionSelector(selectedTaskSection)
         }
         when (tasks) {
-            is UIState.Loading -> {
-                items(3) {
-                    TaskCard(
-                        viewModel.placeholderTask,
-                        bottomSheetState,
-                        coroutineScope,
-                        navController,
-                        true
-                    )
-                }
-            }
             is UIState.Success -> {
                 items((tasks as UIState.Success<List<Task>>).data) {
                     if (it.status == selectedTaskSection.value) {
@@ -107,12 +106,17 @@ fun HomeRouteContent(
                     }
                 }
             }
-            is UIState.Error -> {
-                item {
-                    Text(text = "Error") // TEMP
+            else -> {
+                items(3) {
+                    TaskCard(
+                        viewModel.placeholderTask,
+                        bottomSheetState,
+                        coroutineScope,
+                        navController,
+                        true
+                    )
                 }
             }
-            is UIState.Idle -> {}
         }
     }
 }
@@ -156,12 +160,12 @@ fun TaskCard(
     Card(
         modifier = Modifier
             .fillMaxWidth()
-            .alpha(if (task.status == TaskStatus.Completed) 0.6f else 1.0f)
+            .alpha(if (task.status == TaskStatus.Uncompleted) 1.0f else 0.6f)
             .padding(MaterialTheme.spacing.medium, 0.dp, MaterialTheme.spacing.medium, 12.dp),
         shape = RoundedCornerShape(8.dp),
         elevation = 8.dp,
         onClick = {
-            if (!loading) {
+            if (!loading && task.status == TaskStatus.Uncompleted) {
                 showTask(
                     task,
                     bottomSheetState,
@@ -180,8 +184,8 @@ fun TaskCard(
                         modifier = Modifier
                             .align(Alignment.CenterStart)
                             .shimmer(loading),
-                        text = task.frequency.convert().localized(),
-                        color = when (task.frequency) {
+                        text = task.type.convert().localized(),
+                        color = when (task.type) {
                             TaskFrequency.Daily -> MaterialTheme.colors.violet
                             TaskFrequency.Weekly -> MaterialTheme.colors.purple
                             TaskFrequency.Monthly -> MaterialTheme.colors.orange
@@ -235,10 +239,10 @@ fun showTask(
         sheetSettings.value = SheetSettings(
             state = sheetSettings.value.state,
             title = task.title,
-            desc = task.desc,
+            desc = task.description,
             points = task.points,
             deadline = task.deadline,
-            frequency = task.frequency.convert().toString(context),
+            frequency = task.type.convert().toString(context),
             buttonText = MR.strings.button_next.desc().toString(context),
             onClick = {
                 if (!(

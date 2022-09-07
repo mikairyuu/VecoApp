@@ -1,4 +1,4 @@
-package com.veco.vecoapp
+package com.veco.vecoapp.utils
 
 import dev.icerock.moko.resources.StringResource
 import dev.icerock.moko.resources.desc.Resource

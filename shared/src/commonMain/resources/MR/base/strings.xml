@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <resources>
+    <string name="string_empty"> </string>
     <string name="home_title">Мои задания</string>
     <string name="map_title">Карта</string>
     <string name="material_title">Материалы</string>
@@ -81,4 +82,11 @@
     <string name="auth_pwd_desc3">Чтобы обновить пароль, вам необходимо ввести данные ниже</string>
     <string name="auth_pwd_reset">Сбросить пароль</string>
     <string name="auth_pwd_update">Обновить пароль</string>
+    <string name="status_success">Успешно</string>
+    <string name="error_failed">Произошла ошибка</string>
+    <string name="error_user_not_found">Пользователь не найден...</string>
+    <string name="error_user_exists">Пользователь с таким email уже зарегистрирован</string>
+    <string name="error_file_error">Загрузка файла не удалась</string>
+    <string name="error_task_not_found">Задание не найдено</string>
+    <string name="error_incorrect_pwd">Неправильный пароль</string>
 </resources>
