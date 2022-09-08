@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.compose.animation.AnimatedContentScope
 import androidx.compose.animation.ExitTransition
 import androidx.compose.animation.ExperimentalAnimationApi
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
 import androidx.compose.runtime.MutableState
 import androidx.navigation.NavBackStackEntry
 import androidx.navigation.NavGraphBuilder
@@ -16,11 +18,13 @@ import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.screen.auth.AuthEmail
 import com.veco.vecoapp.android.ui.screen.auth.AuthHome
 import com.veco.vecoapp.android.ui.screen.auth.AuthName
+import com.veco.vecoapp.android.ui.screen.auth.AuthOnboard
 import com.veco.vecoapp.android.ui.screen.auth.AuthPasswordCode
 import com.veco.vecoapp.android.ui.screen.auth.AuthPasswordEmail
 import com.veco.vecoapp.android.ui.screen.auth.AuthPasswordInput
 
 sealed class AuthScreen(val route: String) {
+    object Onboard : AuthScreen("auth_onboard")
     object Home : AuthScreen("auth_home")
     object RegisterEmail : AuthScreen("auth_email")
     object RegisterName : AuthScreen("auth_name")
@@ -35,11 +39,15 @@ fun NavGraphBuilder.authNavGraph(
     scaffoldState: MutableState<ScaffoldState>
 ) {
     navigation(
-        startDestination = AuthScreen.Home.route,
+        startDestination = AuthScreen.Onboard.route,
         route = Screen.Auth.route
     ) {
         composable(AuthScreen.Home.route, enterTransition = {
-            slideIntoContainer(AnimatedContentScope.SlideDirection.Right)
+            if (initialState.destination.route == AuthScreen.Onboard.route) {
+                slideIntoContainer(AnimatedContentScope.SlideDirection.Left) + fadeIn(animationSpec = tween(500))
+            } else {
+                slideIntoContainer(AnimatedContentScope.SlideDirection.Right)
+            }
         }, exitTransition = { ExitTransition.None }) {
             AuthHome(navController, scaffoldState)
         }
@@ -67,6 +75,9 @@ fun NavGraphBuilder.authNavGraph(
             slideIntoContainer(AnimatedContentScope.SlideDirection.Left)
         }, exitTransition = { ExitTransition.None }) {
             AuthPasswordInput(navController)
+        }
+        composable(AuthScreen.Onboard.route) {
+            AuthOnboard(navController)
         }
     }
 }
@@ -113,6 +124,13 @@ fun authScaffoldGraph(
                 screenTitle = context.getString(MR.strings.auth_pwd_restore.resourceId),
                 navigationVisible = false,
                 toolbarState = ToolbarState.Collapsed
+            )
+        }
+        AuthScreen.Onboard.route -> {
+            ScaffoldState(
+                screenTitle = "",
+                navigationVisible = false,
+                toolbarState = ToolbarState.None
             )
         }
         else -> {

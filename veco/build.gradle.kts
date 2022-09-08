@@ -60,6 +60,7 @@ dependencies {
     implementation("com.google.accompanist:accompanist-systemuicontroller:$accompanistVersion")
     implementation("com.google.accompanist:accompanist-navigation-animation:$accompanistVersion")
     implementation("com.google.accompanist:accompanist-placeholder-material:$accompanistVersion")
+    implementation("com.google.accompanist:accompanist-pager:$accompanistVersion")
 
     implementation("me.onebone:toolbar-compose:2.3.4")
     implementation("io.coil-kt:coil-compose:2.2.0")

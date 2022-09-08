@@ -104,7 +104,7 @@ fun AccountHome(navController: NavHostController, viewModel: AccountHomeViewMode
                 modifier = Modifier
                     .size(60.dp)
                     .weight(2f, false),
-                painter = painterResource(id = MR.images.gift_icon.drawableResId),
+                painter = painterResource(id = R.drawable.gift_icon),
                 contentDescription = null
             )
             Text(
