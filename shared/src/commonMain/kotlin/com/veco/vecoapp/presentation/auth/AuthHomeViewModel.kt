@@ -1,5 +1,6 @@
 package com.veco.vecoapp.presentation.auth
 
+import com.veco.vecoapp.data.PersistentDataManager
 import com.veco.vecoapp.di.di
 import com.veco.vecoapp.domain.usecase.user.LoginUseCase
 import com.veco.vecoapp.presentation.UIState
@@ -74,10 +75,12 @@ class AuthHomeViewModel : VecoVM() {
                         password.value
                     )
                 }, handleErrors = true,
-                block = {
+                onSuccess = {
                     if (authState.value == AuthState.LOGIN) {
                         di.direct.instance<KeyValueStorage>()
                             .set(KeyDefaults.KEY_USER_TOKEN, it.data!!, true)
+                        PersistentDataManager.updateLogin(true)
+                        PersistentDataManager.requestUserDataUpdate()
                     }
                     _uiState.emit(UIState.Success(null))
                 }

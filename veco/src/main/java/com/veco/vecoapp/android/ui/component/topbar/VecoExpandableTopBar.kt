@@ -13,6 +13,8 @@ import androidx.compose.material.ProvideTextStyle
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.geometry.Offset
@@ -24,6 +26,7 @@ import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.lerp
 import androidx.compose.ui.unit.dp
 import com.veco.vecoapp.android.ui.theme.spacing
+import com.veco.vecoapp.data.PersistentDataManager
 import me.onebone.toolbar.CollapsingToolbarScaffoldState
 import me.onebone.toolbar.CollapsingToolbarScope
 
@@ -34,6 +37,7 @@ fun VecoExpandableTopBar(
     mainTitle: String
 ) {
     toolbarScope.apply {
+        val userData by PersistentDataManager.userData.collectAsState()
         Box(
             modifier = Modifier
                 .height(100.dp)
@@ -41,7 +45,7 @@ fun VecoExpandableTopBar(
                 .background(color = Color.White)
                 .fillMaxWidth()
         ) {
-            VecoPoints(boxScope = this)
+            VecoPoints(boxScope = this, userData?.points)
         }
 
         // Label animation

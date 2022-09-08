@@ -22,8 +22,20 @@ import io.ktor.client.request.header
 import io.ktor.serialization.kotlinx.json.json
 import kotlinx.serialization.json.Json
 import org.kodein.di.DI
+import org.kodein.di.DirectDI
 import org.kodein.di.bindSingleton
 import org.kodein.di.instance
+
+fun tokenRetrieval(builder: DirectDI): BearerTokens? {
+    builder.apply {
+        val str =
+            instance<KeyValueStorage>().getString(KeyDefaults.KEY_USER_TOKEN, true)
+        return if (str != null) BearerTokens(
+            str,
+            ""
+        ) else null
+    }
+}
 
 val di = DI {
     bindSingleton {
@@ -34,12 +46,10 @@ val di = DI {
             install(Auth) {
                 bearer {
                     loadTokens {
-                        val str =
-                            instance<KeyValueStorage>().getString(KeyDefaults.KEY_USER_TOKEN, true)
-                        return@loadTokens if (str != null) BearerTokens(
-                            str,
-                            ""
-                        ) else BearerTokens("noToken", "")
+                        tokenRetrieval(this@bindSingleton)
+                    }
+                    refreshTokens {
+                        tokenRetrieval(this@bindSingleton)
                     }
                 }
             }

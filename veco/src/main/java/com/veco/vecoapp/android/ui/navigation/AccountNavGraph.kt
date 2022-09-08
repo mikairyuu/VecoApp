@@ -21,6 +21,7 @@ import com.veco.vecoapp.android.ui.screen.account.AccountHome
 import com.veco.vecoapp.android.ui.screen.account.AccountNotifications
 import com.veco.vecoapp.android.ui.screen.account.AccountPassword
 import com.veco.vecoapp.android.ui.screen.account.AccountPrizes
+import com.veco.vecoapp.data.PersistentDataManager
 import kotlinx.coroutines.CoroutineScope
 
 sealed class AccountScreen(val route: String, @StringRes val titleId: Int) {
@@ -95,7 +96,8 @@ fun accountScaffoldGraph(
     return when (backStackEntry.destination.route) {
         AccountScreen.Home.route -> {
             ScaffoldState(
-                context.getString(AccountScreen.Home.titleId),
+                PersistentDataManager.userData.value?.name
+                    ?: context.getString(AccountScreen.Home.titleId),
                 true,
                 ToolbarState.ExpandableExpanded
             )

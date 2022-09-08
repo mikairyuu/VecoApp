@@ -1,7 +1,7 @@
 package com.veco.vecoapp.domain.entity.enums
 
 import com.veco.vecoapp.MR
-import com.veco.vecoapp.getStr
+import com.veco.vecoapp.utils.getStr
 import dev.icerock.moko.resources.desc.StringDesc
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable

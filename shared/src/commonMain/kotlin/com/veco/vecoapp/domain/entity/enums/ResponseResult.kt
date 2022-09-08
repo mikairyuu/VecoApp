@@ -1,7 +1,7 @@
 package com.veco.vecoapp.domain.entity.enums
 
 import com.veco.vecoapp.MR
-import com.veco.vecoapp.getStr
+import com.veco.vecoapp.utils.getStr
 import dev.icerock.moko.resources.desc.StringDesc
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -22,6 +22,7 @@ enum class ResponseResult {
     FileIsEmpty,
     @SerialName("6")
     TaskNotFound,
+    NetworkIssue
 }
 
 fun ResponseResult.convert(): StringDesc {
@@ -33,6 +34,7 @@ fun ResponseResult.convert(): StringDesc {
         ResponseResult.UserAlreadyExists -> getStr(MR.strings.error_user_exists)
         ResponseResult.FileIsEmpty -> getStr(MR.strings.error_file_error)
         ResponseResult.TaskNotFound -> getStr(MR.strings.error_task_not_found)
+        ResponseResult.NetworkIssue -> getStr(MR.strings.error_network)
         else -> {
             getStr(MR.strings.string_empty)
         }

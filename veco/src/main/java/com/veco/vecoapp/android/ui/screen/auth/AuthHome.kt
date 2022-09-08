@@ -84,7 +84,11 @@ fun AuthHome(
                 }
             }
             is UIState.Error -> {
-                Toast.makeText(context, "", Toast.LENGTH_SHORT).show()
+                Toast.makeText(
+                    context,
+                    (uiState as UIState.Error<*>).str.toString(context),
+                    Toast.LENGTH_SHORT
+                ).show()
             }
             else -> {}
         }

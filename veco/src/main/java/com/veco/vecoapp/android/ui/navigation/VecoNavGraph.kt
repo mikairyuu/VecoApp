@@ -102,7 +102,9 @@ fun VecoNavGraph(
         }
         composable(
             Screen.MaterialDetails.route + "/{matId}",
-            arguments = listOf(navArgument("matId") { type = NavType.IntType })
+            arguments = listOf(navArgument("matId") { type = NavType.IntType }),
+            enterTransition = { slideIntoContainer(AnimatedContentScope.SlideDirection.Left) },
+            exitTransition = { slideOutOfContainer(AnimatedContentScope.SlideDirection.Right) }
         ) {
             MaterialDetails(it.arguments?.getInt("matId") ?: 0)
         }
@@ -165,7 +167,16 @@ fun vecoScaffoldGraph(
             )
         }
         else -> {
-            null
+            // We need to handle routes with arguments separately
+            if (backStackEntry.destination.route?.startsWith(Screen.MaterialDetails.route) == true) {
+                ScaffoldState(
+                    "",
+                    false,
+                    ToolbarState.Collapsed
+                )
+            } else {
+                null
+            }
         }
     }
 }

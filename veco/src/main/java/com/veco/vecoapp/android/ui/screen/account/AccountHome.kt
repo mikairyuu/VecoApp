@@ -21,6 +21,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.veco.vecoapp.MR
@@ -30,6 +31,7 @@ import com.veco.vecoapp.android.ui.navigation.AccountScreen
 import com.veco.vecoapp.android.ui.navigation.AuthScreen
 import com.veco.vecoapp.android.ui.theme.regBody1
 import com.veco.vecoapp.android.ui.theme.spacing
+import com.veco.vecoapp.presentation.account.AccountHomeViewModel
 import dev.icerock.moko.graphics.colorInt
 
 data class AccountOption(
@@ -37,41 +39,41 @@ data class AccountOption(
     @StringRes val title: Int,
     val labelColor: Color = Color.Unspecified,
     val hasArrow: Boolean = true,
-    val onClick: (navController: NavController) -> Unit
+    val onClick: (navController: NavController, viewModel: AccountHomeViewModel) -> Unit
 )
 
 val accountOptions = listOf(
     AccountOption(
         icon = R.drawable.ic_account_profile,
         title = R.string.account_data,
-        onClick = {
-            it.navigate(AccountScreen.PersonalData.route)
+        onClick = { navController, viewModel ->
+            navController.navigate(AccountScreen.PersonalData.route)
         }
     ),
     AccountOption(
         icon = R.drawable.ic_account_lock,
         title = R.string.account_change_pwd,
-        onClick = {
-            it.navigate(AccountScreen.ChangePassword.route)
+        onClick = { navController, viewModel ->
+            navController.navigate(AccountScreen.ChangePassword.route)
         }
     ),
     AccountOption(
         icon = R.drawable.ic_account_notification,
         title = R.string.account_notifications,
-        onClick = {
-            it.navigate(AccountScreen.Notifications.route)
+        onClick = { navController, viewModel ->
+            navController.navigate(AccountScreen.Notifications.route)
         }
     ),
     AccountOption(
         icon = R.drawable.ic_account_feedback,
         title = R.string.account_feedback,
-        onClick = {
+        onClick = { navController, viewModel ->
         }
     ),
     AccountOption(
         icon = R.drawable.ic_account_policy,
         title = R.string.account_policy,
-        onClick = {
+        onClick = { navController, viewModel ->
         }
     ),
     AccountOption(
@@ -79,8 +81,9 @@ val accountOptions = listOf(
         title = R.string.exit,
         labelColor = Color(MR.colors.red.color.colorInt()),
         hasArrow = false,
-        onClick = {
-            it.navigate(AuthScreen.Home.route) {
+        onClick = { navController, viewModel ->
+            viewModel.onLogout()
+            navController.navigate(AuthScreen.Home.route) {
                 popUpTo(0)
                 launchSingleTop = true
             }
@@ -89,7 +92,7 @@ val accountOptions = listOf(
 )
 
 @Composable
-fun AccountHome(navController: NavHostController) {
+fun AccountHome(navController: NavHostController, viewModel: AccountHomeViewModel = viewModel()) {
     Column(
         modifier = Modifier.padding(
             MaterialTheme.spacing.medium,
@@ -116,7 +119,8 @@ fun AccountHome(navController: NavHostController) {
                     icon = it.icon,
                     text = it.title,
                     onClick = it.onClick,
-                    navController = navController!!,
+                    navController = navController,
+                    viewModel = viewModel,
                     labelColor = it.labelColor,
                     hasArrow = it.hasArrow
                 )
@@ -129,14 +133,15 @@ fun AccountHome(navController: NavHostController) {
 fun AccountOptionButton(
     @DrawableRes icon: Int,
     @StringRes text: Int,
-    onClick: (navController: NavController) -> Unit,
+    onClick: (navController: NavController, viewModel: AccountHomeViewModel) -> Unit,
     navController: NavController,
+    viewModel: AccountHomeViewModel,
     labelColor: Color = Color.Unspecified,
     hasArrow: Boolean = true
 ) {
     Row(
         modifier = Modifier
-            .clickable { onClick(navController) }
+            .clickable { onClick(navController, viewModel) }
             .padding(0.dp, 12.dp),
         horizontalArrangement = Arrangement.spacedBy(12.dp),
         verticalAlignment = Alignment.CenterVertically

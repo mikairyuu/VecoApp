@@ -18,9 +18,10 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.veco.vecoapp.android.R
 import com.veco.vecoapp.android.ui.utils.defaultGradient
+import com.veco.vecoapp.android.ui.utils.shimmer
 
 @Composable
-fun VecoPoints(boxScope: BoxScope) {
+fun VecoPoints(boxScope: BoxScope, points: Int?) {
     boxScope.apply {
         Box(
             modifier = Modifier
@@ -42,7 +43,8 @@ fun VecoPoints(boxScope: BoxScope) {
                         contentDescription = null
                     )
                     Text(
-                        text = 150.toString(),
+                        modifier = Modifier.shimmer(points == null),
+                        text = points.toString(),
                         style = MaterialTheme.typography.body1,
                         color = Color.White
                     )
