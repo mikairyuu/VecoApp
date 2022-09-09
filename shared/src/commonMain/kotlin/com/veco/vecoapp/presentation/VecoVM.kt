@@ -8,7 +8,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
 open class VecoVM : ViewModel() {
-    fun <T, K> proceed(
+    protected fun <T, K> proceed(
         uiState: MutableStateFlow<UIState<T>>,
         request: suspend () -> Response<K>,
         handleErrors: Boolean = true,

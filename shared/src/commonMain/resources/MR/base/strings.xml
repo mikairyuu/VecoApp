@@ -90,6 +90,8 @@
     <string name="error_task_not_found">Задание не найдено</string>
     <string name="error_incorrect_pwd">Неправильный пароль</string>
     <string name="error_network">Ошибка соединения с сервером...</string>
+    <string name="error_no_network_title">Похоже, вы не подключены к интернету</string>
+    <string name="error_no_network_desc">Проверьте ваше соединение и повторите попытку</string>
     <string name="onboard_title_1">Добро пожаловать в VECO</string>
     <string name="onboard_desc_1">VECO - это эко-трекер, который позволяет вам сохранять природу,
         через ежедневные дела</string>

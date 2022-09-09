@@ -26,6 +26,7 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.R
+import com.veco.vecoapp.android.ui.component.ConnectionCheckScaffold
 import com.veco.vecoapp.android.ui.component.misc.VecoSuggestionCard
 import com.veco.vecoapp.android.ui.navigation.AccountScreen
 import com.veco.vecoapp.android.ui.navigation.AuthScreen
@@ -93,6 +94,13 @@ val accountOptions = listOf(
 
 @Composable
 fun AccountHome(navController: NavHostController, viewModel: AccountHomeViewModel = viewModel()) {
+    ConnectionCheckScaffold(onConnection = { }) {
+        AccountHomeContents(navController = navController, viewModel = viewModel)
+    }
+}
+
+@Composable
+fun AccountHomeContents(navController: NavController, viewModel: AccountHomeViewModel) {
     Column(
         modifier = Modifier.padding(
             MaterialTheme.spacing.medium,

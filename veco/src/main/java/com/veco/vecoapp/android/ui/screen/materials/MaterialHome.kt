@@ -27,6 +27,7 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.veco.vecoapp.android.R
+import com.veco.vecoapp.android.ui.component.ConnectionCheckScaffold
 import com.veco.vecoapp.android.ui.navigation.Screen
 import com.veco.vecoapp.android.ui.testMaterialText
 import com.veco.vecoapp.android.ui.theme.body3
@@ -65,15 +66,17 @@ val materialList =
 
 @Composable
 fun MaterialHome(navController: NavHostController) {
-    LazyColumn(contentPadding = PaddingValues(16.dp)) {
-        items(materialList) { item ->
-            MaterialCard(
-                image = ImageBitmap.imageResource(R.drawable.test_material_img),
-                title = item.title,
-                isPopular = Random.nextBoolean(),
-                onClick = { navController.navigate("${Screen.MaterialDetails.route}/${item.id}") }
-            )
-            Spacer(modifier = Modifier.height(12.dp))
+    ConnectionCheckScaffold(onConnection = { }) {
+        LazyColumn(contentPadding = PaddingValues(16.dp)) {
+            items(materialList) { item ->
+                MaterialCard(
+                    image = ImageBitmap.imageResource(R.drawable.test_material_img),
+                    title = item.title,
+                    isPopular = Random.nextBoolean(),
+                    onClick = { navController.navigate("${Screen.MaterialDetails.route}/${item.id}") }
+                )
+                Spacer(modifier = Modifier.height(12.dp))
+            }
         }
     }
 }

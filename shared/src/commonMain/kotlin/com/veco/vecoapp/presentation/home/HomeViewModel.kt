@@ -30,7 +30,7 @@ class HomeViewModel : VecoVM() {
         TaskStatus.Uncompleted
     )
 
-    init {
+    fun onRefresh() {
         super.proceed(_taskListState, handleErrors = true, request = { getTasksUseCase() }) {
             if (it.resultCode == ResponseResult.Success) {
                 _taskListState.value = UIState.Success(it.data!!)
