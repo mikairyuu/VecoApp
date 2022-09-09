@@ -9,6 +9,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.drawBehind
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
+import com.veco.vecoapp.android.ui.component.scaffold.ScaffoldState
 import com.veco.vecoapp.android.ui.component.topbar.VecoButtonTopBar
 import com.veco.vecoapp.android.ui.component.topbar.VecoExpandableTopBar
 import com.veco.vecoapp.android.ui.component.topbar.VecoTopBar

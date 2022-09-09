@@ -5,7 +5,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
 import androidx.navigation.NavHostController
-import com.veco.vecoapp.android.ui.component.ScaffoldState
+import com.veco.vecoapp.android.ui.component.scaffold.ScaffoldState
 
 val scaffoldGraphs = listOf(::vecoScaffoldGraph, ::authScaffoldGraph, ::accountScaffoldGraph)
 

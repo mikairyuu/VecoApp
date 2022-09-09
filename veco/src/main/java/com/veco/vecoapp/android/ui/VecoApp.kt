@@ -14,9 +14,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.navigation.animation.rememberAnimatedNavController
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
-import com.veco.vecoapp.android.ui.component.MainScaffold
-import com.veco.vecoapp.android.ui.component.ScaffoldState
 import com.veco.vecoapp.android.ui.component.SheetSettings
+import com.veco.vecoapp.android.ui.component.scaffold.MainScaffold
+import com.veco.vecoapp.android.ui.component.scaffold.ScaffoldState
 import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.navigation.ScreenChangeEffect
 import com.veco.vecoapp.android.ui.navigation.VecoNavGraph

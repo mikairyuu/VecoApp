@@ -1,10 +1,13 @@
-package com.veco.vecoapp.android.ui.component
+package com.veco.vecoapp.android.ui.component.scaffold
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.navigation.NavHostController
+import com.veco.vecoapp.android.ui.component.BottomSheetScaffold
+import com.veco.vecoapp.android.ui.component.ExpandableToolbarScaffold
+import com.veco.vecoapp.android.ui.component.SheetSettings
 import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.navigation.VecoBottomNavigation
 

@@ -28,11 +28,11 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.R
-import com.veco.vecoapp.android.ui.component.ScaffoldState
 import com.veco.vecoapp.android.ui.component.input.VecoTextField
 import com.veco.vecoapp.android.ui.component.misc.VecoButton
 import com.veco.vecoapp.android.ui.component.misc.VecoHeadline
 import com.veco.vecoapp.android.ui.component.misc.VecoIconButton
+import com.veco.vecoapp.android.ui.component.scaffold.ScaffoldState
 import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.navigation.AuthScreen
 import com.veco.vecoapp.android.ui.navigation.Screen

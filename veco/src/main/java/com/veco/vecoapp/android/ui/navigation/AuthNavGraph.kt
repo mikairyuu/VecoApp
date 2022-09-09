@@ -13,7 +13,7 @@ import androidx.navigation.NavHostController
 import com.google.accompanist.navigation.animation.composable
 import com.google.accompanist.navigation.animation.navigation
 import com.veco.vecoapp.MR
-import com.veco.vecoapp.android.ui.component.ScaffoldState
+import com.veco.vecoapp.android.ui.component.scaffold.ScaffoldState
 import com.veco.vecoapp.android.ui.enums.ToolbarState
 import com.veco.vecoapp.android.ui.screen.auth.AuthEmail
 import com.veco.vecoapp.android.ui.screen.auth.AuthHome
