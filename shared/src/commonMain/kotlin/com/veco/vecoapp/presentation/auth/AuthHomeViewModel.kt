@@ -75,7 +75,7 @@ class AuthHomeViewModel : VecoVM() {
                         password.value
                     )
                 }, handleErrors = true,
-                onSuccess = {
+                handler = {
                     if (authState.value == AuthState.LOGIN) {
                         di.direct.instance<KeyValueStorage>()
                             .set(KeyDefaults.KEY_USER_TOKEN, it.data!!, true)

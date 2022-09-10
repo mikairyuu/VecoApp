@@ -104,4 +104,8 @@
     <string name="onboard_title_4">Читайте материалы об экологии</string>
     <string name="onboard_desc_4">Вы можете поставить метку на карте и отправить нам отчёт о загрезненном месте,
         а мы как можно скорее очистим его</string>
+    <string name="alert_task_completed">Поздравляем, вы выполнили задание</string>
+    <string name="alert_task_sent">Ваше задание отправлено на проверку</string>
+    <string name="alert_mail_sent">Мы направили вам письмо с дальнейшей информацией</string>
+    <string name="alert_connection_issue">Возникли неполадки при загрузке данных</string>
 </resources>

@@ -37,6 +37,8 @@ import com.veco.vecoapp.android.ui.component.misc.SuggestionCardBase
 import com.veco.vecoapp.android.ui.theme.regBody3
 import com.veco.vecoapp.android.ui.theme.secondaryText
 import com.veco.vecoapp.android.ui.theme.spacing
+import com.veco.vecoapp.data.PersistentDataManager
+import com.veco.vecoapp.presentation.misc.AlertType
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 import kotlin.random.Random
@@ -101,7 +103,12 @@ fun AccountPrizes(
                         desc = prize.description,
                         points = prize.price,
                         buttonText = context.getString(MR.strings.button_acquire.resourceId),
-                        color = color
+                        color = color,
+                        onClick = {
+                            coroutineScope.launch {
+                                PersistentDataManager.makeAlert(AlertType.MailSent)
+                            }
+                        }
                     )
                     coroutineScope.launch {
                         bottomSheetState.value.state.show()
