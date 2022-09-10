@@ -26,8 +26,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.R
-import com.veco.vecoapp.android.ui.component.scaffold.ConnectionCheckScaffold
 import com.veco.vecoapp.android.ui.component.misc.VecoSuggestionCard
+import com.veco.vecoapp.android.ui.component.scaffold.ConnectionCheckScaffold
 import com.veco.vecoapp.android.ui.navigation.AccountScreen
 import com.veco.vecoapp.android.ui.navigation.AuthScreen
 import com.veco.vecoapp.android.ui.theme.regBody1

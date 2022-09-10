@@ -8,6 +8,7 @@ import com.veco.vecoapp.domain.entity.enums.TaskStatus
 import com.veco.vecoapp.domain.usecase.tasks.GetTasksUseCase
 import com.veco.vecoapp.presentation.UIState
 import com.veco.vecoapp.presentation.VecoVM
+import com.veco.vecoapp.utils.getDate
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import org.kodein.di.instance
@@ -23,17 +24,19 @@ class HomeViewModel : VecoVM() {
         0,
         "Сходить в магазин с собственной сумкой",
         "",
-        "Сегодня, 19:00",
+        1662854400,
         TaskFrequency.values().random(),
         true,
         200,
-        TaskStatus.Uncompleted
+        TaskStatus.Uncompleted,
+        "Сегодня, 19:00"
     )
 
     fun onRefresh() {
         super.proceed(_taskListState, handleErrors = true, request = { getTasksUseCase() }) {
             if (it.resultCode == ResponseResult.Success) {
-                _taskListState.value = UIState.Success(it.data!!)
+                it.data!!.forEach { it.stringDeadline = getDate(it.deadline) }
+                _taskListState.value = UIState.Success(it.data)
             }
         }
     }

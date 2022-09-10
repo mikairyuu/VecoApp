@@ -37,9 +37,9 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.veco.vecoapp.MR
-import com.veco.vecoapp.android.ui.component.scaffold.ConnectionCheckScaffold
 import com.veco.vecoapp.android.ui.component.SheetSettings
 import com.veco.vecoapp.android.ui.component.misc.DoubleInfoUnit
+import com.veco.vecoapp.android.ui.component.scaffold.ConnectionCheckScaffold
 import com.veco.vecoapp.android.ui.navigation.Screen
 import com.veco.vecoapp.android.ui.theme.body3
 import com.veco.vecoapp.android.ui.theme.lightGray
@@ -215,7 +215,7 @@ fun TaskCard(
                             .weight(1f)
                             .shimmer(loading),
                         first = stringResource(MR.strings.task_deadline.resourceId),
-                        second = task.deadline
+                        second = task.stringDeadline!!
                     )
                     DoubleInfoUnit(
                         modifier = Modifier
@@ -244,7 +244,7 @@ fun showTask(
             title = task.title,
             desc = task.description,
             points = task.points,
-            deadline = task.deadline,
+            deadline = task.stringDeadline!!,
             frequency = task.type.convert().toString(context),
             buttonText = MR.strings.button_next.desc().toString(context),
             onClick = {

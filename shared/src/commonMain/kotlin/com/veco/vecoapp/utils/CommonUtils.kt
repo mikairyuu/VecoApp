@@ -24,3 +24,5 @@ suspend inline fun <reified T> HttpClient.safeRequest(
         return Response(ResponseResult.NetworkIssue, null)
     }
 }
+
+expect fun getDate(timestamp: Long): String

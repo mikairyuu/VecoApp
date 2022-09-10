@@ -9,9 +9,10 @@ data class Task(
     val id: Int,
     val title: String,
     val description: String,
-    val deadline: String,
+    val deadline: Long,
     val type: TaskFrequency,
     val isSeen: Boolean,
     val points: Int,
-    val status: TaskStatus
+    val status: TaskStatus,
+    var stringDeadline: String? = null
 )
