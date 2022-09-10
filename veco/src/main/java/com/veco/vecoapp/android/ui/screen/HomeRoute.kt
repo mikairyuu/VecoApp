@@ -37,7 +37,7 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavController
 import androidx.navigation.NavHostController
 import com.veco.vecoapp.MR
-import com.veco.vecoapp.android.ui.component.ConnectionCheckScaffold
+import com.veco.vecoapp.android.ui.component.scaffold.ConnectionCheckScaffold
 import com.veco.vecoapp.android.ui.component.SheetSettings
 import com.veco.vecoapp.android.ui.component.misc.DoubleInfoUnit
 import com.veco.vecoapp.android.ui.navigation.Screen

@@ -27,7 +27,7 @@ import androidx.compose.ui.res.imageResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.veco.vecoapp.android.R
-import com.veco.vecoapp.android.ui.component.ConnectionCheckScaffold
+import com.veco.vecoapp.android.ui.component.scaffold.ConnectionCheckScaffold
 import com.veco.vecoapp.android.ui.navigation.Screen
 import com.veco.vecoapp.android.ui.testMaterialText
 import com.veco.vecoapp.android.ui.theme.body3

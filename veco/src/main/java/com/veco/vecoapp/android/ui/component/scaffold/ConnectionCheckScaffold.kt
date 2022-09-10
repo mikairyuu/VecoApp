@@ -1,4 +1,4 @@
-package com.veco.vecoapp.android.ui.component
+package com.veco.vecoapp.android.ui.component.scaffold
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
