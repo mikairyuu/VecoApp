@@ -6,7 +6,6 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,6 +18,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.veco.vecoapp.android.R
+import com.veco.vecoapp.android.ui.component.misc.VecoProgressIndicator
 import com.veco.vecoapp.android.ui.theme.regBody1
 import com.veco.vecoapp.data.PersistentDataManager
 
@@ -59,10 +59,6 @@ fun NoConnectionScreen() {
             textAlign = TextAlign.Center
         )
         Spacer(modifier = Modifier.height(24.dp))
-        CircularProgressIndicator(
-            modifier = Modifier.size(48.dp),
-            color = MaterialTheme.colors.primary,
-            strokeWidth = 2.5.dp
-        )
+        VecoProgressIndicator(modifier = Modifier.size(48.dp))
     }
 }

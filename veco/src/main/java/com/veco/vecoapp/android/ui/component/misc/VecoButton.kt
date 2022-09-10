@@ -6,8 +6,6 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.Button
-import androidx.compose.material.CircularProgressIndicator
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -33,11 +31,7 @@ fun VecoButton(
             if (!isLoading) {
                 Text(text)
             } else {
-                CircularProgressIndicator(
-                    modifier = Modifier.size(32.dp),
-                    color = MaterialTheme.colors.primary,
-                    strokeWidth = 3.dp
-                )
+                VecoProgressIndicator(modifier = Modifier.size(32.dp))
             }
         }
     }
