@@ -17,6 +17,8 @@ import org.kodein.di.instance
 import java.io.BufferedReader
 
 class MainActivity : AppCompatActivity() {
+    private lateinit var connectivityManager: ConnectivityManager
+
     override fun onCreate(savedInstanceState: Bundle?) {
         installSplashScreen()
         super.onCreate(savedInstanceState)
@@ -37,8 +39,7 @@ class MainActivity : AppCompatActivity() {
             startScreen = Screen.Auth.route
         }
 
-        val connectivityManager =
-            getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+        connectivityManager = getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
         connectivityManager.registerDefaultNetworkCallback(object :
                 ConnectivityManager.NetworkCallback() {
                 override fun onAvailable(network: Network) {
@@ -58,6 +59,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onResume() {
         super.onResume()
+        PersistentDataManager.updateConnection(connectivityManager.isDefaultNetworkActive)
         PersistentDataManager.requestUserDataUpdate()
     }
 }

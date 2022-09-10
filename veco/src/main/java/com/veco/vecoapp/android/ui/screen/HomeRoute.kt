@@ -9,8 +9,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
@@ -39,7 +41,9 @@ import androidx.navigation.NavHostController
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.android.ui.component.SheetSettings
 import com.veco.vecoapp.android.ui.component.misc.DoubleInfoUnit
+import com.veco.vecoapp.android.ui.component.misc.VecoProgressIndicator
 import com.veco.vecoapp.android.ui.component.scaffold.ConnectionCheckScaffold
+import com.veco.vecoapp.android.ui.component.scaffold.VecoSwipeRefresh
 import com.veco.vecoapp.android.ui.navigation.Screen
 import com.veco.vecoapp.android.ui.theme.body3
 import com.veco.vecoapp.android.ui.theme.lightGray
@@ -83,6 +87,8 @@ fun HomeRouteContent(
     val selectedTaskSection = remember { mutableStateOf(TaskStatus.Uncompleted) }
     val tasks by viewModel.taskListState.collectAsState()
     val context = LocalContext.current
+    val isLoading = tasks is UIState.Loading
+    val swipeProgress = remember { mutableStateOf(0f) }
     LaunchedEffect(tasks) {
         if (tasks is UIState.Error) {
             Toast.makeText(
@@ -92,32 +98,46 @@ fun HomeRouteContent(
             ).show()
         }
     }
-    LazyColumn {
-        item {
-            SectionSelector(selectedTaskSection)
-        }
-        when (tasks) {
-            is UIState.Success -> {
-                items((tasks as UIState.Success<List<Task>>).data) {
-                    if (it.status == selectedTaskSection.value) {
-                        TaskCard(
-                            it,
-                            bottomSheetState,
-                            coroutineScope,
-                            navController
-                        )
-                    }
+    VecoSwipeRefresh(
+        progressState = swipeProgress,
+        isRefreshing = isLoading,
+        onRefresh = { viewModel.onRefresh() }
+    ) {
+        LazyColumn(modifier = Modifier.fillMaxSize()) {
+            item {
+                Box(modifier = Modifier.fillMaxWidth(), contentAlignment = Alignment.Center) {
+                    VecoProgressIndicator(
+                        modifier = Modifier.size((swipeProgress.value * 32).coerceIn(0f, 32f).dp),
+                        progress = if (isLoading) null else swipeProgress.value
+                    )
                 }
             }
-            else -> {
-                items(3) {
-                    TaskCard(
-                        viewModel.placeholderTask,
-                        bottomSheetState,
-                        coroutineScope,
-                        navController,
-                        true
-                    )
+            item {
+                SectionSelector(selectedTaskSection)
+            }
+            when (tasks) {
+                is UIState.Success -> {
+                    items((tasks as UIState.Success<List<Task>>).data) {
+                        if (it.status == selectedTaskSection.value) {
+                            TaskCard(
+                                it,
+                                bottomSheetState,
+                                coroutineScope,
+                                navController
+                            )
+                        }
+                    }
+                }
+                else -> {
+                    items(3) {
+                        TaskCard(
+                            viewModel.placeholderTask,
+                            bottomSheetState,
+                            coroutineScope,
+                            navController,
+                            true
+                        )
+                    }
                 }
             }
         }
