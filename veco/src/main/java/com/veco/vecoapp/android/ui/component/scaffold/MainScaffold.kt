@@ -1,5 +1,6 @@
 package com.veco.vecoapp.android.ui.component.scaffold
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Scaffold
 import androidx.compose.runtime.Composable
@@ -40,13 +41,25 @@ fun MainScaffold(
                 }
             },
             content = {
-                ExpandableToolbarScaffold(
-                    modifier = Modifier.padding(it),
-                    screenTitle = scaffoldState.screenTitle,
-                    scaffoldState = scaffoldState,
-                    navController = navController,
-                    content = content
-                )
+                // This looks unnecessary, but it makes the nav bar disappear in some edge cases,
+                // since this causes a redraw all the way from here
+                if (!scaffoldState.navigationVisible) {
+                    Box(modifier = Modifier.padding(it)) {
+                        ExpandableToolbarScaffold(
+                            screenTitle = scaffoldState.screenTitle,
+                            scaffoldState = scaffoldState,
+                            navController = navController,
+                            content = content
+                        )
+                    }
+                } else {
+                    ExpandableToolbarScaffold(
+                        screenTitle = scaffoldState.screenTitle,
+                        scaffoldState = scaffoldState,
+                        navController = navController,
+                        content = content
+                    )
+                }
             }
         )
     }

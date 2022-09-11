@@ -37,6 +37,18 @@ fun VecoTextField(
     keyboardType: KeyboardType = KeyboardType.Text,
     hint: String = "",
     isError: Boolean = false,
+    decorationBox: @Composable (text: String, isFocused: Boolean, textFunc: @Composable () -> Unit) -> Unit =
+        { text, isFocused, textFunc ->
+            if (text.isEmpty() && !isFocused) {
+                Text(
+                    text = hint,
+                    style = MaterialTheme.typography.regBody1,
+                    color = MaterialTheme.colors.secondaryText
+                )
+            } else {
+                textFunc()
+            }
+        },
     onValueChange: (String) -> Unit = { textState.value = it }
 ) {
     val textFieldInteraction = remember { MutableInteractionSource() }
@@ -61,15 +73,7 @@ fun VecoTextField(
         singleLine = singleLine,
         keyboardOptions = KeyboardOptions(imeAction = imeAction, keyboardType = keyboardType),
         decorationBox = {
-            if (text.isEmpty() && !textFieldFocused) {
-                Text(
-                    text = hint,
-                    style = MaterialTheme.typography.regBody1,
-                    color = MaterialTheme.colors.secondaryText
-                )
-            } else {
-                it()
-            }
+            decorationBox(text, textFieldFocused, it)
         },
         interactionSource = textFieldInteraction,
         visualTransformation = if (keyboardType == KeyboardType.Password) {

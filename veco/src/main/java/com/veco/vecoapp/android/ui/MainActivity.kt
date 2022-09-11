@@ -12,6 +12,7 @@ import com.veco.vecoapp.data.PersistentDataManager
 import com.veco.vecoapp.di.di
 import com.veco.vecoapp.storage.KeyDefaults
 import com.veco.vecoapp.storage.KeyValueStorage
+import com.yandex.mapkit.MapKitFactory
 import org.kodein.di.direct
 import org.kodein.di.instance
 import java.io.BufferedReader
@@ -51,6 +52,8 @@ class MainActivity : AppCompatActivity() {
                     PersistentDataManager.updateConnection(false)
                 }
             })
+
+        MapKitFactory.setApiKey("c161f4cb-68c2-4373-b0fb-dfa905b578d7")
 
         setContent {
             VecoApp(startScreen)

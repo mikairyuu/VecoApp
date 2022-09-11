@@ -67,4 +67,5 @@ dependencies {
     implementation("io.coil-kt:coil-compose:2.2.0")
     implementation("androidx.compose.material3:material3:1.0.0-beta01")
     implementation("androidx.compose.material3:material3-window-size-class:1.0.0-beta01")
+    implementation("com.yandex.android:maps.mobile:4.2.0-full")
 }

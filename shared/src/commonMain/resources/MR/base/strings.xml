@@ -108,4 +108,6 @@
     <string name="alert_task_sent">Ваше задание отправлено на проверку</string>
     <string name="alert_mail_sent">Мы направили вам письмо с дальнейшей информацией</string>
     <string name="alert_connection_issue">Возникли неполадки при загрузке данных</string>
+    <string name="map_card_title">Сообщить о загрязненном месте</string>
+    <string name="map_permission_denied">Необходимо разрешение на местоположение</string>
 </resources>

@@ -25,7 +25,6 @@ import com.veco.vecoapp.data.PersistentDataManager
 import kotlinx.coroutines.CoroutineScope
 
 sealed class AccountScreen(val route: String, @StringRes val titleId: Int) {
-    object Home : AccountScreen("account_home", MR.strings.account_title.resourceId)
     object PersonalData : AccountScreen("account_data", MR.strings.account_data.resourceId)
     object Notifications :
         AccountScreen("notifications", MR.strings.account_notifications.resourceId)
@@ -44,11 +43,11 @@ fun NavGraphBuilder.accountNavGraph(
     coroutineScope: CoroutineScope
 ) {
     navigation(
-        startDestination = AccountScreen.Home.route,
-        route = Screen.Account.route
+        startDestination = Screen.Account.route,
+        route = Screen.AccountGraph.route
     ) {
-        composable(AccountScreen.Home.route, enterTransition = {
-            if (initialState.destination.route == AccountScreen.Home.route) {
+        composable(Screen.Account.route, enterTransition = {
+            if (initialState.destination.route == Screen.Account.route) {
                 EnterTransition.None
             } else if (destinationList.find { screen -> screen.route == initialState.destination.route } != null) {
                 slideIntoContainer(AnimatedContentScope.SlideDirection.Left)
@@ -94,10 +93,10 @@ fun accountScaffoldGraph(
     context: Context
 ): ScaffoldState? {
     return when (backStackEntry.destination.route) {
-        AccountScreen.Home.route -> {
+        Screen.Account.route -> {
             ScaffoldState(
                 PersistentDataManager.userData.value?.name
-                    ?: context.getString(AccountScreen.Home.titleId),
+                    ?: context.getString(Screen.Account.titleId),
                 true,
                 ToolbarState.ExpandableExpanded
             )

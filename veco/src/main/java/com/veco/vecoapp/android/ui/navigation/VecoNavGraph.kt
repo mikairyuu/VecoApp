@@ -49,6 +49,9 @@ sealed class Screen(
     object Account :
         Screen("account", MR.strings.account_title.resourceId, R.drawable.ic_home_account)
 
+    object AccountGraph :
+        Screen("account_graph", MR.strings.account_title.resourceId, R.drawable.ic_home_account)
+
     object Review :
         Screen("review", MR.strings.account_title.resourceId, R.drawable.ic_home_account)
 
@@ -88,7 +91,7 @@ fun VecoNavGraph(
                 else -> fadeIn()
             }
         }, exitTransition = { ExitTransition.None }) {
-            MapHome()
+            MapHome(navController)
         }
         composable(Screen.Material.route, enterTransition = {
             when (initialState.destination.route) {
@@ -136,6 +139,13 @@ fun vecoScaffoldGraph(
                 context.getString(Screen.Home.titleId),
                 true,
                 ToolbarState.ExpandableExpanded
+            )
+        }
+        Screen.Map.route -> {
+            ScaffoldState(
+                context.getString(Screen.Map.titleId),
+                false,
+                ToolbarState.None
             )
         }
         Screen.Material.route -> {
