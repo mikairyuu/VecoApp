@@ -13,7 +13,7 @@ class TaskRepository : ITaskRepository {
     private val httpClient: HttpClient by di.instance()
 
     override suspend fun getTasks(): Response<List<Task>> {
-        return httpClient.safeRequest("tasks/all") {
+        return httpClient.safeRequest("tasks") {
             method = HttpMethod.Get
         }
     }
