@@ -4,6 +4,7 @@ plugins {
     id("com.android.library")
     id("dev.icerock.mobile.multiplatform-resources")
     id("org.jetbrains.kotlin.plugin.serialization") version("1.7.0")
+    id("io.realm.kotlin")
 }
 
 version = "1.0"
@@ -36,6 +37,8 @@ kotlin {
                 implementation("io.ktor:ktor-client-content-negotiation:$ktorVersion")
                 implementation("io.ktor:ktor-serialization-kotlinx-json:$ktorVersion")
                 implementation("io.ktor:ktor-client-auth:$ktorVersion")
+                api("io.realm.kotlin:library-base:1.0.2")
+                // DEBUG ENTRIES
                 implementation("io.ktor:ktor-client-logging:$ktorVersion")
                 implementation("ch.qos.logback:logback-classic:1.2.3")
             }

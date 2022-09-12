@@ -2,6 +2,7 @@ package com.veco.vecoapp.di
 
 import com.veco.vecoapp.data.repository.TaskRepository
 import com.veco.vecoapp.data.repository.UserRepository
+import com.veco.vecoapp.domain.entity.Task
 import com.veco.vecoapp.domain.repository.ITaskRepository
 import com.veco.vecoapp.domain.repository.IUserRepository
 import com.veco.vecoapp.domain.usecase.tasks.GetTasksUseCase
@@ -20,6 +21,8 @@ import io.ktor.client.plugins.logging.LogLevel
 import io.ktor.client.plugins.logging.Logging
 import io.ktor.client.request.header
 import io.ktor.serialization.kotlinx.json.json
+import io.realm.kotlin.Realm
+import io.realm.kotlin.RealmConfiguration
 import kotlinx.serialization.json.Json
 import org.kodein.di.DI
 import org.kodein.di.DirectDI
@@ -73,6 +76,9 @@ val di = DI {
     // repository
     bindSingleton<ITaskRepository> { TaskRepository() }
     bindSingleton<IUserRepository> { UserRepository() }
+
+    // realms
+    bindSingleton(tag = "taskRealm") { Realm.open(RealmConfiguration.Builder(schema = setOf(Task::class)).build()) }
 
     // usecases
 

@@ -7,5 +7,5 @@ import org.kodein.di.instance
 class GetTasksUseCase {
     private val repository: ITaskRepository by di.instance()
 
-    suspend operator fun invoke() = repository.getTasks()
+    suspend operator fun invoke(forceSync: Boolean = false) = repository.getTasks(forceSync)
 }

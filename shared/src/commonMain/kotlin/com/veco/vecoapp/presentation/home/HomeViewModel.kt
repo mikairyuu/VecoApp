@@ -20,20 +20,27 @@ class HomeViewModel : VecoVM() {
         MutableStateFlow(UIState.Idle())
     val taskListState: StateFlow<UIState<List<Task>>> = _taskListState
 
-    val placeholderTask = Task(
-        0,
-        "Сходить в магазин с собственной сумкой",
-        "",
-        1662854400,
-        TaskFrequency.values().random(),
-        true,
-        200,
-        TaskStatus.Uncompleted,
-        "Сегодня, 19:00"
-    )
+    private var isFirstLaunch = true
 
-    fun onRefresh() {
-        super.proceed(_taskListState, handleErrors = true, request = { getTasksUseCase() }) {
+    val placeholderTask = Task().apply {
+        id = 0
+        title = "Сходить в магазин с собственной сумкой"
+        description = ""
+        deadline = 1662854400
+        type = TaskFrequency.Daily
+        isSeen = true
+        points = 200
+        status = TaskStatus.Uncompleted
+        stringDeadline = "Сегодня, 19:00"
+    }
+
+    fun onRefresh(forceSync: Boolean = false) {
+        super.proceed(
+            _taskListState,
+            handleErrors = true,
+            request = { getTasksUseCase(isFirstLaunch || forceSync) }
+        ) {
+            isFirstLaunch = false
             if (it.resultCode == ResponseResult.Success) {
                 it.data!!.forEach { it.stringDeadline = getDate(it.deadline) }
                 _taskListState.value = UIState.Success(it.data)

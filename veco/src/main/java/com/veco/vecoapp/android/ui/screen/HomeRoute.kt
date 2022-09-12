@@ -101,7 +101,7 @@ fun HomeRouteContent(
     VecoSwipeRefresh(
         progressState = swipeProgress,
         isRefreshing = isLoading,
-        onRefresh = { viewModel.onRefresh() }
+        onRefresh = { viewModel.onRefresh(true) }
     ) {
         LazyColumn(modifier = Modifier.fillMaxSize()) {
             item {
@@ -145,7 +145,7 @@ fun HomeRouteContent(
 }
 
 @Composable
-fun SectionSelector(selectedTaskStatus: MutableState<TaskStatus>) {
+fun SectionSelector(selectedTaskStatus: MutableState<Int>) {
     LazyRow(
         modifier = Modifier.padding(
             0.dp,
@@ -154,12 +154,12 @@ fun SectionSelector(selectedTaskStatus: MutableState<TaskStatus>) {
             12.dp
         )
     ) {
-        items(TaskStatus.values()) { item ->
+        items(TaskStatus.values) { item ->
             Text(
                 modifier = Modifier
                     .clickable { selectedTaskStatus.value = item }
                     .padding(MaterialTheme.spacing.medium, 0.dp),
-                text = item.convert().localized(),
+                text = TaskStatus.convert(item).localized(),
                 color = if (item == selectedTaskStatus.value) {
                     MaterialTheme.colors.onBackground
                 } else {
@@ -207,11 +207,12 @@ fun TaskCard(
                         modifier = Modifier
                             .align(Alignment.CenterStart)
                             .shimmer(loading),
-                        text = task.type.convert().localized(),
+                        text = TaskFrequency.convert(task.type).localized(),
                         color = when (task.type) {
                             TaskFrequency.Daily -> MaterialTheme.colors.violet
                             TaskFrequency.Weekly -> MaterialTheme.colors.purple
                             TaskFrequency.Monthly -> MaterialTheme.colors.orange
+                            else -> { MaterialTheme.colors.violet }
                         },
                         style = MaterialTheme.typography.body3
                     )
@@ -265,7 +266,7 @@ fun showTask(
             desc = task.description,
             points = task.points,
             deadline = task.stringDeadline!!,
-            frequency = task.type.convert().toString(context),
+            frequency = TaskFrequency.convert(task.type).toString(context),
             buttonText = MR.strings.button_next.desc().toString(context),
             onClick = {
                 if (!(

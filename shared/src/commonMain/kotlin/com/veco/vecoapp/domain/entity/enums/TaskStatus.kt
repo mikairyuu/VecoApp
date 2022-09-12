@@ -3,23 +3,21 @@ package com.veco.vecoapp.domain.entity.enums
 import com.veco.vecoapp.MR
 import com.veco.vecoapp.utils.getStr
 import dev.icerock.moko.resources.desc.StringDesc
-import kotlinx.serialization.SerialName
-import kotlinx.serialization.Serializable
 
-@Serializable
-enum class TaskStatus {
-    @SerialName("0")
-    Uncompleted,
-    @SerialName("1")
-    InProgress,
-    @SerialName("2")
-    Completed
+object TaskStatus {
+    const val Uncompleted: Int = 0
+    const val InProgress: Int = 1
+    const val Completed: Int = 2
+    val values: List<Int> = listOf(Uncompleted, InProgress, Completed)
 }
 
-fun TaskStatus.convert(): StringDesc {
-    return when (this) {
-        TaskStatus.Uncompleted -> getStr(MR.strings.main_active)
-        TaskStatus.InProgress -> getStr(MR.strings.main_check)
-        TaskStatus.Completed -> getStr(MR.strings.main_finished)
+fun TaskStatus.convert(value: Int): StringDesc {
+    return when (value) {
+        Uncompleted -> getStr(MR.strings.main_active)
+        InProgress -> getStr(MR.strings.main_check)
+        Completed -> getStr(MR.strings.main_finished)
+        else -> {
+            return getStr(MR.strings.string_empty)
+        }
     }
 }
