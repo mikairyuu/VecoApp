@@ -3,10 +3,12 @@ package com.veco.vecoapp.data.repository
 import com.veco.vecoapp.di.di
 import com.veco.vecoapp.domain.entity.Task
 import com.veco.vecoapp.domain.entity.enums.ResponseResult
+import com.veco.vecoapp.domain.entity.request.SubmitTaskRequest
 import com.veco.vecoapp.domain.entity.response.Response
 import com.veco.vecoapp.domain.repository.ITaskRepository
 import com.veco.vecoapp.utils.safeRequest
 import io.ktor.client.HttpClient
+import io.ktor.client.request.setBody
 import io.ktor.http.HttpMethod
 import io.realm.kotlin.Realm
 import io.realm.kotlin.UpdatePolicy
@@ -33,6 +35,13 @@ class TaskRepository : ITaskRepository {
             }
         }
         return response
+    }
+
+    override suspend fun submitTask(imageIds: List<Int>, taskId: Int): Response<Int> {
+        return httpClient.safeRequest("tasks/images") {
+            method = HttpMethod.Post
+            setBody(SubmitTaskRequest(imageIds, taskId))
+        }
     }
 
     override suspend fun completeTask(task: Task): Response<Any> {

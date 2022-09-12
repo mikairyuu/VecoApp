@@ -6,6 +6,7 @@ import com.veco.vecoapp.domain.usecase.user.GetUserDataUseCase
 import com.veco.vecoapp.presentation.misc.Alert
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.channels.BufferOverflow
 import kotlinx.coroutines.flow.MutableSharedFlow
@@ -17,6 +18,7 @@ import org.kodein.di.instance
 object PersistentDataManager {
     private val getUserDataUseCase: GetUserDataUseCase by di.instance()
     private val persistentScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
+    private val runningJob: MutableStateFlow<Job?> = MutableStateFlow(null)
 
     private val _userData = MutableStateFlow<UserDataResponse?>(null)
     val userData: StateFlow<UserDataResponse?> = _userData
@@ -33,8 +35,9 @@ object PersistentDataManager {
     )
 
     fun requestUserDataUpdate() {
+        if (runningJob.value?.isCompleted == false) return
         if (connected.value && login.value) {
-            persistentScope.launch {
+            runningJob.value = persistentScope.launch {
                 val response = getUserDataUseCase()
                 _userData.emit(response.data)
             }

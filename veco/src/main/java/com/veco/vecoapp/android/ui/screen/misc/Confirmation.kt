@@ -1,5 +1,7 @@
 package com.veco.vecoapp.android.ui.screen.misc
 
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
 import android.net.Uri
 import androidx.activity.compose.ManagedActivityResultLauncher
 import androidx.activity.compose.rememberLauncherForActivityResult
@@ -36,7 +38,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateListOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.runtime.snapshots.SnapshotStateList
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -46,6 +48,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.StrokeCap
 import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.SpanStyle
@@ -53,25 +56,49 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
 import com.veco.vecoapp.MR
+import com.veco.vecoapp.VecoAndroidApp
 import com.veco.vecoapp.android.R
 import com.veco.vecoapp.android.ui.component.misc.VecoButton
 import com.veco.vecoapp.android.ui.component.misc.VecoHeadline
 import com.veco.vecoapp.android.ui.enums.ResultState
 import com.veco.vecoapp.android.ui.navigation.Screen
+import com.veco.vecoapp.presentation.misc.ConfirmViewModel
+import kotlinx.coroutines.launch
+import java.io.File
+import java.io.FileOutputStream
+import java.io.InputStream
+import kotlin.random.Random
 
 @Composable
-fun ConfirmationRoute(navController: NavHostController) {
+fun ConfirmationRoute(
+    navController: NavHostController,
+    taskId: Int,
+    viewModel: ConfirmViewModel = viewModel()
+) {
+    val selectedImageIds = remember {
+        mutableStateListOf<Int?>()
+    }
+    val imageCount = remember {
+        mutableStateOf(0)
+    }
     Column(modifier = Modifier.padding(16.dp, 24.dp, 16.dp, 16.dp)) {
         Headline()
-        ImagePicker()
+        ImagePicker(viewModel, selectedImageIds, imageCount)
         Box(Modifier.fillMaxSize()) {
             VecoButton(
                 text = stringResource(MR.strings.button_send.resourceId),
                 modifier = Modifier.align(Alignment.BottomCenter)
-            ) { navController.navigate(Screen.Review.route) }
+            ) {
+                viewModel.proceed(
+                    selectedImageIds.subList(0, imageCount.value).toList().requireNoNulls(),
+                    taskId = taskId,
+                    navigateHome = { navController.navigate(Screen.Review.route) }
+                )
+            }
         }
     }
 }
@@ -89,31 +116,58 @@ fun Headline() {
 }
 
 @Composable
-fun ImagePicker() {
-    var result = remember {
+fun ImagePicker(
+    viewModel: ConfirmViewModel,
+    imageIds: SnapshotStateList<Int?>,
+    imageCount: MutableState<Int>
+) {
+    val ctx = LocalContext.current
+    val coroutineScope = rememberCoroutineScope()
+    val result = remember {
         mutableStateListOf<ResultState>()
     }
-    var imageUri = remember {
+    val imageUri = remember {
         mutableStateListOf<Uri?>()
     }
-    repeat(5) {
-        imageUri.add(null)
-        result.add(ResultState.NONE)
+
+    LaunchedEffect(Unit) {
+        repeat(5) {
+            imageUri.add(null)
+            result.add(ResultState.NONE)
+            imageIds.add(null)
+        }
     }
 
-    var imageCount = remember {
-        mutableStateOf(0)
+    val uploadPhoto: (Int, Uri) -> Unit = { n: Int, uri: Uri ->
+        result[n] = ResultState.LOADING(0f)
+        val stream = ctx.contentResolver.openInputStream(uri)!!
+        coroutineScope.launch {
+            val webpFilePath = encodeToWebp(stream)
+            viewModel.uploadPicture(
+                File(webpFilePath).readBytes(),
+                webpFilePath.substringAfterLast('/'),
+                onDone = {
+                    if (it == null) {
+                        result[n] = ResultState.ERROR
+                    } else {
+                        result[n] = ResultState.SUCCESS
+                        imageIds[n] = it
+                    }
+                }
+            ) {
+                result[n] = ResultState.LOADING(it)
+            }
+        }
     }
+
     val imagePicker = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.GetContent(),
         onResult = { uri ->
             if (uri != null) {
-                if (imageUri.count() < 5) {
-                    imageUri.add(null)
-                }
-                imageUri[imageCount.value] = uri
-                result[imageCount.value] = ResultState.LOADING
+                val n = imageCount.value
                 imageCount.value++
+                imageUri[n] = uri
+                uploadPhoto(n, uri)
             }
         }
     )
@@ -122,8 +176,24 @@ fun ImagePicker() {
         photos = imageUri,
         imagePicker = imagePicker,
         imageCount = imageCount,
-        result = result
+        result = result,
+        uploadPhoto = uploadPhoto
     )
+}
+
+fun encodeToWebp(inputStream: InputStream): String {
+    val bitmap = BitmapFactory.decodeStream(inputStream)
+    inputStream.close()
+    var path: String
+    do {
+        path =
+            VecoAndroidApp.INSTANCE.applicationContext.filesDir.absolutePath + Random.nextInt() + "_cache.webp"
+        val exists = File(path).exists()
+    } while (exists)
+    val out = FileOutputStream(path)
+    bitmap.compress(Bitmap.CompressFormat.WEBP, 70, out)
+    out.close()
+    return path
 }
 
 @Composable
@@ -131,7 +201,8 @@ fun PhotoGrid(
     photos: SnapshotStateList<Uri?>,
     imagePicker: ManagedActivityResultLauncher<String, Uri?>,
     imageCount: MutableState<Int>,
-    result: SnapshotStateList<ResultState>
+    result: SnapshotStateList<ResultState>,
+    uploadPhoto: (Int, Uri) -> Unit
 ) {
     LazyVerticalGrid(
         columns = GridCells.Fixed(3),
@@ -141,7 +212,7 @@ fun PhotoGrid(
         modifier = Modifier.fillMaxWidth()
 
     ) {
-        item() {
+        item {
             Box(
                 modifier = Modifier
                     .size(104.dp, 104.dp)
@@ -151,6 +222,12 @@ fun PhotoGrid(
             }
         }
         itemsIndexed(photos) { i, photo ->
+            val removePhoto = {
+                photos[i] = null
+                result[i] = ResultState.NONE
+                imageCount.value--
+            }
+
             if (photo != null) {
                 Box(
                     contentAlignment = Alignment.Center,
@@ -160,41 +237,40 @@ fun PhotoGrid(
                         .background(color = Color.Gray)
                 ) {
                     AsyncImage(
-                        modifier = Modifier.alpha(if (result[i] == ResultState.LOADING) 0.5f else 1f),
+                        modifier = Modifier.alpha(if (result[i] is ResultState.LOADING) 0.5f else 1f),
                         contentScale = ContentScale.Inside,
                         model = photo,
-                        contentDescription = "Selected image"
+                        contentDescription = null
                     )
                     when (result[i]) {
-                        ResultState.LOADING -> {
+                        is ResultState.LOADING -> {
                             Box(modifier = Modifier.padding(32.dp)) {
                                 CircularProgressBar(
-                                    percentage = 1f,
+                                    percentage = (result[i] as ResultState.LOADING).progress,
                                     imageCount = imageCount,
                                     result = result
                                 )
                             }
                         }
-                        ResultState.SUCCESS -> {
+                        is ResultState.SUCCESS -> {
                             Box(modifier = Modifier.align(Alignment.TopEnd)) {
                                 CornerImage(id = R.drawable.ic_delete_button) {
-                                    photos.removeAt(photos.indexOf(photo))
-                                    imageCount.value--
+                                    removePhoto()
                                 }
                             }
                         }
-                        ResultState.ERROR -> {
+                        is ResultState.ERROR -> {
                             ImageButton(R.drawable.ic_resend) {
-                                result[i] = ResultState.LOADING
+                                uploadPhoto(i, photo)
                             }
                             Box(modifier = Modifier.align(Alignment.TopEnd)) {
-                                CornerImage(id = R.drawable.ic_error_button) {}
+                                CornerImage(id = R.drawable.ic_error_button) {
+                                    removePhoto()
+                                }
                             }
                         }
                         ResultState.CANCELED -> {
-                            photos.removeAt(i)
-                            imageCount.value--
-                            result[i] = ResultState.NONE
+                            removePhoto()
                         }
                         else -> {}
                     }
@@ -205,8 +281,8 @@ fun PhotoGrid(
 }
 
 @Composable
-fun CornerImage(id: Int, func: () -> Unit) {
-    Box(modifier = Modifier.clickable { func() })
+fun CornerImage(id: Int, onClick: () -> Unit) {
+    Box(modifier = Modifier.clickable(onClick = onClick))
     Image(
         painter = painterResource(id = id),
         contentDescription = "Delete image",
@@ -230,12 +306,11 @@ fun AddImg(
         },
         colors = ButtonDefaults.buttonColors(backgroundColor = Color.White),
         modifier = Modifier.fillMaxSize()
-
     ) {
         Column(horizontalAlignment = Alignment.CenterHorizontally) {
             Image(
                 painterResource(R.drawable.ic_baseline_camera_alt_24),
-                "content description"
+                null
             )
             Text(text = "Загрузить")
         }
@@ -245,48 +320,24 @@ fun AddImg(
 @Composable
 fun CircularProgressBar(
     percentage: Float,
-    /*number: Int,
-    frontSize: TextUnit = 28.sp,*/
     radius: Dp = 40.dp,
     color: Color = Color.White,
     strokeWidth: Dp = 4.dp,
-    animDuration: Int = 1000,
-    animDelay: Int = 500,
     result: SnapshotStateList<ResultState>,
     imageCount: MutableState<Int>
-
 ) {
-    var animationPlayed by remember {
-        mutableStateOf(false)
-    }
-    var curPercentage = animateFloatAsState(
-        targetValue = if (animationPlayed) percentage else 0f,
-        animationSpec = tween(
-            durationMillis = animDuration,
-            delayMillis = animDelay
-        )
+    val curPercentage by animateFloatAsState(
+        targetValue = percentage,
+        animationSpec = tween(durationMillis = 100)
     )
-    if (curPercentage.value == percentage) {
-        result[imageCount.value - 1] = ResultState.SUCCESS
-    }
-
-    LaunchedEffect(key1 = true) {
-        if (!animationPlayed) {
-            animationPlayed = true
-        }
-    }
-    var func = {
-        result[imageCount.value - 1] = ResultState.CANCELED
-    }
 
     Box(
         contentAlignment = Alignment.Center,
-
         modifier = Modifier
             .size(radius)
             .clip(CircleShape)
     ) {
-        ImageButton(R.drawable.ic_cross, func)
+        ImageButton(R.drawable.ic_cross, { result[imageCount.value - 1] = ResultState.CANCELED })
         Canvas(
             modifier = Modifier
                 .size(radius)
@@ -296,7 +347,7 @@ fun CircularProgressBar(
             drawArc(
                 color = color,
                 -90f,
-                360f * curPercentage.value,
+                360f * curPercentage,
                 useCenter = false,
                 style = Stroke(strokeWidth.toPx(), cap = StrokeCap.Round)
             )
@@ -311,9 +362,7 @@ fun ImageButton(id: Int, func: () -> Unit) {
             .alpha(0.7f)
             .fillMaxSize()
             .background(color = Color.Black)
-            .clickable {
-                func()
-            }
+            .clickable(onClick = func)
     )
     Icon(
         painter = painterResource(id = id),

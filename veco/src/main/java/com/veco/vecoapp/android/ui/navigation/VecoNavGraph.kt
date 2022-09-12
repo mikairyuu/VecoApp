@@ -111,8 +111,11 @@ fun VecoNavGraph(
         ) {
             MaterialDetails(it.arguments?.getInt("matId") ?: 0)
         }
-        composable(Screen.Confirmation.route) {
-            ConfirmationRoute(navController)
+        composable(
+            Screen.Confirmation.route + "/{taskId}",
+            arguments = listOf(navArgument("taskId") { type = NavType.IntType })
+        ) {
+            ConfirmationRoute(navController, it.arguments?.getInt("taskId") ?: 0)
         }
         composable(Screen.Review.route) {
             ReviewRoute(navController)
@@ -162,13 +165,6 @@ fun vecoScaffoldGraph(
                 ToolbarState.Collapsed
             )
         }
-        Screen.Confirmation.route -> {
-            ScaffoldState(
-                "",
-                false,
-                ToolbarState.Collapsed
-            )
-        }
         Screen.Review.route -> {
             ScaffoldState(
                 "",
@@ -179,6 +175,12 @@ fun vecoScaffoldGraph(
         else -> {
             // We need to handle routes with arguments separately
             if (backStackEntry.destination.route?.startsWith(Screen.MaterialDetails.route) == true) {
+                ScaffoldState(
+                    "",
+                    false,
+                    ToolbarState.Collapsed
+                )
+            } else if (backStackEntry.destination.route?.startsWith(Screen.Confirmation.route) == true) {
                 ScaffoldState(
                     "",
                     false,

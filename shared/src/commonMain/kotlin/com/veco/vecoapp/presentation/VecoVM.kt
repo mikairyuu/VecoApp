@@ -11,14 +11,14 @@ import kotlinx.coroutines.launch
 
 open class VecoVM : ViewModel() {
     protected fun <T, K> proceed(
-        uiState: MutableStateFlow<UIState<T>>,
+        uiState: MutableStateFlow<UIState<T>>?,
         request: suspend () -> Response<K>,
         handleErrors: Boolean = true,
         handler: suspend (Response<K>) -> Unit
     ) {
-        if (uiState.value is UIState.Loading) return
+        if (uiState?.value is UIState.Loading) return
         viewModelScope.launch {
-            uiState.emit(UIState.Loading())
+            uiState?.emit(UIState.Loading())
             val res = request.invoke()
             if (res.resultCode == ResponseResult.Success) handler.invoke(res)
             else if (handleErrors) PersistentDataManager.makeAlert(AlertType.CommonAlert(res.resultCode.convert()))

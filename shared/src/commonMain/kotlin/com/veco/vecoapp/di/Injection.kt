@@ -1,11 +1,15 @@
 package com.veco.vecoapp.di
 
+import com.veco.vecoapp.data.repository.ImageRepository
 import com.veco.vecoapp.data.repository.TaskRepository
 import com.veco.vecoapp.data.repository.UserRepository
 import com.veco.vecoapp.domain.entity.Task
+import com.veco.vecoapp.domain.repository.IImageRepository
 import com.veco.vecoapp.domain.repository.ITaskRepository
 import com.veco.vecoapp.domain.repository.IUserRepository
+import com.veco.vecoapp.domain.usecase.file.UploadImageUseCase
 import com.veco.vecoapp.domain.usecase.tasks.GetTasksUseCase
+import com.veco.vecoapp.domain.usecase.tasks.SubmitTaskUseCase
 import com.veco.vecoapp.domain.usecase.user.GetUserDataUseCase
 import com.veco.vecoapp.domain.usecase.user.LoginUseCase
 import com.veco.vecoapp.domain.usecase.user.RegisterUseCase
@@ -76,6 +80,7 @@ val di = DI {
     // repository
     bindSingleton<ITaskRepository> { TaskRepository() }
     bindSingleton<IUserRepository> { UserRepository() }
+    bindSingleton<IImageRepository> { ImageRepository() }
 
     // realms
     bindSingleton(tag = "taskRealm") { Realm.open(RealmConfiguration.Builder(schema = setOf(Task::class)).build()) }
@@ -84,9 +89,13 @@ val di = DI {
 
     // tasks
     bindSingleton { GetTasksUseCase() }
+    bindSingleton { SubmitTaskUseCase() }
 
     // user
     bindSingleton { LoginUseCase() }
     bindSingleton { RegisterUseCase() }
     bindSingleton { GetUserDataUseCase() }
+
+    // files
+    bindSingleton { UploadImageUseCase() }
 }

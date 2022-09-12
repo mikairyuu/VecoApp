@@ -1,9 +1,9 @@
 package com.veco.vecoapp.android.ui.enums
 
-enum class ResultState {
-    LOADING,
-    SUCCESS,
-    ERROR,
-    CANCELED,
-    NONE
+sealed class ResultState {
+    class LOADING(val progress: Float) : ResultState()
+    object SUCCESS : ResultState()
+    object ERROR : ResultState()
+    object CANCELED : ResultState()
+    object NONE : ResultState()
 }

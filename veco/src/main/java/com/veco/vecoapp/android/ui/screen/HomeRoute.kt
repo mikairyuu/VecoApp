@@ -275,7 +275,7 @@ fun showTask(
                     )
                 ) {
                     coroutineScope.launch { sheetSettings.value.state.hide() }
-                    navController.navigate(Screen.Confirmation.route)
+                    navController.navigate(Screen.Confirmation.route + "/${task.id}")
                 }
             }
         )

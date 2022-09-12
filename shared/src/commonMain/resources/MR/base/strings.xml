@@ -48,6 +48,7 @@
     <string name="string_login">Войти</string>
     <string name="string_name">Имя</string>
     <string name="string_code">Код</string>
+    <string name="string_upload_btn">Загрузить</string>
     <string name="string_password_conf">Подтверждение пароля</string>
     <string name="notification_title_3">Актуальные материалы</string>
     <string name="exit">Выйти</string>
