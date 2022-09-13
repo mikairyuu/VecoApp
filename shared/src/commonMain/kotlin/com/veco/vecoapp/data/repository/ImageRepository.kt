@@ -30,7 +30,7 @@ class ImageRepository : IImageRepository {
                         append(
                             "file", filePath,
                             Headers.build {
-                                append(HttpHeaders.ContentType, "image/png")
+                                append(HttpHeaders.ContentType, "image/webp")
                                 append(HttpHeaders.ContentDisposition, "filename=\"$fileName\"")
                             }
                         )
