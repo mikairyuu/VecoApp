@@ -23,7 +23,11 @@ import com.veco.vecoapp.android.ui.theme.regBody1
 import com.veco.vecoapp.data.PersistentDataManager
 
 @Composable
-fun ConnectionCheckScaffold(onConnection: () -> Unit, block: @Composable () -> Unit) {
+fun ConnectionCheckScaffold(
+    onConnection: () -> Unit,
+    shouldDisplay: Boolean = true,
+    block: @Composable () -> Unit
+) {
     val connected by PersistentDataManager.connected.collectAsState()
     LaunchedEffect(connected) {
         if (connected) {
@@ -32,7 +36,7 @@ fun ConnectionCheckScaffold(onConnection: () -> Unit, block: @Composable () -> U
     }
     if (connected) {
         block()
-    } else {
+    } else if (shouldDisplay) {
         NoConnectionScreen()
     }
 }

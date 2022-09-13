@@ -18,7 +18,7 @@ open class VecoVM : ViewModel() {
         handler: suspend (Response<K>) -> Unit
     ) {
         if (uiState?.value is UIState.Loading) return
-        viewModelScope.launch (Dispatchers.Default) {
+        viewModelScope.launch(Dispatchers.Default) {
             uiState?.emit(UIState.Loading())
             val res = request.invoke()
             if (res.resultCode == ResponseResult.Success) handler.invoke(res)

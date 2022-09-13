@@ -25,4 +25,6 @@ suspend inline fun <reified T> HttpClient.safeRequest(
     }
 }
 
+expect fun getRelativeDate(timestamp: Long): String
+
 expect fun getDate(timestamp: Long): String

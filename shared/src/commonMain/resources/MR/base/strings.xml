@@ -111,4 +111,5 @@
     <string name="alert_connection_issue">Возникли неполадки при загрузке данных</string>
     <string name="map_card_title">Сообщить о загрязненном месте</string>
     <string name="map_permission_denied">Необходимо разрешение на местоположение</string>
+    <string name="material_popular">Популярное</string>
 </resources>

@@ -1,13 +1,20 @@
 package com.veco.vecoapp.di
 
 import com.veco.vecoapp.data.repository.ImageRepository
+import com.veco.vecoapp.data.repository.MaterialRepository
 import com.veco.vecoapp.data.repository.TaskRepository
 import com.veco.vecoapp.data.repository.UserRepository
+import com.veco.vecoapp.domain.entity.CacheFile
+import com.veco.vecoapp.domain.entity.Material
 import com.veco.vecoapp.domain.entity.Task
 import com.veco.vecoapp.domain.repository.IImageRepository
+import com.veco.vecoapp.domain.repository.IMaterialRepository
 import com.veco.vecoapp.domain.repository.ITaskRepository
 import com.veco.vecoapp.domain.repository.IUserRepository
+import com.veco.vecoapp.domain.usecase.file.DownloadImageUseCase
 import com.veco.vecoapp.domain.usecase.file.UploadImageUseCase
+import com.veco.vecoapp.domain.usecase.material.GetMaterialPageUseCase
+import com.veco.vecoapp.domain.usecase.material.GetMaterialUseCase
 import com.veco.vecoapp.domain.usecase.tasks.GetTasksUseCase
 import com.veco.vecoapp.domain.usecase.tasks.SubmitTaskUseCase
 import com.veco.vecoapp.domain.usecase.user.GetUserDataUseCase
@@ -81,9 +88,28 @@ val di = DI {
     bindSingleton<ITaskRepository> { TaskRepository() }
     bindSingleton<IUserRepository> { UserRepository() }
     bindSingleton<IImageRepository> { ImageRepository() }
+    bindSingleton<IMaterialRepository> { MaterialRepository() }
 
     // realms
-    bindSingleton(tag = "taskRealm") { Realm.open(RealmConfiguration.Builder(schema = setOf(Task::class)).build()) }
+    bindSingleton(tag = "taskRealm") {
+        Realm.open(
+            RealmConfiguration.Builder(schema = setOf(Task::class)).build()
+        )
+    }
+    bindSingleton(tag = "matRealm") {
+        Realm.open(
+            RealmConfiguration.Builder(schema = setOf(Material::class)).build()
+        )
+    }
+    bindSingleton(tag = "fileRealm") {
+        Realm.open(
+            RealmConfiguration.Builder(
+                schema = setOf(
+                    CacheFile::class
+                )
+            ).build()
+        )
+    }
 
     // usecases
 
@@ -98,4 +124,9 @@ val di = DI {
 
     // files
     bindSingleton { UploadImageUseCase() }
+    bindSingleton { DownloadImageUseCase() }
+
+    // material
+    bindSingleton { GetMaterialPageUseCase() }
+    bindSingleton { GetMaterialUseCase() }
 }
