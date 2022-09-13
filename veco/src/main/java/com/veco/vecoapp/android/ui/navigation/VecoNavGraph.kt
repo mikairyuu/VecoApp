@@ -27,7 +27,6 @@ import com.veco.vecoapp.android.ui.screen.map.MapHome
 import com.veco.vecoapp.android.ui.screen.materials.MaterialDetails
 import com.veco.vecoapp.android.ui.screen.materials.MaterialHome
 import com.veco.vecoapp.android.ui.screen.misc.ConfirmationRoute
-import com.veco.vecoapp.android.ui.screen.misc.ReviewRoute
 import kotlinx.coroutines.CoroutineScope
 
 sealed class Screen(
@@ -117,9 +116,7 @@ fun VecoNavGraph(
         ) {
             ConfirmationRoute(navController, it.arguments?.getInt("taskId") ?: 0)
         }
-        composable(Screen.Review.route) {
-            ReviewRoute(navController)
-        }
+
         accountNavGraph(
             navController,
             sheetSettings,

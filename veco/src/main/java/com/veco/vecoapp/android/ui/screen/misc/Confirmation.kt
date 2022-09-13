@@ -56,6 +56,7 @@ import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.font.FontWeight.Companion.Bold
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
+import androidx.lifecycle.viewModelScope
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
@@ -66,8 +67,11 @@ import com.veco.vecoapp.android.ui.component.misc.VecoButton
 import com.veco.vecoapp.android.ui.component.misc.VecoHeadline
 import com.veco.vecoapp.android.ui.enums.ResultState
 import com.veco.vecoapp.android.ui.navigation.Screen
+import com.veco.vecoapp.commonLog
 import com.veco.vecoapp.presentation.misc.ConfirmViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
@@ -96,7 +100,7 @@ fun ConfirmationRoute(
                 viewModel.proceed(
                     selectedImageIds.subList(0, imageCount.value).toList().requireNoNulls(),
                     taskId = taskId,
-                    navigateHome = { navController.navigate(Screen.Review.route) }
+                    navigateHome = { navController.navigate(Screen.Home.route) }
                 )
             }
         }
@@ -141,7 +145,7 @@ fun ImagePicker(
     val uploadPhoto: (Int, Uri) -> Unit = { n: Int, uri: Uri ->
         result[n] = ResultState.LOADING(0f)
         val stream = ctx.contentResolver.openInputStream(uri)!!
-        coroutineScope.launch {
+        coroutineScope.launch (Dispatchers.IO) {
             val webpFilePath = encodeToWebp(stream)
             viewModel.uploadPicture(
                 File(webpFilePath).readBytes(),
