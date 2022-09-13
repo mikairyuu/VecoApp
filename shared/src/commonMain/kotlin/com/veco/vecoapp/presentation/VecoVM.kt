@@ -6,6 +6,7 @@ import com.veco.vecoapp.domain.entity.enums.convert
 import com.veco.vecoapp.domain.entity.response.Response
 import com.veco.vecoapp.presentation.misc.AlertType
 import dev.icerock.moko.mvvm.viewmodel.ViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.launch
 
@@ -17,7 +18,7 @@ open class VecoVM : ViewModel() {
         handler: suspend (Response<K>) -> Unit
     ) {
         if (uiState?.value is UIState.Loading) return
-        viewModelScope.launch {
+        viewModelScope.launch (Dispatchers.Default) {
             uiState?.emit(UIState.Loading())
             val res = request.invoke()
             if (res.resultCode == ResponseResult.Success) handler.invoke(res)
