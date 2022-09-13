@@ -20,6 +20,8 @@ object PersistentDataManager {
     private val persistentScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     private val runningJob: MutableStateFlow<Job?> = MutableStateFlow(null)
 
+    val kvs = mutableMapOf<String, Any>() // Runtime Key-Value Storage
+
     private val _userData = MutableStateFlow<UserDataResponse?>(null)
     val userData: StateFlow<UserDataResponse?> = _userData
 
