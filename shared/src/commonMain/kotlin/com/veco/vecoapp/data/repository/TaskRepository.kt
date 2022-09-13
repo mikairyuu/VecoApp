@@ -38,14 +38,14 @@ class TaskRepository : ITaskRepository {
     }
 
     override suspend fun submitTask(imageIds: List<Int>, taskId: Int): Response<Int> {
-        return httpClient.safeRequest("tasks/images") {
+        return httpClient.safeRequest("task/images") {
             method = HttpMethod.Post
             setBody(SubmitTaskRequest(imageIds, taskId))
         }
     }
 
     override suspend fun completeTask(task: Task): Response<Any> {
-        return httpClient.safeRequest("tasks/status") {
+        return httpClient.safeRequest("task/status") {
             method = HttpMethod.Put
         }
     }
