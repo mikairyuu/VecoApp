@@ -36,6 +36,7 @@ android {
             isMinifyEnabled = false
         }
     }
+    namespace = "com.veco.vecoapp.android"
 }
 
 dependencies {
